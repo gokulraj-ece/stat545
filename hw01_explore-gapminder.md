@@ -6,7 +6,7 @@ Gokul Raj
 Load the Gapminder data
 -----------------------
 
-whatever
+blah
 
 ``` r
 library("gapminder")
