@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Load the Gapminder data
 
-whatever
+Blah
 
 ```{r}
 library("gapminder")

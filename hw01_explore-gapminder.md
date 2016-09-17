@@ -1,12 +1,12 @@
 Exploring Gapminder Data
 ================
 Gokul Raj
-2016-09-15
+2016-09-17
 
 Load the Gapminder data
 -----------------------
 
-blah
+Blah
 
 ``` r
 library("gapminder")
