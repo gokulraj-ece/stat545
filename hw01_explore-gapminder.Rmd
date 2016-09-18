@@ -5,8 +5,8 @@ date: "`r format(Sys.Date())`"
 output: github_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include = FALSE, cache = FALSE}
+knitr::opts_chunk$set(error = TRUE)
 ```
 
 ## Load the Gapminder data
