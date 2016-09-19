@@ -1,6 +1,6 @@
 ---
 title: "Exploring Gapminder Data"
-author: "Gokul Raj"
+author: "Gokul Raj Suresh Kumar"
 date: "`r format(Sys.Date())`"
 output: github_document
 ---
@@ -9,11 +9,63 @@ output: github_document
 knitr::opts_chunk$set(error = TRUE)
 ```
 
-## Load the Gapminder data
-
+## Loading the Gapminder data
 
 ```{r}
 library("gapminder")
 gapminder
 ```
 
+## Summarizing the Gapminder data
+
+```{r}
+summary(gapminder)
+```
+
+## Visualizing the Gapminder data - Scatterplot(s)
+
+```{r}
+plot(lifeExp ~ log(gdpPercap), gapminder)
+```
+
+## Visualizing the Gapminder data - Histogram(s)
+
+```{r}
+hist(gapminder$lifeExp)
+```
+
+## Visualizing the Gapminder data - Bar plot(s)
+
+```{r}
+barplot(table(gapminder$continent))
+```
+
+## Loading the ggplot2 library
+```{r}
+library(ggplot2)
+```
+
+## Visualizing the Gapminder data - Scatterplot(s)
+
+```{r}
+p <- ggplot(subset(gapminder),
+            aes(x = gdpPercap, y = lifeExp)) 
+p <- p + scale_x_log10()
+p + geom_point(alpha = (1/3), size = 3) + facet_wrap(~ continent) + 
+geom_smooth( lwd = 1.5, se = FALSE)
+```
+
+## Visualizing the Gapminder data - Scatterplot(s)
+
+```{r}
+p <- ggplot(subset(gapminder, country == "India"),
+           aes(x = year, y = lifeExp)) 
+p + geom_point() + geom_smooth( lwd = 1,se = FALSE, method = "lm")
+```
+
+## Visualizing the Gapminder data - Scatterplot(s)
+
+```{r}
+with(subset(gapminder, subset = country == "India"),
+       cor(lifeExp, gdpPercap))
+```

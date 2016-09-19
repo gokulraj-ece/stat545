@@ -1,10 +1,10 @@
 Exploring Gapminder Data
 ================
-Gokul Raj
+Gokul Raj Suresh Kumar
 2016-09-18
 
-Load the Gapminder data
------------------------
+Loading the Gapminder data
+--------------------------
 
 ``` r
 library("gapminder")
@@ -25,3 +25,95 @@ gapminder
     ## 9  Afghanistan      Asia  1992  41.674 16317921  649.3414
     ## 10 Afghanistan      Asia  1997  41.763 22227415  635.3414
     ## # ... with 1,694 more rows
+
+Summarizing the Gapminder data
+------------------------------
+
+``` r
+summary(gapminder)
+```
+
+    ##         country        continent        year         lifeExp     
+    ##  Afghanistan:  12   Africa  :624   Min.   :1952   Min.   :23.60  
+    ##  Albania    :  12   Americas:300   1st Qu.:1966   1st Qu.:48.20  
+    ##  Algeria    :  12   Asia    :396   Median :1980   Median :60.71  
+    ##  Angola     :  12   Europe  :360   Mean   :1980   Mean   :59.47  
+    ##  Argentina  :  12   Oceania : 24   3rd Qu.:1993   3rd Qu.:70.85  
+    ##  Australia  :  12                  Max.   :2007   Max.   :82.60  
+    ##  (Other)    :1632                                                
+    ##       pop              gdpPercap       
+    ##  Min.   :6.001e+04   Min.   :   241.2  
+    ##  1st Qu.:2.794e+06   1st Qu.:  1202.1  
+    ##  Median :7.024e+06   Median :  3531.8  
+    ##  Mean   :2.960e+07   Mean   :  7215.3  
+    ##  3rd Qu.:1.959e+07   3rd Qu.:  9325.5  
+    ##  Max.   :1.319e+09   Max.   :113523.1  
+    ## 
+
+Visualizing the Gapminder data - Scatterplot(s)
+-----------------------------------------------
+
+``` r
+plot(lifeExp ~ log(gdpPercap), gapminder)
+```
+
+![](hw01_explore-gapminder_files/figure-markdown_github/unnamed-chunk-3-1.png)
+
+Visualizing the Gapminder data - Histogram(s)
+---------------------------------------------
+
+``` r
+hist(gapminder$lifeExp)
+```
+
+![](hw01_explore-gapminder_files/figure-markdown_github/unnamed-chunk-4-1.png)
+
+Visualizing the Gapminder data - Bar plot(s)
+--------------------------------------------
+
+``` r
+barplot(table(gapminder$continent))
+```
+
+![](hw01_explore-gapminder_files/figure-markdown_github/unnamed-chunk-5-1.png)
+
+Loading the ggplot2 library
+---------------------------
+
+``` r
+library(ggplot2)
+```
+
+Visualizing the Gapminder data - Scatterplot(s)
+-----------------------------------------------
+
+``` r
+p <- ggplot(subset(gapminder),
+            aes(x = gdpPercap, y = lifeExp)) 
+p <- p + scale_x_log10()
+p + geom_point(alpha = (1/3), size = 3) + facet_wrap(~ continent) + 
+geom_smooth( lwd = 1.5, se = FALSE)
+```
+
+![](hw01_explore-gapminder_files/figure-markdown_github/unnamed-chunk-7-1.png)
+
+Visualizing the Gapminder data - Scatterplot(s)
+-----------------------------------------------
+
+``` r
+p <- ggplot(subset(gapminder, country == "India"),
+           aes(x = year, y = lifeExp)) 
+p + geom_point() + geom_smooth( lwd = 1,se = FALSE, method = "lm")
+```
+
+![](hw01_explore-gapminder_files/figure-markdown_github/unnamed-chunk-8-1.png)
+
+Visualizing the Gapminder data - Scatterplot(s)
+-----------------------------------------------
+
+``` r
+with(subset(gapminder, subset = country == "India"),
+       cor(lifeExp, gdpPercap))
+```
+
+    ## [1] 0.8006954
