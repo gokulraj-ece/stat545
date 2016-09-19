@@ -50,66 +50,60 @@ summary(gapminder)
     ##  Max.   :1.319e+09   Max.   :113523.1  
     ## 
 
-Visualizing the Gapminder data - Scatterplot(s)
------------------------------------------------
-
-``` r
-plot(lifeExp ~ log(gdpPercap), gapminder)
-```
-
-![](hw01_explore-gapminder_files/figure-markdown_github/unnamed-chunk-3-1.png)
-
-Visualizing the Gapminder data - Histogram(s)
----------------------------------------------
-
-``` r
-hist(gapminder$lifeExp)
-```
-
-![](hw01_explore-gapminder_files/figure-markdown_github/unnamed-chunk-4-1.png)
-
-Visualizing the Gapminder data - Bar plot(s)
---------------------------------------------
+Observations associated with each continent
+-------------------------------------------
 
 ``` r
 barplot(table(gapminder$continent))
 ```
 
-![](hw01_explore-gapminder_files/figure-markdown_github/unnamed-chunk-5-1.png)
+![](hw01_explore-gapminder_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
-Loading the ggplot2 library
----------------------------
+Life Expectancy vs GDP per capita
+---------------------------------
+
+``` r
+plot(lifeExp ~ log(gdpPercap), gapminder)
+```
+
+![](hw01_explore-gapminder_files/figure-markdown_github/unnamed-chunk-4-1.png)
+
+Life Expectancy vs GDP per capita - Segregated View
+---------------------------------------------------
 
 ``` r
 library(ggplot2)
-```
-
-Visualizing the Gapminder data - Scatterplot(s)
------------------------------------------------
-
-``` r
 p <- ggplot(subset(gapminder),
             aes(x = gdpPercap, y = lifeExp)) 
 p <- p + scale_x_log10()
 p + geom_point(alpha = (1/3), size = 3) + facet_wrap(~ continent) + 
-geom_smooth( lwd = 1.5, se = FALSE)
+geom_smooth(lwd = 1.5, se = FALSE)
 ```
 
-![](hw01_explore-gapminder_files/figure-markdown_github/unnamed-chunk-7-1.png)
+![](hw01_explore-gapminder_files/figure-markdown_github/unnamed-chunk-5-1.png)
 
-Visualizing the Gapminder data - Scatterplot(s)
------------------------------------------------
+Frequency of occurence of Life Expectancy
+-----------------------------------------
+
+``` r
+hist(gapminder$lifeExp)
+```
+
+![](hw01_explore-gapminder_files/figure-markdown_github/unnamed-chunk-6-1.png)
+
+Life Expectancy vs Year for India
+---------------------------------
 
 ``` r
 p <- ggplot(subset(gapminder, country == "India"),
            aes(x = year, y = lifeExp)) 
-p + geom_point() + geom_smooth( lwd = 1,se = FALSE, method = "lm")
+p + geom_point() + geom_smooth(lwd = 1.5, se = FALSE, method = "lm")
 ```
 
-![](hw01_explore-gapminder_files/figure-markdown_github/unnamed-chunk-8-1.png)
+![](hw01_explore-gapminder_files/figure-markdown_github/unnamed-chunk-7-1.png)
 
-Visualizing the Gapminder data - Scatterplot(s)
------------------------------------------------
+Correlation of Life Expectancy and GDP per capita for India
+-----------------------------------------------------------
 
 ``` r
 with(subset(gapminder, subset = country == "India"),
