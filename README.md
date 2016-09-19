@@ -22,7 +22,7 @@ These lines pointed out by [Jennifer Bryan](https://github.com/jennybc) in the f
 >
 > http://jakevdp.github.io/blog/2013/10/26/big-data-brain-drain/
 
-Apart from that, I want to learn R.
+Apart from that, I wanted to learn R.
 
 # How I edited my README.md
 
