@@ -9,6 +9,7 @@ Explore Gapminder with the tidyverse
 #### Load the packages
 
 ``` r
+suppressPackageStartupMessages(library(dplyr))
 library(tidyverse)
 ```
 
@@ -17,7 +18,6 @@ library(tidyverse)
     ## Loading tidyverse: tidyr
     ## Loading tidyverse: readr
     ## Loading tidyverse: purrr
-    ## Loading tidyverse: dplyr
 
     ## Conflicts with tidy packages ----------------------------------------------
 
