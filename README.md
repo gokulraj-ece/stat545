@@ -35,8 +35,9 @@ I used RStudio to:
 
 ## Documents to verify for Assignment 1
 
-+ My main R Markdown document can be found [here](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw01_explore-gapminder.Rmd). 
-+ The resultant Markdown document produced by knitting the above document can be found [here](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw01_explore-gapminder.md).
++ Main R Markdown document: [`hw01_explore-gapminder.Rmd`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw01_explore-gapminder.Rmd). 
++ The resultant Markdown document:
+[`hw01_explore-gapminder.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw01_explore-gapminder.md).
 
 I felt that [Happy Git with R](http://happygitwithr.com/) provided a comprehensive explanation to get through the painful part. 
 
