@@ -1,0 +1,68 @@
+---
+title: "hw02_explore-gapminder-dplyr"
+author: "Gokul Raj"
+date: "September 20, 2016"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Explore Gapminder with the tidyverse
+
+####Load the packages
+
+```{r}
+library(tidyverse)
+library(gapminder)
+```
+
+#### Exploring the Gapminder data frame
+
+```{r}
+gapminder
+str(gapminder)
+glimpse(gapminder)
+head(gapminder)
+tail(gapminder)
+```
+
+####Let's filter to certain rows and select certain columns
+
+```{r}
+filter(gapminder, country == "Canada")
+filter(gapminder, continent == "Europe", year == 2007)
+filter(gapminder, country == "Bulgaria" | year == 2007)
+filter(gapminder, country == "Bulgaria" | country == "Albania")
+filter(gapminder, country %in% c("Bulgaria", "Albania"))
+select(gapminder, year, lifeExp)
+select(                                #This is the one implemented first with pipe
+  filter(gapminder, 
+         country == "Canada"), 
+  year, lifeExp)
+
+filter(
+  select(gapminder,
+         year, 
+         lifeExp,
+         country), 
+  country == "Canada")
+
+```
+
+####Let's use the pipe
+
+```{r}
+gapminder %>% 
+  filter(country == "Canada") %>% 
+  select(year, lifeExp)
+
+gapminder %>%
+  select(year, lifeExp, country) %>% 
+  filter(country == "Canada") %>% 
+  select(-country)
+y <- gapminder %>% 
+  select(starts_with("co"))
+```
+
