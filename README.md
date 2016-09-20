@@ -24,7 +24,7 @@ These lines pointed out by [Jennifer Bryan](https://github.com/jennybc) in the f
 
 Apart from that, I wanted to learn R.
 
-# How I edited my README.md
+## How I edited my README.md
 
 I used RStudio to:
 
@@ -32,6 +32,11 @@ I used RStudio to:
 2. Edit the README.md file locally.
 3. Save and Commit the edited file.
 4. Push the file to github.
+
+## Documents to verify for Assignment 1
+
++ My main R Markdown document can be found [here](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw01_explore-gapminder.Rmd) 
++ The resultant Markdown document produced by knitting the above document can be found [here](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw01_explore-gapminder.md)
 
 I felt that [Happy Git with R](http://happygitwithr.com/) provided a comprehensive explanation to get through the painful part. 
 

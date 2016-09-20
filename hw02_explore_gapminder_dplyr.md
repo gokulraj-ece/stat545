@@ -9,22 +9,13 @@ Explore Gapminder with the tidyverse
 #### Load the packages
 
 ``` r
-suppressPackageStartupMessages(library(dplyr))
-library(tidyverse)
+suppressPackageStartupMessages(library(tidyverse))
 ```
-
-    ## Loading tidyverse: ggplot2
-    ## Loading tidyverse: tibble
-    ## Loading tidyverse: tidyr
-    ## Loading tidyverse: readr
-    ## Loading tidyverse: purrr
 
     ## Conflicts with tidy packages ----------------------------------------------
 
-    ## filter(): dplyr, stats
-    ## lag():    dplyr, stats
-
 ``` r
+library(tidyverse)
 library(gapminder)
 ```
 
