@@ -63,7 +63,7 @@ gapminder %>%
   select(year, lifeExp, country) %>% 
   filter(country == "Canada") %>% 
   select(-country)
-y <- gapminder %>% 
+gapminder %>% 
   select(starts_with("co"))
 ```
 
