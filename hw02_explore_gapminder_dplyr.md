@@ -306,6 +306,21 @@ gapminder %>%
     ## 12  2007  80.653
 
 ``` r
-y <- gapminder %>% 
+gapminder %>% 
   select(starts_with("co"))
 ```
+
+    ## # A tibble: 1,704 × 2
+    ##        country continent
+    ##         <fctr>    <fctr>
+    ## 1  Afghanistan      Asia
+    ## 2  Afghanistan      Asia
+    ## 3  Afghanistan      Asia
+    ## 4  Afghanistan      Asia
+    ## 5  Afghanistan      Asia
+    ## 6  Afghanistan      Asia
+    ## 7  Afghanistan      Asia
+    ## 8  Afghanistan      Asia
+    ## 9  Afghanistan      Asia
+    ## 10 Afghanistan      Asia
+    ## # ... with 1,694 more rows
