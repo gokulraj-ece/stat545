@@ -14,8 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ####Load the packages
 
 ```{r}
-suppressPackageStartupMessages(library(tidyverse))
-library(tidyverse)
+suppressPackageStartupMessages(library(dplyr))
 library(gapminder)
 ```
 

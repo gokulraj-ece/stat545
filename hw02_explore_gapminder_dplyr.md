@@ -9,13 +9,7 @@ Explore Gapminder with the tidyverse
 #### Load the packages
 
 ``` r
-suppressPackageStartupMessages(library(tidyverse))
-```
-
-    ## Conflicts with tidy packages ----------------------------------------------
-
-``` r
-library(tidyverse)
+suppressPackageStartupMessages(library(dplyr))
 library(gapminder)
 ```
 
