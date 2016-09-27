@@ -2,7 +2,7 @@
 title: "Gapminder, ggplot2 and dplyr single table verbs"
 author: "Gokul Raj"
 date: "September 27, 2016"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
@@ -18,6 +18,29 @@ library(tidyverse) #gets me ggplot2
 library(gapminder)
 
 ggplot(gapminder , aes(x = gdpPercap, y = lifeExp)) # won't plot anything
+p <- ggplot(gapminder , aes(x = gdpPercap, y = lifeExp))
+
+## add points
+p + geom_point()
+
+## let's log the x axis (brute force)
+p <- ggplot(gapminder , aes(x = log10(gdpPercap), y = lifeExp))
+p + geom_point()
+
+# a better way
+p <- ggplot(gapminder , aes(x = gdpPercap, y = lifeExp))
+p + scale_x_log10() + geom_point()
+
+## let's save that
+p <- ggplot(gapminder , aes(x = gdpPercap, y = lifeExp)) + scale_x_log10()
+p + geom_point()
+
+##color by continent
+p + geom_point(aes(color = continent)) ## mapping an aesthetic
+
+##deal with overplotting
+p + geom_point(alpha = 1/3 , size = 3) ## setting an aesthetic
+
 ```
 
 
