@@ -1,0 +1,24 @@
+---
+title: "Gapminder, ggplot2 and dplyr single table verbs"
+author: "Gokul Raj"
+date: "September 27, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Blah blah
+
+Let's make scatterplots
+
+```{r}
+library(tidyverse) #gets me ggplot2
+library(gapminder)
+
+ggplot(gapminder , aes(x = gdpPercap, y = lifeExp)) # won't plot anything
+```
+
+
+
