@@ -24,12 +24,10 @@ p <- ggplot(gapminder , aes(x = gdpPercap, y = lifeExp))
 p + geom_point()
 
 ## let's log the x axis (brute force)
-p <- ggplot(gapminder , aes(x = log10(gdpPercap), y = lifeExp))
-p + geom_point()
+ggplot(gapminder , aes(x = log10(gdpPercap), y = lifeExp)) + geom_point()
 
 # a better way
-p <- ggplot(gapminder , aes(x = gdpPercap, y = lifeExp))
-p + scale_x_log10() + geom_point()
+ggplot(gapminder , aes(x = gdpPercap)) + scale_x_log10() + geom_point()
 
 ## let's save that
 p <- ggplot(gapminder , aes(x = gdpPercap, y = lifeExp)) + scale_x_log10()
@@ -40,6 +38,17 @@ p + geom_point(aes(color = continent)) ## mapping an aesthetic
 
 ##deal with overplotting
 p + geom_point(alpha = 1/3 , size = 3) ## setting an aesthetic
+
+##add a fitted line or curve
+p + 
+  geom_point(aes(color = continent)) +
+  geom_smooth(se = FALSE, method = "lm")
+
+p + geom_point(alpha = 1/3 , size = 3) + 
+  facet_wrap(~ continent) + geom_smooth(se = FALSE)
+
+p + geom_point(alpha = 1/3 , size = 3) + 
+  facet_grid(~ continent)
 
 ```
 
