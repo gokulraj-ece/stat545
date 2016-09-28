@@ -141,8 +141,27 @@ p <- ggplot(gapminder , aes(x = pop))
 p + geom_histogram() + scale_x_log10()
 ```
 
-## Using `filer()` , `select` and `%>%`
+## Using `filter()` , `select()` and `%>%`
 
+#### `filter()`
 
+```{r}
+filter(gapminder, country %in% c("India" , "Canada" ), year == 2007)
+```
+
+#### `select()`
+
+```{r}
+select(gapminder, country , pop)
+```
+
+#### Both `filter()` and `select()` 
+
+```{r}
+filter(select(gapminder, country, year, pop), country == "India" , year == 2007)
+select(filter(gapminder, country == "India" , year == 2007), country, year, pop)
+```
+
+#### The **PIPE** `%>%`
 
 

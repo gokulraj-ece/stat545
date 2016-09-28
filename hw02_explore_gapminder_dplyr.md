@@ -306,5 +306,60 @@ p + geom_histogram() + scale_x_log10()
 
 ![](hw02_explore_gapminder_dplyr_files/figure-markdown_github/unnamed-chunk-15-1.png)
 
-Using `filer()` , `select` and `%>%`
-------------------------------------
+Using `filter()` , `select()` and `%>%`
+---------------------------------------
+
+#### `filter()`
+
+``` r
+filter(gapminder, country %in% c("India" , "Canada" ), year == 2007)
+```
+
+    ## # A tibble: 2 × 6
+    ##   country continent  year lifeExp        pop gdpPercap
+    ##    <fctr>    <fctr> <int>   <dbl>      <int>     <dbl>
+    ## 1  Canada  Americas  2007  80.653   33390141  36319.24
+    ## 2   India      Asia  2007  64.698 1110396331   2452.21
+
+#### `select()`
+
+``` r
+select(gapminder, country , pop)
+```
+
+    ## # A tibble: 1,704 × 2
+    ##        country      pop
+    ##         <fctr>    <int>
+    ## 1  Afghanistan  8425333
+    ## 2  Afghanistan  9240934
+    ## 3  Afghanistan 10267083
+    ## 4  Afghanistan 11537966
+    ## 5  Afghanistan 13079460
+    ## 6  Afghanistan 14880372
+    ## 7  Afghanistan 12881816
+    ## 8  Afghanistan 13867957
+    ## 9  Afghanistan 16317921
+    ## 10 Afghanistan 22227415
+    ## # ... with 1,694 more rows
+
+#### Both `filter()` and `select()`
+
+``` r
+filter(select(gapminder, country, year, pop), country == "India" , year == 2007)
+```
+
+    ## # A tibble: 1 × 3
+    ##   country  year        pop
+    ##    <fctr> <int>      <int>
+    ## 1   India  2007 1110396331
+
+``` r
+select(filter(gapminder, country == "India" , year == 2007), country, year, pop)
+```
+
+    ## # A tibble: 1 × 3
+    ##   country  year        pop
+    ##    <fctr> <int>      <int>
+    ## 1   India  2007 1110396331
+
+#### The **PIPE** `%>%`
