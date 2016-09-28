@@ -159,9 +159,35 @@ select(gapminder, country , pop)
 
 ```{r}
 filter(select(gapminder, country, year, pop), country == "India" , year == 2007)
-select(filter(gapminder, country == "India" , year == 2007), country, year, pop)
+select(filter(gapminder, country == "India" , year == 2007), country , year , pop)
 ```
 
 #### The **PIPE** `%>%`
+
+```{r}
+gapminder %>% filter(country == "India" , year == 2007)
+gapminder %>% select(country , pop)
+```
+
+#### The `filter()` , `select()` and `%>%` together 
+
+```{r}
+gapminder %>% select(country , year , pop) %>% filter(country == "India", year == 2007)
+gapminder %>% filter(country == "India" , year == 2007) %>% select( country , year, pop)
+```
+
+#### Piping into `ggplot()`
+
+```R
+p <- ggplot(filter(gapminder, continent != "Asia"), aes(x = continent, y = lifeExp)) 
+p + geom_boxplot()
+```
+Implementing the above boxplot I had done earlier, using the pipe.
+
+```{r}
+p <- gapminder %>% filter(continent != "Asia") %>% ggplot(aes(x = continent, y = lifeExp))
+p + geom_boxplot()
+```
+
 
 

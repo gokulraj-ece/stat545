@@ -354,7 +354,7 @@ filter(select(gapminder, country, year, pop), country == "India" , year == 2007)
     ## 1   India  2007 1110396331
 
 ``` r
-select(filter(gapminder, country == "India" , year == 2007), country, year, pop)
+select(filter(gapminder, country == "India" , year == 2007), country , year , pop)
 ```
 
     ## # A tibble: 1 × 3
@@ -363,3 +363,67 @@ select(filter(gapminder, country == "India" , year == 2007), country, year, pop)
     ## 1   India  2007 1110396331
 
 #### The **PIPE** `%>%`
+
+``` r
+gapminder %>% filter(country == "India" , year == 2007)
+```
+
+    ## # A tibble: 1 × 6
+    ##   country continent  year lifeExp        pop gdpPercap
+    ##    <fctr>    <fctr> <int>   <dbl>      <int>     <dbl>
+    ## 1   India      Asia  2007  64.698 1110396331   2452.21
+
+``` r
+gapminder %>% select(country , pop)
+```
+
+    ## # A tibble: 1,704 × 2
+    ##        country      pop
+    ##         <fctr>    <int>
+    ## 1  Afghanistan  8425333
+    ## 2  Afghanistan  9240934
+    ## 3  Afghanistan 10267083
+    ## 4  Afghanistan 11537966
+    ## 5  Afghanistan 13079460
+    ## 6  Afghanistan 14880372
+    ## 7  Afghanistan 12881816
+    ## 8  Afghanistan 13867957
+    ## 9  Afghanistan 16317921
+    ## 10 Afghanistan 22227415
+    ## # ... with 1,694 more rows
+
+#### The `filter()` , `select()` and `%>%` together
+
+``` r
+gapminder %>% select(country , year , pop) %>% filter(country == "India", year == 2007)
+```
+
+    ## # A tibble: 1 × 3
+    ##   country  year        pop
+    ##    <fctr> <int>      <int>
+    ## 1   India  2007 1110396331
+
+``` r
+gapminder %>% filter(country == "India" , year == 2007) %>% select( country , year, pop)
+```
+
+    ## # A tibble: 1 × 3
+    ##   country  year        pop
+    ##    <fctr> <int>      <int>
+    ## 1   India  2007 1110396331
+
+#### Piping into `ggplot()`
+
+``` r
+p <- ggplot(filter(gapminder, continent != "Asia"), aes(x = continent, y = lifeExp)) 
+p + geom_boxplot()
+```
+
+Implementing the above boxplot I had done earlier, using the pipe.
+
+``` r
+p <- gapminder %>% filter(continent != "Asia") %>% ggplot(aes(x = continent, y = lifeExp))
+p + geom_boxplot()
+```
+
+![](hw02_explore_gapminder_dplyr_files/figure-markdown_github/unnamed-chunk-21-1.png)
