@@ -30,6 +30,12 @@ Apart from that, I wanted to learn R.
 + The resultant Markdown document:
 [`hw01_explore-gapminder.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw01_explore-gapminder.md).
 
+## Documents to verify for Assignment 2
++ Main R Markdown document:
+[`hw02_explore_gapminder_dplyr.Rmd`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw02_explore_gapminder_dplyr.Rmd).
++ The resultant Markdown document:
+[`hw02_explore_gapminder_dplyr.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw02_explore_gapminder_dplyr.md).
+
 ## How I edited my README.md
 
 I used RStudio to:

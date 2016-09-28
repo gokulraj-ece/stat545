@@ -9,20 +9,20 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Explore Gapminder with dplyr
+#Explore Gapminder with dplyr
 
-## Bringing rectangular data in
+##Bringing rectangular data in
 
-#### Loading the gapminder and dplyr packages 
+####Loading the gapminder and dplyr packages 
 
 ```{r}
 suppressPackageStartupMessages(library(dplyr))
 library(gapminder)
 ```
 
-## Smell testing the data
+##Smell testing the data
 
-#### Displaying a tibble
+####Displaying a tibble
 ```{r}
 gapminder
 ```
@@ -35,7 +35,7 @@ summary(gapminder)
 ```
 
 
-#### Determining the class 
+####Determining the class 
 
 ```{r}
 class(gapminder)
@@ -43,19 +43,19 @@ class(gapminder)
 - The `gapminder` object is a regular data frame.
 - It is a tibble as well.
 
-#### Determining the number of variables
+####Determining the number of variables
 
 ```{r}
 ncol(gapminder)
 ```
 
-#### Determining the number of observations
+####Determining the number of observations
 
 ```{r}
 nrow(gapminder)
 ```
 
-#### Alternate ways of determining the size
+####Alternate ways of determining the size
 
 ```{r}
 dim(gapminder)
@@ -63,7 +63,7 @@ dim(gapminder)
 
 - The 2 functions described in the subsequent section can also be considered as alternate ways of determining the size.
 
-#### Determining the flavour of each variable
+####Determining the flavour of each variable
 
 ```{r}
 str(gapminder)
@@ -75,7 +75,7 @@ glimpse(gapminder)
 4. **lifeExp** is of type **num**.
 5. **pop** is of type **int**.
 
-## Exploring individual variables
+##Exploring individual variables
 
 The variables **pop** and **lifeExp** have been chosen as quantitative variables for this analysis.
 
@@ -107,76 +107,78 @@ nlevels(gapminder$country)
 ```
 
 
-## Exploring various plot types
+##Exploring various plot types
+
+####Loading `ggplot2`
 
 ```{r}
 library(ggplot2)
 ```
 
-#### Scatterplots
+####Scatterplots
 
 ```{r}
 p <- ggplot(filter(gapminder,continent == "Asia"), aes(x = gdpPercap , y = lifeExp))
 p + geom_point(alpha = 1/4, size = 4) + scale_x_log10() + geom_smooth(lwd = 2, se = FALSE)
 ```
 
-#### Stripplots
+####Stripplots
 
 ```{r}
 p <- ggplot(gapminder, aes(x = continent, y = pop)) 
 p + geom_jitter()
 ```
 
-#### Boxplots
+####Boxplots
 
 ```{r}
 p <- ggplot(filter(gapminder, continent != "Asia"), aes(x = continent, y = lifeExp)) 
 p + geom_boxplot()
 ```
 
-#### Histogram
+####Histogram
 
 ```{r}
 p <- ggplot(gapminder , aes(x = pop)) 
 p + geom_histogram() + scale_x_log10()
 ```
 
-## Using `filter()` , `select()` and `%>%`
+##Using `filter()` , `select()` and `%>%`
 
-#### `filter()`
+####`filter()`
 
 ```{r}
 filter(gapminder, country %in% c("India" , "Canada" ), year == 2007)
 ```
 
-#### `select()`
+####`select()`
 
 ```{r}
 select(gapminder, country , pop)
 ```
 
-#### Both `filter()` and `select()` 
+####`filter()` and `select()` 
 
 ```{r}
 filter(select(gapminder, country, year, pop), country == "India" , year == 2007)
 select(filter(gapminder, country == "India" , year == 2007), country , year , pop)
 ```
 
-#### The **PIPE** `%>%`
+####The **PIPE** `%>%`
 
 ```{r}
 gapminder %>% filter(country == "India" , year == 2007)
 gapminder %>% select(country , pop)
 ```
 
-#### The `filter()` , `select()` and `%>%` together 
+####`filter()` , `select()` and `%>%`  
 
 ```{r}
 gapminder %>% select(country , year , pop) %>% filter(country == "India", year == 2007)
 gapminder %>% filter(country == "India" , year == 2007) %>% select( country , year, pop)
 ```
 
-#### Piping into `ggplot()`
+####Piping into `ggplot()`
 
 ```R
 p <- ggplot(filter(gapminder, continent != "Asia"), aes(x = continent, y = lifeExp)) 
@@ -188,6 +190,21 @@ Implementing the above boxplot I had done earlier, using the pipe.
 p <- gapminder %>% filter(continent != "Asia") %>% ggplot(aes(x = continent, y = lifeExp))
 p + geom_boxplot()
 ```
+
+##Venturing a bit further
+
+```{r}
+filter(gapminder, country == c("Rwanda", "Afghanistan"))
+
+```
+
+I believe that the Analyst' script is not fetching all the data that she needs. In order to fetch the complete data after applying the constraints, she has to replace the `==` with the `%in%`.
+
+```{r}
+filter(gapminder, country %in% c("Rwanda" , "Afghanistan"))
+```
+
+
 
 
 
