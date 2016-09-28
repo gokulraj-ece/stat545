@@ -1,7 +1,7 @@
 ---
 title: "hw02_explore-gapminder-dplyr"
-author: "Gokul Raj"
-date: "September 20, 2016"
+author: "Gokul Raj Suresh Kumar"
+date: "`r format(Sys.Date())`"
 output: github_document
 ---
 
@@ -9,118 +9,65 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Explore Gapminder with the tidyverse
+# Explore Gapminder with dplyr
 
-####Load the packages
+## Bringing rectangular data in
+
+#### Loading the gapminder and dplyr packages 
 
 ```{r}
 suppressPackageStartupMessages(library(dplyr))
 library(gapminder)
 ```
 
-#### Exploring the Gapminder data frame
+## Smell testing the data
 
+#### Displaying a tibble
 ```{r}
 gapminder
-str(gapminder)
-glimpse(gapminder)
-head(gapminder)
-tail(gapminder)
 ```
+- A `data.frame` is a list of vectors of equal length. 
+- Printing the `gapminder` object prints a tibble. 
+- A tibble is a `data.frame` reimagined to retrieve just the effective information.
 
-####Let's filter to certain rows and select certain columns
+#### Determining the class 
 
 ```{r}
-filter(gapminder, country == "Canada")
-filter(gapminder, year > 2000)
-filter(gapminder, continent == "Europe", year == 2007)
-filter(gapminder, country == "Bulgaria" | year == 2007)
-filter(gapminder, country == "Bulgaria" | country == "Albania")
-filter(gapminder, country %in% c("Bulgaria", "Albania"))
-select(gapminder, year, lifeExp)
-select(                                #This is the one implemented first with pipe
-  filter(gapminder, 
-         country == "Canada"), 
-  year, lifeExp)
-
-filter(
-  select(gapminder,
-         year, 
-         lifeExp,
-         country), 
-  country == "Canada")
-
+class(gapminder)
 ```
+- The `gapminder` object is a regular data frame.
+- It is a tibble as well.
 
-####Let's use the pipe
+#### Determining the number of variables
 
 ```{r}
-gapminder %>% 
-  filter(country == "Canada") %>%  #myfn(arg1,arg2,arg3,..) # arg1 usually a tibble
-  select(year, lifeExp)            #arg1 %>%  myfn(arg2,arg3,..)
-
-gapminder %>%
-  select(year, lifeExp, country) %>% 
-  filter(country == "Canada") %>% 
-  select(-country)
-y <- gapminder %>% 
-  select(starts_with("co"))
-```
-
-Let's look at some functions to get to know a data frame
-
-```{r}
-names(gapminder)
-colnames(gapminder)
 ncol(gapminder)
-length(gapminder)
-dim(gapminder)
+```
+
+#### Determining the number of observations
+
+```{r}
 nrow(gapminder)
 ```
 
-Shift from describing the whole object to looking at the variable inside
+#### Alternate ways of determining the size
 
 ```{r}
-summary(gapminder)
-gapminder$lifeExp
-gapminder[["gdpPercap"]]
-gapminder[c("year" , "country")]
-my_fav_var <-  "country"
-gapminder[[my_fav_var]]
-#can't use gapminder$my_fav_var
-str(gapminder$lifeExp)
-#str(gapminder[[lifeExp]])
+dim(gapminder)
 ```
 
-Now we know how to get 1 variable. Let's explore single variables.
+- The 2 functions described in the subsequent section can also be considered as alternate ways of determining the size.
+
+#### Determining the flavour of each variable
 
 ```{r}
-summary(gapminder$continent)
-table(gapminder$continent)
-class(gapminder$continent)
-levels(gapminder$continent)
-nlevels(gapminder$continent)
-barplot(table(gapminder$continent))
-summary(gapminder$lifeExp)
-quantile(gapminder$lifeExp)
-mean(gapminder$lifeExp)
-median(gapminder$lifeExp)
-hist(gapminder$lifeExp)
+str(gapminder)
+glimpse(gapminder)
 ```
+1. *country* is of type *Factor*.
+2. *continent* is of type *Factor*.
+3. *year* is of type *int*.
+4. *lifeExp* is of type *num*.
+5. *pop* is of type *int*.
 
-Let's make a few figures
-
-```{r}
-library(ggplot2)
-ggplot(gapminder, aes(x = gdpPercap , y = lifeExp)) + 
-  geom_point()
-ggplot(gapminder, aes(x= gdpPercap, y = lifeExp)) + 
-  geom_point()
-gapminder %>% 
-  ggplot(aes(x = gdpPercap, y = lifeExp)) + 
-  geom_point()
-p <- ggplot(gapminder, aes(x = gdpPercap , y = lifeExp))
-#p + geom_point()
-p + geom_point(aes(color = continent))
-```
-
+## Exploring individual variables
