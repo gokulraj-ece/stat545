@@ -109,6 +109,10 @@ nlevels(gapminder$country)
 
 ## Exploring various plot types
 
+```{r}
+library(ggplot2)
+```
+
 #### Scatterplots
 
 ```{r}

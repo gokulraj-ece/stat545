@@ -256,82 +256,6 @@ class(gapminder$country)
     ## [1] "factor"
 
 ``` r
-levels(gapminder$country)
-```
-
-    ##   [1] "Afghanistan"              "Albania"                 
-    ##   [3] "Algeria"                  "Angola"                  
-    ##   [5] "Argentina"                "Australia"               
-    ##   [7] "Austria"                  "Bahrain"                 
-    ##   [9] "Bangladesh"               "Belgium"                 
-    ##  [11] "Benin"                    "Bolivia"                 
-    ##  [13] "Bosnia and Herzegovina"   "Botswana"                
-    ##  [15] "Brazil"                   "Bulgaria"                
-    ##  [17] "Burkina Faso"             "Burundi"                 
-    ##  [19] "Cambodia"                 "Cameroon"                
-    ##  [21] "Canada"                   "Central African Republic"
-    ##  [23] "Chad"                     "Chile"                   
-    ##  [25] "China"                    "Colombia"                
-    ##  [27] "Comoros"                  "Congo, Dem. Rep."        
-    ##  [29] "Congo, Rep."              "Costa Rica"              
-    ##  [31] "Cote d'Ivoire"            "Croatia"                 
-    ##  [33] "Cuba"                     "Czech Republic"          
-    ##  [35] "Denmark"                  "Djibouti"                
-    ##  [37] "Dominican Republic"       "Ecuador"                 
-    ##  [39] "Egypt"                    "El Salvador"             
-    ##  [41] "Equatorial Guinea"        "Eritrea"                 
-    ##  [43] "Ethiopia"                 "Finland"                 
-    ##  [45] "France"                   "Gabon"                   
-    ##  [47] "Gambia"                   "Germany"                 
-    ##  [49] "Ghana"                    "Greece"                  
-    ##  [51] "Guatemala"                "Guinea"                  
-    ##  [53] "Guinea-Bissau"            "Haiti"                   
-    ##  [55] "Honduras"                 "Hong Kong, China"        
-    ##  [57] "Hungary"                  "Iceland"                 
-    ##  [59] "India"                    "Indonesia"               
-    ##  [61] "Iran"                     "Iraq"                    
-    ##  [63] "Ireland"                  "Israel"                  
-    ##  [65] "Italy"                    "Jamaica"                 
-    ##  [67] "Japan"                    "Jordan"                  
-    ##  [69] "Kenya"                    "Korea, Dem. Rep."        
-    ##  [71] "Korea, Rep."              "Kuwait"                  
-    ##  [73] "Lebanon"                  "Lesotho"                 
-    ##  [75] "Liberia"                  "Libya"                   
-    ##  [77] "Madagascar"               "Malawi"                  
-    ##  [79] "Malaysia"                 "Mali"                    
-    ##  [81] "Mauritania"               "Mauritius"               
-    ##  [83] "Mexico"                   "Mongolia"                
-    ##  [85] "Montenegro"               "Morocco"                 
-    ##  [87] "Mozambique"               "Myanmar"                 
-    ##  [89] "Namibia"                  "Nepal"                   
-    ##  [91] "Netherlands"              "New Zealand"             
-    ##  [93] "Nicaragua"                "Niger"                   
-    ##  [95] "Nigeria"                  "Norway"                  
-    ##  [97] "Oman"                     "Pakistan"                
-    ##  [99] "Panama"                   "Paraguay"                
-    ## [101] "Peru"                     "Philippines"             
-    ## [103] "Poland"                   "Portugal"                
-    ## [105] "Puerto Rico"              "Reunion"                 
-    ## [107] "Romania"                  "Rwanda"                  
-    ## [109] "Sao Tome and Principe"    "Saudi Arabia"            
-    ## [111] "Senegal"                  "Serbia"                  
-    ## [113] "Sierra Leone"             "Singapore"               
-    ## [115] "Slovak Republic"          "Slovenia"                
-    ## [117] "Somalia"                  "South Africa"            
-    ## [119] "Spain"                    "Sri Lanka"               
-    ## [121] "Sudan"                    "Swaziland"               
-    ## [123] "Sweden"                   "Switzerland"             
-    ## [125] "Syria"                    "Taiwan"                  
-    ## [127] "Tanzania"                 "Thailand"                
-    ## [129] "Togo"                     "Trinidad and Tobago"     
-    ## [131] "Tunisia"                  "Turkey"                  
-    ## [133] "Uganda"                   "United Kingdom"          
-    ## [135] "United States"            "Uruguay"                 
-    ## [137] "Venezuela"                "Vietnam"                 
-    ## [139] "West Bank and Gaza"       "Yemen, Rep."             
-    ## [141] "Zambia"                   "Zimbabwe"
-
-``` r
 nlevels(gapminder$country)
 ```
 
@@ -339,3 +263,48 @@ nlevels(gapminder$country)
 
 Exploring various plot types
 ----------------------------
+
+``` r
+library(ggplot2)
+```
+
+#### Scatterplots
+
+``` r
+p <- ggplot(filter(gapminder,continent == "Asia"), aes(x = gdpPercap , y = lifeExp))
+p + geom_point(alpha = 1/4, size = 4) + scale_x_log10() + geom_smooth(lwd = 2, se = FALSE)
+```
+
+![](hw02_explore_gapminder_dplyr_files/figure-markdown_github/unnamed-chunk-12-1.png)
+
+#### Stripplots
+
+``` r
+p <- ggplot(gapminder, aes(x = continent, y = pop)) 
+p + geom_jitter()
+```
+
+![](hw02_explore_gapminder_dplyr_files/figure-markdown_github/unnamed-chunk-13-1.png)
+
+#### Boxplots
+
+``` r
+p <- ggplot(filter(gapminder, continent != "Asia"), aes(x = continent, y = lifeExp)) 
+p + geom_boxplot()
+```
+
+![](hw02_explore_gapminder_dplyr_files/figure-markdown_github/unnamed-chunk-14-1.png)
+
+#### Histogram
+
+``` r
+p <- ggplot(gapminder , aes(x = pop)) 
+p + geom_histogram() + scale_x_log10()
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](hw02_explore_gapminder_dplyr_files/figure-markdown_github/unnamed-chunk-15-1.png)
+
+Using `filer()` , `select` and `%>%`
+------------------------------------
