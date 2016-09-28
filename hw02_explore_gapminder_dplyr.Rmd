@@ -30,6 +30,11 @@ gapminder
 - Printing the `gapminder` object prints a tibble. 
 - A tibble is a `data.frame` reimagined to retrieve just the effective information.
 
+```{r}
+summary(gapminder)
+```
+
+
 #### Determining the class 
 
 ```{r}
@@ -64,10 +69,46 @@ dim(gapminder)
 str(gapminder)
 glimpse(gapminder)
 ```
-1. *country* is of type *Factor*.
-2. *continent* is of type *Factor*.
-3. *year* is of type *int*.
-4. *lifeExp* is of type *num*.
-5. *pop* is of type *int*.
+1. **country** is of type **Factor**.
+2. **continent** is of type **Factor**.
+3. **year** is of type **int**.
+4. **lifeExp** is of type **num**.
+5. **pop** is of type **int**.
 
 ## Exploring individual variables
+
+The variables **pop** and **lifeExp** have been chosen as quantitative variables for this analysis.
+
+```{r}
+class(gapminder$pop)
+summary(gapminder$pop)
+quantile(gapminder$pop)
+mean(gapminder$pop)
+median(gapminder$pop)
+class(gapminder$lifeExp)
+summary(gapminder$lifeExp)
+quantile(gapminder$lifeExp)
+mean(gapminder$lifeExp)
+median(gapminder$lifeExp)
+hist(gapminder$lifeExp)
+```
+
+The variables **continent** and **country**  have been chosen as categorical variables for this analysis.
+
+```{r}
+summary(gapminder$continent)
+class(gapminder$continent)
+levels(gapminder$continent)
+nlevels(gapminder$continent)
+class(gapminder$country)
+barplot(table(gapminder$continent))
+class(gapminder$country)
+nlevels(gapminder$country)
+```
+
+
+
+## Exploring various plot types
+
+
+
