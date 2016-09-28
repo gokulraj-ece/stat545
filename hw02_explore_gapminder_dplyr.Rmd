@@ -204,7 +204,9 @@ I believe that the Analyst's script is not fetching all the data that she needs.
 filter(gapminder, country %in% c("Rwanda" , "Afghanistan"))
 ```
 
+## The Process
 
+I have fallen in love with the `%>%` ! Oddly satisfying to use it in my scripts ! This assignment did involve a decent amount of exploration, and I didn't find any technical hurdles. The resources provided by the STAT 545 team was more than sufficient for me to finish this one.
 
 
 
