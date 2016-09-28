@@ -110,12 +110,34 @@ nlevels(gapminder$country)
 ## Exploring various plot types
 
 #### Scatterplots
+
 ```{r}
 p <- ggplot(filter(gapminder,continent == "Asia"), aes(x = gdpPercap , y = lifeExp))
 p + geom_point(alpha = 1/4, size = 4) + scale_x_log10() + geom_smooth(lwd = 2, se = FALSE)
 ```
 
-#### 
+#### Stripplots
+
+```{r}
+p <- ggplot(gapminder, aes(x = continent, y = pop)) 
+p + geom_jitter()
+```
+
+#### Boxplots
+
+```{r}
+p <- ggplot(filter(gapminder, continent != "Asia"), aes(x = continent, y = lifeExp)) 
+p + geom_boxplot()
+```
+
+#### Histogram
+
+```{r}
+p <- ggplot(gapminder , aes(x = pop)) 
+p + geom_histogram() + scale_x_log10()
+```
+
+## Using `filer()` , `select` and `%>%`
 
 
 
