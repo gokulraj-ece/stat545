@@ -453,7 +453,7 @@ filter(gapminder, country == c("Rwanda", "Afghanistan"))
     ## 11      Rwanda    Africa  1992  23.599  7290203  737.0686
     ## 12      Rwanda    Africa  2002  43.413  7852401  785.6538
 
-I believe that the Analyst' script is not fetching all the data that she needs. In order to fetch the complete data after applying the constraints, she has to replace the `==` with the `%in%`.
+I believe that the Analyst's script is not fetching all the data that she needs. In order to fetch the complete data after applying the constraints, she has to replace the `==` with the `%in%`.
 
 ``` r
 filter(gapminder, country %in% c("Rwanda" , "Afghanistan"))
@@ -473,3 +473,8 @@ filter(gapminder, country %in% c("Rwanda" , "Afghanistan"))
     ## 9  Afghanistan      Asia  1992  41.674 16317921  649.3414
     ## 10 Afghanistan      Asia  1997  41.763 22227415  635.3414
     ## # ... with 14 more rows
+
+The Process
+-----------
+
+I have fallen in love with the `%>%` ! Oddly satisfying to use it in my scripts ! This assignment did involve a decent amount of exploration, and I didn't find any technical hurdles. The resources provided by the STAT 545 team was more than sufficient for me to finish this one.
