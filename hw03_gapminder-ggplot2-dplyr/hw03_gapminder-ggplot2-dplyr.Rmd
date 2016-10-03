@@ -1,7 +1,7 @@
 ---
 title: "Gapminder, ggplot2 and dplyr single table verbs"
-author: "Gokul Raj"
-date: "September 27, 2016"
+author: "Gokul Raj Suresh Kumar"
+date: "`r format(Sys.Date())`"
 output: github_document
 ---
 
@@ -9,127 +9,13 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Blah blah
+##Starting
 
-Let's make scatterplots
 
 ```{r}
 library(tidyverse) #gets me ggplot2
 library(gapminder)
-
 ggplot(gapminder , aes(x = gdpPercap, y = lifeExp)) # won't plot anything
-
-
-## add points
-ggplot(gapminder , aes(x = gdpPercap, y = lifeExp)) + 
-  geom_point()
-
-## let's log the x axis (brute force)
-ggplot(gapminder , aes(x = log10(gdpPercap), y = lifeExp)) +
-  geom_point()
-
-# a better way
-ggplot(gapminder , aes(x = gdpPercap, y = lifeExp)) + scale_x_log10() + 
-  geom_point()
-
-##color by continent
-ggplot(gapminder , aes(x = gdpPercap, y = lifeExp)) + scale_x_log10() +
-  geom_point(aes(color = continent, y = lifeExp)) ## mapping an aesthetic
-
-##deal with overplotting
-ggplot(gapminder , aes(x = gdpPercap, y = lifeExp)) + scale_x_log10() +
-  geom_point(alpha = 1/3 , size = 3) ## setting an aesthetic
-
-##add a fitted line or curve
-ggplot(gapminder , aes(x = gdpPercap, y = lifeExp)) + scale_x_log10() +
-  geom_point(aes(color = continent)) +
-  geom_smooth(se = FALSE, method = "lm")
-
-ggplot(gapminder , aes(x = gdpPercap, y = lifeExp)) + scale_x_log10() +
-  geom_point(alpha = 1/3 , size = 3) + 
-  facet_wrap(~ continent) + geom_smooth(se = FALSE)
-
-ggplot(gapminder , aes(x = gdpPercap, y = lifeExp)) + scale_x_log10() +
-  geom_point(alpha = 1/3 , size = 3) +
-  facet_grid(~ continent)
-
-```
-
-## dplyr single table verbs
-
-working through this material.
-
-<http://stat545.com/block010_dplyr-end-single-table.html>
-
-```{r}
-(my_gap <-  gapminder)
-
-## mutate() creates new variables
-my_gap <- my_gap %>% 
-  mutate(gdp = pop * gdpPercap) 
-
-my_gap <-  my_gap %>% 
-  mutate(gdp = NULL)
-names(my_gap)
-
-canada <- my_gap %>% 
-  filter(country == "Canada")
-
-rep(canada$gdpPercap, nlevels(my_gap$country))
-
-
-my_gap <- my_gap %>% 
-  mutate(canada = rep(canada$gdpPercap,
-                      nlevels(country)),
-         gdpPercapRel = gdpPercap/canada,
-         canada = NULL) %>% 
-  select(gdpPercapRel, everything())
-
-my_gap %>% 
-  filter(country == "Canada")
-
-my_gap %>% 
-  print(n = 20)
- 
-summary(my_gap$gdpPercapRel)
-
-## arrange()
-
-my_gap %>% 
-  arrange(year, country)
-
-my_gap %>% 
-  filter(year == 2007) %>% 
-  arrange(desc(lifeExp))
-
-## rename()
-
-my_gap %>% 
-  rename(life_exp = lifeExp,
-         gdp_perca = gdpPercap,
-         gdp_percap_rel = gdpPercapRel)
-
-my_gap %>% 
-  print(n = 20)
-
-## group_by()
-
-my_gap %>% 
-  group_by(continent) %>% 
-  summarise(n_obs = n())
-
-my_gap %>% 
-  group_by(continent) %>% 
-  tally()
-
-my_gap %>% 
-  count(continent)
-
-my_gap %>% 
-  group_by(continent) %>% 
-  summarise(n_obs = n(),
-            n_countries = n_distinct(country))
-
 
 ```
 
