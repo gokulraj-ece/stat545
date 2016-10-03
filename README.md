@@ -26,15 +26,15 @@ Apart from that, I wanted to learn R.
 
 ## Documents to verify - Assignment 1
 
-+ Main R Markdown document: [`hw01_explore-gapminder.Rmd`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw01_explore-gapminder.Rmd). 
++ Main R Markdown document: [`hw01_explore-gapminder.Rmd`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw01_explore-gapminder/hw01_explore-gapminder.Rmd). 
 + The resultant Markdown document:
-[`hw01_explore-gapminder.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw01_explore-gapminder.md).
+[`hw01_explore-gapminder.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw01_explore-gapminder/hw01_explore-gapminder.md).
 
 ## Documents to verify - Assignment 2
 + Main R Markdown document:
-[`hw02_explore_gapminder_dplyr.Rmd`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw02_explore_gapminder_dplyr.Rmd).
+[`hw02_explore_gapminder_dplyr.Rmd`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw02_explore-gapminder-dplyr/hw02_explore_gapminder_dplyr.Rmd).
 + The resultant Markdown document:
-[`hw02_explore_gapminder_dplyr.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw02_explore_gapminder_dplyr.md).
+[`hw02_explore_gapminder_dplyr.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw02_explore-gapminder-dplyr/hw02_explore_gapminder_dplyr.md).
 
 ## How I edited my README.md
 
