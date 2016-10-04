@@ -86,28 +86,27 @@ spread_data %>%
 ``` r
 expectancy_data <- my_gap %>%
   select( continent , lifeExp , year ) %>%
-  filter( year %in% c(1957 , 1967 , 1977 , 1987 , 1997 , 2007 )) %>% 
   group_by( continent , year ) %>% 
   summarise( avg_life_exp = mean( lifeExp )) %>% 
   print( n = 10 )
 ```
 
-    ## Source: local data frame [30 x 3]
+    ## Source: local data frame [60 x 3]
     ## Groups: continent [?]
     ## 
     ##    continent  year avg_life_exp
     ##       <fctr> <int>        <dbl>
-    ## 1     Africa  1957     41.26635
-    ## 2     Africa  1967     45.33454
-    ## 3     Africa  1977     49.58042
-    ## 4     Africa  1987     53.34479
-    ## 5     Africa  1997     53.59827
-    ## 6     Africa  2007     54.80604
-    ## 7   Americas  1957     55.96028
-    ## 8   Americas  1967     60.41092
-    ## 9   Americas  1977     64.39156
-    ## 10  Americas  1987     68.09072
-    ## # ... with 20 more rows
+    ## 1     Africa  1952     39.13550
+    ## 2     Africa  1957     41.26635
+    ## 3     Africa  1962     43.31944
+    ## 4     Africa  1967     45.33454
+    ## 5     Africa  1972     47.45094
+    ## 6     Africa  1977     49.58042
+    ## 7     Africa  1982     51.59287
+    ## 8     Africa  1987     53.34479
+    ## 9     Africa  1992     53.62958
+    ## 10    Africa  1997     53.59827
+    ## # ... with 50 more rows
 
 ``` r
 expectancy_data %>%
