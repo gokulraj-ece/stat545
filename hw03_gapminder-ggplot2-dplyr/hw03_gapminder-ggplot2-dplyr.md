@@ -25,10 +25,10 @@ Tasks
 my_gap <- gapminder
 
 gdp_data <- my_gap %>% 
-  group_by(continent) %>% 
-  summarize(min_gdp_percap = min(gdpPercap), max_gdp_percap = max(gdpPercap))
+  group_by( continent ) %>% 
+  summarize( min_gdp_percap = min( gdpPercap ) , max_gdp_percap = max( gdpPercap ))
 
-knitr::kable(gdp_data)
+knitr::kable( gdp_data )
 ```
 
 | continent |  min\_gdp\_percap|  max\_gdp\_percap|
@@ -41,16 +41,16 @@ knitr::kable(gdp_data)
 
 ``` r
 gdp_data %>%
-  ggplot(aes(x = continent , y = min_gdp_percap )) + 
-  geom_point( aes(color = continent) , size = 4)
+  ggplot( aes( x = continent , y = min_gdp_percap )) + 
+  geom_point(size = 4)
 ```
 
 ![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
 ``` r
 gdp_data %>%
-  ggplot(aes(x = continent , y = max_gdp_percap )) + 
-  geom_point( aes(color = continent) , size = 4)
+  ggplot( aes( x = continent , y = max_gdp_percap )) + 
+  geom_point(size = 4)
 ```
 
 ![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-3-2.png)
@@ -60,9 +60,9 @@ gdp_data %>%
 ``` r
 spread_data <- my_gap %>%
   group_by(continent) %>% 
-  summarize( spread_by_continent = (max(gdpPercap) - min(gdpPercap)))
+  summarize( spread_by_continent = ( max( gdpPercap ) - min( gdpPercap )))
 
-knitr::kable(spread_data)
+knitr::kable( spread_data )
 ```
 
 | continent |  spread\_by\_continent|
@@ -75,8 +75,8 @@ knitr::kable(spread_data)
 
 ``` r
 spread_data %>%
-  ggplot(aes(x = continent , y = spread_by_continent )) + 
-  geom_point( aes(color = continent) , size = 4)
+  ggplot( aes( x = continent , y = spread_by_continent )) + 
+  geom_point( size = 4 )
 ```
 
 ![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-5-1.png)
@@ -86,7 +86,7 @@ spread_data %>%
 ``` r
 expectancy_data <- my_gap %>%
   select(continent , lifeExp , year) %>%
-  filter(year %in% c(1957, 1967, 1977, 1987, 1997, 2007)) %>% 
+  filter(year %in% c(1957 , 1967 , 1977 , 1987 , 1997 , 2007)) %>% 
   group_by(continent , year) %>% 
   summarise(avg_life_exp = mean(lifeExp)) %>% 
   print(n = 10)
@@ -111,8 +111,52 @@ expectancy_data <- my_gap %>%
 
 ``` r
 expectancy_data %>%
-  ggplot(aes(x = year , y = avg_life_exp )) + 
-  geom_point( aes(color = continent)) + geom_line( aes(group = continent, color = continent))
+  ggplot( aes( x = year , y = avg_life_exp )) + 
+  geom_point( aes( color = continent )) + 
+  geom_line( aes( group = continent , color =   continent ))
 ```
 
 ![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-7-1.png)
+
+#### Relative abundance of country with low life expectancy over time by continent
+
+``` r
+benchmark <- my_gap %>% 
+  filter( country == "India" )
+
+relative_life_expectancy <- my_gap %>% 
+  mutate( temp = rep( benchmark$lifeExp , nlevels( country )), 
+         lifeExpRel = lifeExp/temp, 
+         temp = NULL)
+
+relative_abundance <- relative_life_expectancy %>%
+  group_by( continent , year)%>% 
+  filter( lifeExpRel < 1 )%>% 
+  summarise( n_countries = n_distinct( country )) %>% 
+  print( n = 10 )
+```
+
+    ## Source: local data frame [34 x 3]
+    ## Groups: continent [?]
+    ## 
+    ##    continent  year n_countries
+    ##       <fctr> <int>       <int>
+    ## 1     Africa  1952          19
+    ## 2     Africa  1957          23
+    ## 3     Africa  1962          28
+    ## 4     Africa  1967          33
+    ## 5     Africa  1972          37
+    ## 6     Africa  1977          39
+    ## 7     Africa  1982          39
+    ## 8     Africa  1987          38
+    ## 9     Africa  1992          39
+    ## 10    Africa  1997          44
+    ## # ... with 24 more rows
+
+``` r
+relative_life_expectancy %>%
+  ggplot( aes( x = year , y = lifeExpRel )) + 
+  geom_point() + facet_wrap( ~continent ) + geom_line( aes( group = country ))
+```
+
+![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-9-1.png)
