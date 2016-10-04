@@ -9,13 +9,38 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-##Starting
+#Manipulate and Explore Gapminder with dplyr & ggplot2
 
+##Bringing rectangular data in
+
+####Loading the tidyverse and gapminder packages 
 
 ```{r}
-library(tidyverse) #gets me ggplot2
+library(tidyverse)
 library(gapminder)
-ggplot(gapminder , aes(x = gdpPercap, y = lifeExp)) # won't plot anything
-
 ```
+
+##Tasks
+
+####Maximum and Minimum of `gdpPercap` for all continents
+
+```{r results = 'asis'}
+my_gap <- gapminder
+gdp_data <- my_gap %>% 
+  group_by(continent) %>% 
+  summarise(min_gdpPercap = min(gdpPercap), max_gdpPercap = max(gdpPercap))
+knitr::kable(gdp_data)
+```
+
+```{r}
+gdp_data %>% ggplot(aes(x = continent , y = min_gdpPercap )) + 
+  geom_point( aes(color = continent) , size = 4)
+
+gdp_data %>% ggplot(aes(x = continent , y = max_gdpPercap )) + 
+  geom_point( aes(color = continent) , size = 4)
+```
+
+
+
+
 
