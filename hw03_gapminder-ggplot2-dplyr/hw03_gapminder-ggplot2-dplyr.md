@@ -13,21 +13,6 @@ Bringing rectangular data in
 
 ``` r
 library(tidyverse)
-```
-
-    ## Loading tidyverse: ggplot2
-    ## Loading tidyverse: tibble
-    ## Loading tidyverse: tidyr
-    ## Loading tidyverse: readr
-    ## Loading tidyverse: purrr
-    ## Loading tidyverse: dplyr
-
-    ## Conflicts with tidy packages ----------------------------------------------
-
-    ## filter(): dplyr, stats
-    ## lag():    dplyr, stats
-
-``` r
 library(gapminder)
 ```
 
@@ -95,3 +80,39 @@ spread_data %>%
 ```
 
 ![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-5-1.png)
+
+#### Life expectancy over time for different continents
+
+``` r
+expectancy_data <- my_gap %>%
+  select(continent , lifeExp , year) %>%
+  filter(year %in% c(1957, 1967, 1977, 1987, 1997, 2007)) %>% 
+  group_by(continent , year) %>% 
+  summarise(avg_life_exp = mean(lifeExp)) %>% 
+  print(n = 10)
+```
+
+    ## Source: local data frame [30 x 3]
+    ## Groups: continent [?]
+    ## 
+    ##    continent  year avg_life_exp
+    ##       <fctr> <int>        <dbl>
+    ## 1     Africa  1957     41.26635
+    ## 2     Africa  1967     45.33454
+    ## 3     Africa  1977     49.58042
+    ## 4     Africa  1987     53.34479
+    ## 5     Africa  1997     53.59827
+    ## 6     Africa  2007     54.80604
+    ## 7   Americas  1957     55.96028
+    ## 8   Americas  1967     60.41092
+    ## 9   Americas  1977     64.39156
+    ## 10  Americas  1987     68.09072
+    ## # ... with 20 more rows
+
+``` r
+expectancy_data %>%
+  ggplot(aes(x = year , y = avg_life_exp )) + 
+  geom_point( aes(color = continent)) + geom_line( aes(group = continent, color = continent))
+```
+
+![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-7-1.png)

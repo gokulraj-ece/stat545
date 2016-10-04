@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ####Loading the tidyverse and gapminder packages 
 
-```{r}
+```{r message=FALSE}
 library(tidyverse)
 library(gapminder)
 ```
@@ -59,6 +59,26 @@ spread_data %>%
   ggplot(aes(x = continent , y = spread_by_continent )) + 
   geom_point( aes(color = continent) , size = 4)
 ```
+
+
+#### Life expectancy over time for different continents
+
+```{r}
+expectancy_data <- my_gap %>%
+  select(continent , lifeExp , year) %>%
+  filter(year %in% c(1957, 1967, 1977, 1987, 1997, 2007)) %>% 
+  group_by(continent , year) %>% 
+  summarise(avg_life_exp = mean(lifeExp)) %>% 
+  print(n = 10)
+
+```
+
+```{r}
+expectancy_data %>%
+  ggplot(aes(x = year , y = avg_life_exp )) + 
+  geom_point( aes(color = continent)) + geom_line( aes(group = continent, color = continent))
+```
+
 
 
 
