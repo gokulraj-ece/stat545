@@ -1,7 +1,7 @@
 Gapminder, ggplot2 and dplyr single table verbs
 ================
 Gokul Raj Suresh Kumar
-2016-10-03
+2016-10-04
 
 Manipulate and Explore Gapminder with dplyr & ggplot2
 =====================================================
@@ -40,17 +40,17 @@ knitr::kable( gdp_data )
 | Oceania   |        10039.5956|          34435.37|
 
 ``` r
-gdp_data %>%
-  ggplot( aes( x = continent , y = min_gdp_percap )) + 
-  geom_point( size = 4 )
+gdp_data %>% 
+  ggplot(aes( x = continent , y = min_gdp_percap , fill = continent)) +
+  geom_bar( stat = "identity")
 ```
 
 ![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
 ``` r
-gdp_data %>%
-  ggplot( aes( x = continent , y = max_gdp_percap )) + 
-  geom_point( size = 4 )
+gdp_data %>% 
+  ggplot(aes( x = continent , y = max_gdp_percap , fill = continent)) +
+  geom_bar( stat = "identity")
 ```
 
 ![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-3-2.png)

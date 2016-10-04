@@ -35,13 +35,13 @@ knitr::kable( gdp_data )
 ```
 
 ```{r}
-gdp_data %>%
-  ggplot( aes( x = continent , y = min_gdp_percap )) + 
-  geom_point( size = 4 )
+gdp_data %>% 
+  ggplot(aes( x = continent , y = min_gdp_percap , fill = continent)) +
+  geom_bar( stat = "identity")
 
-gdp_data %>%
-  ggplot( aes( x = continent , y = max_gdp_percap )) + 
-  geom_point( size = 4 )
+gdp_data %>% 
+  ggplot(aes( x = continent , y = max_gdp_percap , fill = continent)) +
+  geom_bar( stat = "identity")
 ```
 
 ####Spread of `gdpPercap` within the continents
