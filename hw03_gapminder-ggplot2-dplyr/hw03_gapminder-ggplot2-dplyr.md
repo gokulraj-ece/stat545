@@ -12,8 +12,8 @@ Bringing rectangular data in
 #### Loading the tidyverse and gapminder packages
 
 ``` r
-library(tidyverse)
-library(gapminder)
+library( tidyverse )
+library( gapminder )
 ```
 
 Tasks
@@ -42,7 +42,7 @@ knitr::kable( gdp_data )
 ``` r
 gdp_data %>%
   ggplot( aes( x = continent , y = min_gdp_percap )) + 
-  geom_point(size = 4)
+  geom_point( size = 4 )
 ```
 
 ![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-3-1.png)
@@ -50,7 +50,7 @@ gdp_data %>%
 ``` r
 gdp_data %>%
   ggplot( aes( x = continent , y = max_gdp_percap )) + 
-  geom_point(size = 4)
+  geom_point( size = 4 )
 ```
 
 ![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-3-2.png)
@@ -59,7 +59,7 @@ gdp_data %>%
 
 ``` r
 spread_data <- my_gap %>%
-  group_by(continent) %>% 
+  group_by( continent ) %>% 
   summarize( spread_by_continent = ( max( gdpPercap ) - min( gdpPercap )))
 
 knitr::kable( spread_data )
@@ -85,11 +85,11 @@ spread_data %>%
 
 ``` r
 expectancy_data <- my_gap %>%
-  select(continent , lifeExp , year) %>%
-  filter(year %in% c(1957 , 1967 , 1977 , 1987 , 1997 , 2007)) %>% 
-  group_by(continent , year) %>% 
-  summarise(avg_life_exp = mean(lifeExp)) %>% 
-  print(n = 10)
+  select( continent , lifeExp , year ) %>%
+  filter( year %in% c(1957 , 1967 , 1977 , 1987 , 1997 , 2007 )) %>% 
+  group_by( continent , year ) %>% 
+  summarise( avg_life_exp = mean( lifeExp )) %>% 
+  print( n = 10 )
 ```
 
     ## Source: local data frame [30 x 3]
@@ -126,8 +126,8 @@ benchmark <- my_gap %>%
 
 relative_life_expectancy <- my_gap %>% 
   mutate( temp = rep( benchmark$lifeExp , nlevels( country )), 
-         lifeExpRel = lifeExp/temp, 
-         temp = NULL)
+          lifeExpRel = lifeExp/temp, 
+          temp = NULL)
 
 relative_abundance <- relative_life_expectancy %>%
   group_by( continent , year)%>% 
@@ -156,7 +156,8 @@ relative_abundance <- relative_life_expectancy %>%
 ``` r
 relative_life_expectancy %>%
   ggplot( aes( x = year , y = lifeExpRel )) + 
-  geom_point() + facet_wrap( ~continent ) + geom_line( aes( group = country ))
+  geom_point() + facet_wrap( ~ continent ) + 
+  geom_line( aes( group = country ))
 ```
 
 ![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-9-1.png)
