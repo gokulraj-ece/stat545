@@ -26,20 +26,39 @@ library(gapminder)
 
 ```{r results = 'asis'}
 my_gap <- gapminder
+
 gdp_data <- my_gap %>% 
   group_by(continent) %>% 
-  summarise(min_gdpPercap = min(gdpPercap), max_gdpPercap = max(gdpPercap))
+  summarize(min_gdp_percap = min(gdpPercap), max_gdp_percap = max(gdpPercap))
+
 knitr::kable(gdp_data)
 ```
 
 ```{r}
-gdp_data %>% ggplot(aes(x = continent , y = min_gdpPercap )) + 
+gdp_data %>%
+  ggplot(aes(x = continent , y = min_gdp_percap )) + 
   geom_point( aes(color = continent) , size = 4)
 
-gdp_data %>% ggplot(aes(x = continent , y = max_gdpPercap )) + 
+gdp_data %>%
+  ggplot(aes(x = continent , y = max_gdp_percap )) + 
   geom_point( aes(color = continent) , size = 4)
 ```
 
+####Spread of `gdpPercap` within the continents
+
+```{r results = 'asis'}
+spread_data <- my_gap %>%
+  group_by(continent) %>% 
+  summarize( spread_by_continent = (max(gdpPercap) - min(gdpPercap)))
+
+knitr::kable(spread_data)
+```
+
+```{r}
+spread_data %>%
+  ggplot(aes(x = continent , y = spread_by_continent )) + 
+  geom_point( aes(color = continent) , size = 4)
+```
 
 
 
