@@ -66,7 +66,6 @@ spread_data %>%
 ```{r}
 expectancy_data <- my_gap %>%
   select( continent , lifeExp , year ) %>%
-  filter( year %in% c(1957 , 1967 , 1977 , 1987 , 1997 , 2007 )) %>% 
   group_by( continent , year ) %>% 
   summarise( avg_life_exp = mean( lifeExp )) %>% 
   print( n = 10 )
