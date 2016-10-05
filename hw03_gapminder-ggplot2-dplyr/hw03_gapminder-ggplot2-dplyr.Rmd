@@ -11,6 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #Manipulate and Explore Gapminder with dplyr & ggplot2
 
+##Tasks
+
 ####Loading the tidyverse and gapminder packages 
 
 ```{r message=FALSE}
@@ -18,28 +20,28 @@ library( tidyverse )
 library( gapminder )
 ```
 
-##Tasks
-
 ####Maximum and Minimum of `gdpPercap` for all continents
 
-```{r results = 'asis'}
+```{r}
 my_gap <- gapminder
 
 min_max_gdp <- my_gap %>% 
   group_by( continent ) %>% 
-  summarize( min_gdp_percap = min( gdpPercap ) , max_gdp_percap = max( gdpPercap ))
+  summarize( min_gdp_percap = min( gdpPercap ) , max_gdp_percap = max( gdpPercap ) )
 
 knitr::kable( min_max_gdp )
 ```
 
 ```{r}
 min_max_gdp %>% 
-  ggplot(aes( x = continent , y = min_gdp_percap )) +
-  geom_bar( width = 0.10 , stat = "identity")
+  ggplot( aes( x = continent , y = min_gdp_percap ) ) +
+  geom_bar( width = 0.10 , stat = "identity" ) + 
+  labs( title = "Minimum GDP per capita" , x = "Continent" , y = "GDP per capita" )
 
 min_max_gdp %>% 
-  ggplot(aes( x = continent , y = max_gdp_percap )) +
-  geom_bar( width = 0.10 , stat = "identity")
+  ggplot( aes( x = continent , y = max_gdp_percap ) ) +
+  geom_bar( width = 0.10 , stat = "identity") +
+  labs( title = "Maximum GDP per capita" , x = "Continent" , y = "GDP per capita" )
 ```
 
 ####Weighted Mean of `lifeExp` (by population) 
@@ -47,14 +49,15 @@ min_max_gdp %>%
 ```{r}
 le_wt_mean <- my_gap %>% 
   group_by( continent ) %>% 
-  summarize( mean_wt_le = weighted.mean( lifeExp, pop )) %>% 
-  print(n = Inf)
+  summarize( mean_wt_le = weighted.mean( lifeExp, pop ) ) %>% 
+  print( n = Inf )
 ```
 
 ```{r}
 le_wt_mean %>% 
-  ggplot(aes( x = continent , y = mean_wt_le)) +
-  geom_bar( width = 0.10 , stat = "identity")
+  ggplot( aes( x = continent , y = mean_wt_le ) ) +
+  geom_bar( width = 0.10 , stat = "identity" ) +
+  labs( title = "Weighted Mean of Life Expectancy" , x = "Continent" , y = "Mean Life     Expectancy" )
 ```
 
 ####`lifeExp` over time for different continents
@@ -63,41 +66,68 @@ le_wt_mean %>%
 le_over_time <- my_gap %>%
   select( continent , lifeExp , year ) %>%
   group_by( continent , year ) %>% 
-  summarise( avg_life_exp = mean( lifeExp )) %>% 
+  summarise( avg_life_exp = mean( lifeExp ) ) %>% 
   print( n = 10 )
 ```
 
 ```{r}
 le_over_time %>%
-  ggplot( aes( x = year , y = avg_life_exp )) + 
-  geom_point( aes( color = continent )) + 
-  geom_line( aes( group = continent , color =   continent ))
+  ggplot( aes( x = year , y = avg_life_exp ) ) + 
+  geom_point( aes( color = continent ) ) + 
+  geom_line( aes( color =   continent ) ) +
+  labs( title = "Life Expectancy over Time" , x = "Continent" , y = "Life Expectancy" )
 ```
 
-####Relative abundance of countries with low life expectancy over time by continent
+####Relative abundance of countries with low `lifeExp` over time by continent
 
 ```{r}
 benchmark_country <- my_gap %>% 
   filter( country == "India" )
 
 rel_le <- my_gap %>% 
-  mutate( temp = rep( benchmark_country$lifeExp , nlevels( country )), 
+  mutate( temp = rep( benchmark_country$lifeExp , nlevels( country ) ), 
           lifeExpRel = lifeExp/temp, 
-          temp = NULL)
+          temp = NULL )
 
 rel_abundance <- rel_le %>%
-  group_by( continent , year)%>% 
-  filter( lifeExpRel < 1 )%>% 
-  summarise( n_countries = n_distinct( country )) %>% 
+  group_by( continent , year ) %>% 
+  filter( lifeExpRel < 1 ) %>% 
+  summarise( n_countries = n_distinct( country ) ) %>% 
   print( n = 10 )
 ```
 
 ```{r}
 rel_abundance %>%
-  ggplot( aes( x = year , y = n_countries , fill = continent )) + 
-  geom_bar( stat = "identity" , position = "stack")
+  ggplot( aes( x = year , y = n_countries , fill = continent ) ) + 
+  geom_bar( stat = "identity" , position = "stack") +
+  labs( title = "No. of Countries having lifeExp < India" , x = "Year" , y = "Number of Countries" )
 ```
 
+I believe that I have **unintentionally** arrived at a highly reproducable workflow for this task ! The benchmark country can be changed easily in the above code. The plot above implies that there are no countries from Oceania and Europe that had a GDP per capita lesser than India any point of time that is under consideration. I am changing the benchmark country below, in an attempt to capture countries from all continents, by using a country that has had significantly high GDP per capita over the years.
 
+```{r}
+benchmark_country <- my_gap %>% 
+  filter( country == "Japan" ) # That's the only change I had to make!
+
+rel_le <- my_gap %>% 
+  mutate( temp = rep( benchmark_country$lifeExp , nlevels( country ) ), 
+          lifeExpRel = lifeExp/temp, 
+          temp = NULL )
+
+rel_abundance <- rel_le %>%
+  group_by( continent , year ) %>% 
+  filter( lifeExpRel < 1 ) %>% 
+  summarise( n_countries = n_distinct( country ) ) %>% 
+  print( n = 10 )
+```
+
+```{r}
+rel_abundance %>%
+  ggplot( aes( x = year , y = n_countries , fill = continent ) ) + 
+  geom_bar( stat = "identity" , position = "stack") +
+  labs( title = "No. of Countries having lifeExp < Japan" , x = "Year" , y = "Number of Countries" )
+```
+
+##The Process
 
 
