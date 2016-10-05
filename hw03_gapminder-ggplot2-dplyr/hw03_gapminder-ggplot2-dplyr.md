@@ -6,9 +6,6 @@ Gokul Raj Suresh Kumar
 Manipulate and Explore Gapminder with dplyr & ggplot2
 =====================================================
 
-Bringing rectangular data in
-----------------------------
-
 #### Loading the tidyverse and gapminder packages
 
 ``` r
@@ -24,11 +21,11 @@ Tasks
 ``` r
 my_gap <- gapminder
 
-gdp_data <- my_gap %>% 
+min_max_gdp <- my_gap %>% 
   group_by( continent ) %>% 
   summarize( min_gdp_percap = min( gdpPercap ) , max_gdp_percap = max( gdpPercap ))
 
-knitr::kable( gdp_data )
+knitr::kable( min_max_gdp )
 ```
 
 | continent |  min\_gdp\_percap|  max\_gdp\_percap|
@@ -40,25 +37,51 @@ knitr::kable( gdp_data )
 | Oceania   |        10039.5956|          34435.37|
 
 ``` r
-gdp_data %>% 
-  ggplot(aes( x = continent , y = min_gdp_percap , fill = continent)) +
-  geom_bar( stat = "identity")
+min_max_gdp %>% 
+  ggplot(aes( x = continent , y = min_gdp_percap )) +
+  geom_bar( width = 0.10 , stat = "identity")
 ```
 
 ![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
 ``` r
-gdp_data %>% 
-  ggplot(aes( x = continent , y = max_gdp_percap , fill = continent)) +
-  geom_bar( stat = "identity")
+min_max_gdp %>% 
+  ggplot(aes( x = continent , y = max_gdp_percap )) +
+  geom_bar( width = 0.10 , stat = "identity")
 ```
 
 ![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-3-2.png)
 
-#### Life expectancy over time for different continents
+#### Weighted Mean of `lifeExp` (by population)
 
 ``` r
-expectancy_data <- my_gap %>%
+le_wt_mean <- my_gap %>% 
+  group_by( continent ) %>% 
+  summarize( mean_wt_le = weighted.mean( lifeExp, pop )) %>% 
+  print(n = Inf)
+```
+
+    ## # A tibble: 5 × 2
+    ##   continent mean_wt_le
+    ##      <fctr>      <dbl>
+    ## 1    Africa   50.59279
+    ## 2  Americas   69.50691
+    ## 3      Asia   61.11856
+    ## 4    Europe   72.30718
+    ## 5   Oceania   75.48954
+
+``` r
+le_wt_mean %>% 
+  ggplot(aes( x = continent , y = mean_wt_le)) +
+  geom_bar( width = 0.10 , stat = "identity")
+```
+
+![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-5-1.png)
+
+#### `lifeExp` over time for different continents
+
+``` r
+le_over_time <- my_gap %>%
   select( continent , lifeExp , year ) %>%
   group_by( continent , year ) %>% 
   summarise( avg_life_exp = mean( lifeExp )) %>% 
@@ -83,26 +106,26 @@ expectancy_data <- my_gap %>%
     ## # ... with 50 more rows
 
 ``` r
-expectancy_data %>%
+le_over_time %>%
   ggplot( aes( x = year , y = avg_life_exp )) + 
   geom_point( aes( color = continent )) + 
   geom_line( aes( group = continent , color =   continent ))
 ```
 
-![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-5-1.png)
+![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-7-1.png)
 
-#### Relative abundance of country with low life expectancy over time by continent
+#### Relative abundance of countries with low life expectancy over time by continent
 
 ``` r
-benchmark <- my_gap %>% 
+benchmark_country <- my_gap %>% 
   filter( country == "India" )
 
-relative_life_expectancy <- my_gap %>% 
-  mutate( temp = rep( benchmark$lifeExp , nlevels( country )), 
+rel_le <- my_gap %>% 
+  mutate( temp = rep( benchmark_country$lifeExp , nlevels( country )), 
           lifeExpRel = lifeExp/temp, 
           temp = NULL)
 
-relative_abundance <- relative_life_expectancy %>%
+rel_abundance <- rel_le %>%
   group_by( continent , year)%>% 
   filter( lifeExpRel < 1 )%>% 
   summarise( n_countries = n_distinct( country )) %>% 
@@ -127,10 +150,9 @@ relative_abundance <- relative_life_expectancy %>%
     ## # ... with 24 more rows
 
 ``` r
-relative_life_expectancy %>%
-  ggplot( aes( x = year , y = lifeExpRel )) + 
-  geom_point() + facet_wrap( ~ continent ) + 
-  geom_line( aes( group = country ))
+rel_abundance %>%
+  ggplot( aes( x = year , y = n_countries , fill = continent )) + 
+  geom_bar( stat = "identity" , position = "stack")
 ```
 
-![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-7-1.png)
+![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-9-1.png)
