@@ -23,13 +23,13 @@ library( gapminder )
 ####Maximum and Minimum of `gdpPercap` for all continents
 
 ```{r}
-my_gap <- gapminder
+my_gap <- gapminder #copying the data.frame to an object
 
 min_max_gdp <- my_gap %>% 
   group_by( continent ) %>% 
-  summarize( min_gdp_percap = min( gdpPercap ) , max_gdp_percap = max( gdpPercap ) )
+  summarize( min_gdp_percap = min( gdpPercap ) , max_gdp_percap = max( gdpPercap ) ) 
 
-knitr::kable( min_max_gdp )
+knitr::kable( min_max_gdp ) #displaying data in a nice table
 ```
 
 ```{r}
@@ -40,7 +40,7 @@ min_max_gdp %>%
 
 min_max_gdp %>% 
   ggplot( aes( x = continent , y = max_gdp_percap ) ) +
-  geom_bar( width = 0.10 , stat = "identity") +
+  geom_bar( width = 0.10 , stat = "identity" ) +
   labs( title = "Maximum GDP per capita" , x = "Continent" , y = "GDP per capita" )
 ```
 
@@ -49,8 +49,8 @@ min_max_gdp %>%
 ```{r}
 le_wt_mean <- my_gap %>% 
   group_by( continent ) %>% 
-  summarize( mean_wt_le = weighted.mean( lifeExp, pop ) ) %>% 
-  print( n = Inf )
+  summarize( mean_wt_le = weighted.mean( lifeExp, pop ) ) %>% #pop is the weighting factor
+  print( n = Inf ) #prints all the results
 ```
 
 ```{r}
@@ -67,7 +67,7 @@ le_over_time <- my_gap %>%
   select( continent , lifeExp , year ) %>%
   group_by( continent , year ) %>% 
   summarise( avg_life_exp = mean( lifeExp ) ) %>% 
-  print( n = 10 )
+  print( n = 10 ) #prints the first 10 results alone 
 ```
 
 ```{r}
@@ -85,21 +85,29 @@ benchmark_country <- my_gap %>%
   filter( country == "India" )
 
 rel_le <- my_gap %>% 
-  mutate( temp = rep( benchmark_country$lifeExp , nlevels( country ) ), 
-          lifeExpRel = lifeExp/temp, 
+  mutate( temp = rep( benchmark_country$lifeExp , nlevels( country ) ), #creating replicates
+          lifeExpRel = lifeExp/temp, #calculating the relative life expectancy
           temp = NULL )
+```
 
+```{r}
+rel_le %>% 
+  filter( country == "India" ) %>% #sanity check
+  select( country , year , lifeExp , lifeExpRel )
+```
+
+```{r}
 rel_abundance <- rel_le %>%
   group_by( continent , year ) %>% 
-  filter( lifeExpRel < 1 ) %>% 
+  filter( lifeExpRel < 1 ) %>% #filtering out the countries having lesser life expectancy
   summarise( n_countries = n_distinct( country ) ) %>% 
-  print( n = 10 )
+  print( n = 10 ) #prints the first 10 results alone 
 ```
 
 ```{r}
 rel_abundance %>%
   ggplot( aes( x = year , y = n_countries , fill = continent ) ) + 
-  geom_bar( stat = "identity" , position = "stack") +
+  geom_bar( stat = "identity" , position = "stack" ) +
   labs( title = "No. of Countries having lifeExp < India" , x = "Year" , y = "Number of Countries" )
 ```
 
@@ -124,10 +132,11 @@ rel_abundance <- rel_le %>%
 ```{r}
 rel_abundance %>%
   ggplot( aes( x = year , y = n_countries , fill = continent ) ) + 
-  geom_bar( stat = "identity" , position = "stack") +
+  geom_bar( stat = "identity" , position = "stack" ) +
   labs( title = "No. of Countries having lifeExp < Japan" , x = "Year" , y = "Number of Countries" )
 ```
 
 ##The Process
 
+I found this assignment really interesting. I was able to build on the concepts explained in [`dplyr functions for a single dataset`](http://stat545.com/block010_dplyr-end-single-table.html) and relied heavily on [`Jenny's ggplot2 tutorial`](https://github.com/jennybc/ggplot2-tutorial) to arrive at the solutions for the tasks. [`RStudio's ggplot2 cheatsheet`](https://www.rstudio.com/wp-content/uploads/2015/12/ggplot2-cheatsheet-2.0.pdf) was also of great help when I encountered roadblocks. 
 
