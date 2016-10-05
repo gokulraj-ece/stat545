@@ -55,32 +55,6 @@ gdp_data %>%
 
 ![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-3-2.png)
 
-#### Spread of `gdpPercap` within the continents
-
-``` r
-spread_data <- my_gap %>%
-  group_by( continent ) %>% 
-  summarize( spread_by_continent = ( max( gdpPercap ) - min( gdpPercap )))
-
-knitr::kable( spread_data )
-```
-
-| continent |  spread\_by\_continent|
-|:----------|----------------------:|
-| Africa    |               21710.05|
-| Americas  |               41750.02|
-| Asia      |              113192.13|
-| Europe    |               48383.66|
-| Oceania   |               24395.77|
-
-``` r
-spread_data %>%
-  ggplot( aes( x = continent , y = spread_by_continent )) + 
-  geom_point( size = 4 )
-```
-
-![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-5-1.png)
-
 #### Life expectancy over time for different continents
 
 ``` r
@@ -115,7 +89,7 @@ expectancy_data %>%
   geom_line( aes( group = continent , color =   continent ))
 ```
 
-![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-7-1.png)
+![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-5-1.png)
 
 #### Relative abundance of country with low life expectancy over time by continent
 
@@ -159,4 +133,4 @@ relative_life_expectancy %>%
   geom_line( aes( group = country ))
 ```
 
-![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-9-1.png)
+![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-7-1.png)
