@@ -50,9 +50,11 @@ knitr::kable( le_by_year )
 ``` r
 le_by_year %>% ggplot( ) +
   geom_point( aes( x = Year , y = India ) ) +  
-  geom_smooth( aes( x = Year , y = India ) , color = "Purple" , se = FALSE ) +
+  geom_smooth( aes( x = Year , y = India , color = "India"  ) , se = FALSE ) +
   geom_point( aes( x = Year , y = Canada ) ) +  
-  geom_smooth( aes( x = Year , y = Canada ) , color = "Green" , se = FALSE ) +
+  geom_smooth( aes( x = Year , y = Canada , color = "Canada" ) , se = FALSE ) +
+  scale_color_manual( name = "" , values = c( "India" = "red" ,
+                                              "Canada" = "blue" ) ) +
   labs( title = "Life Expectancy over Time" , x = "Year" , y = "lifeExp" )
 ```
 
@@ -95,15 +97,20 @@ knitr::kable( le_continents )
 ``` r
 le_continents %>% ggplot( ) +
   geom_point( aes( x = Year , y = Africa ) ) +
-  geom_smooth( aes( x = Year , y = Africa ) , color = "red" , se = FALSE ) +
+  geom_smooth( aes( x = Year , y = Africa , color = "Africa" ) , se = FALSE ) +
   geom_point( aes( x = Year , y = Americas ) ) +
-  geom_smooth( aes( x = Year , y = Americas ) , color = "orange" , se = FALSE ) +
+  geom_smooth( aes( x = Year , y = Americas, color = "Americas" ) , se = FALSE ) +
   geom_point( aes( x = Year , y = Asia ) ) +
-  geom_smooth( aes( x = Year , y = Asia ) , color = "green" , se = FALSE ) +
+  geom_smooth( aes( x = Year , y = Asia , color = "Asia" ) , se = FALSE ) +
   geom_point( aes( x = Year , y = Europe ) ) +
-  geom_smooth( aes( x = Year , y = Europe ) , color = "brown" , se = FALSE ) +
+  geom_smooth( aes( x = Year , y = Europe , color = "Europe") , se = FALSE ) +
   geom_point( aes( x = Year , y = Oceania ) ) + 
-  geom_smooth( aes( x = Year , y = Oceania ) , color = "Purple" , se = FALSE ) +
+  geom_smooth( aes( x = Year , y = Oceania , color = "Oceania" ) , se = FALSE ) +
+  scale_color_manual( name = "" , values = c( "Africa" = "red" , 
+                                              "Americas" = "green" ,
+                                              "Asia" = "orange" , 
+                                              "Europe" = "blue" ,
+                                              "Oceania" = "purple") ) +
   labs( title = "Life Expectancy over Time" , x = "Year" , y = "Life Expectancy" )
 ```
 
@@ -112,7 +119,7 @@ le_continents %>% ggplot( ) +
 Activity \#4
 ------------
 
-#### Countries having lowest and highest life expectancy by year
+#### Continents having lowest and highest life expectancy by year
 
 ``` r
 min_max_le <- gapminder %>%
@@ -142,3 +149,6 @@ knitr::kable( min_max_le_continent )
 |  1997|  36.087|  80.690|      NA|
 |  2002|  39.193|  82.000|      NA|
 |  2007|  39.613|  82.603|      NA|
+
+General data reshaping and relationship to aggregation
+------------------------------------------------------
