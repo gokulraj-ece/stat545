@@ -69,27 +69,7 @@ all_continents <- gapminder %>%
   group_by( year , continent ) %>% 
   summarise( mean_lifeExp = mean( lifeExp ) ) %>% 
   arrange( continent )
-all_continents
-```
 
-    ## Source: local data frame [60 x 3]
-    ## Groups: year [12]
-    ## 
-    ##     year continent mean_lifeExp
-    ##    <int>    <fctr>        <dbl>
-    ## 1   1952    Africa     39.13550
-    ## 2   1957    Africa     41.26635
-    ## 3   1962    Africa     43.31944
-    ## 4   1967    Africa     45.33454
-    ## 5   1972    Africa     47.45094
-    ## 6   1977    Africa     49.58042
-    ## 7   1982    Africa     51.59287
-    ## 8   1987    Africa     53.34479
-    ## 9   1992    Africa     53.62958
-    ## 10  1997    Africa     53.59827
-    ## # ... with 50 more rows
-
-``` r
 le_continents <- all_continents %>% 
   spread( key = "continent" , value = "mean_lifeExp") %>% 
   rename( Year = year )
@@ -128,3 +108,37 @@ le_continents %>% ggplot( ) +
 ```
 
 ![](hw04_tidy-data-joins_files/figure-markdown_github/unnamed-chunk-3-1.png)
+
+Activity \#4
+------------
+
+#### Countries having lowest and highest life expectancy by year
+
+``` r
+min_max_le <- gapminder %>%
+  select( year , continent , lifeExp ) %>%
+  group_by( year ) %>%
+  filter( min_rank( desc( lifeExp) ) == 1 | min_rank( lifeExp ) == 1 ) %>% 
+  arrange( year )
+
+min_max_le_continent <- min_max_le %>% 
+  spread( key = "continent" , value = "lifeExp" ) %>% 
+  rename( Year = year )
+
+knitr::kable( min_max_le_continent )
+```
+
+|  Year|  Africa|    Asia|  Europe|
+|-----:|-------:|-------:|-------:|
+|  1952|      NA|  28.801|   72.67|
+|  1957|      NA|  30.332|   73.47|
+|  1962|      NA|  31.997|   73.68|
+|  1967|      NA|  34.020|   74.16|
+|  1972|  35.400|      NA|   74.72|
+|  1977|      NA|  31.220|   76.11|
+|  1982|  38.445|  77.110|      NA|
+|  1987|  39.906|  78.670|      NA|
+|  1992|  23.599|  79.360|      NA|
+|  1997|  36.087|  80.690|      NA|
+|  2002|  39.193|  82.000|      NA|
+|  2007|  39.613|  82.603|      NA|

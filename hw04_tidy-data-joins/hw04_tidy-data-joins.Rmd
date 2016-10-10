@@ -53,7 +53,7 @@ all_continents <- gapminder %>%
   group_by( year , continent ) %>% 
   summarise( mean_lifeExp = mean( lifeExp ) ) %>% 
   arrange( continent )
-all_continents
+
 le_continents <- all_continents %>% 
   spread( key = "continent" , value = "mean_lifeExp") %>% 
   rename( Year = year )
@@ -72,5 +72,23 @@ le_continents %>% ggplot( ) +
   geom_point( aes( x = Year , y = Oceania ) ) + 
   geom_smooth( aes( x = Year , y = Oceania ) , color = "Purple" , se = FALSE ) +
   labs( title = "Life Expectancy over Time" , x = "Year" , y = "Life Expectancy" )
+```
+
+##Activity #4
+
+#### Countries having lowest and highest life expectancy by year
+
+```{r}
+min_max_le <- gapminder %>%
+  select( year , continent , lifeExp ) %>%
+  group_by( year ) %>%
+  filter( min_rank( desc( lifeExp) ) == 1 | min_rank( lifeExp ) == 1 ) %>% 
+  arrange( year )
+
+min_max_le_continent <- min_max_le %>% 
+  spread( key = "continent" , value = "lifeExp" ) %>% 
+  rename( Year = year )
+
+knitr::kable( min_max_le_continent )
 ```
 
