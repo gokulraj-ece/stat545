@@ -26,7 +26,7 @@ library( gapminder )
 ```{r}
 my_gap <- gapminder %>% 
   select( year , country , lifeExp ) %>% 
-  filter( country %in% c( "India" , "Canada" , "United States" , "China" , "Japan" ))
+  filter( country %in% c( "India" , "Canada" , "United States" , "China" , "Japan" ) )
 
 le_by_year <- my_gap %>% 
   spread ( key = "country" , value = "lifeExp" ) %>% 
@@ -34,6 +34,11 @@ le_by_year <- my_gap %>%
 
 knitr::kable( le_by_year )
 
+le_by_year %>% ggplot( ) +
+  geom_point( aes( x = Year , y = India ) ) +  
+  geom_smooth( aes( x = Year , y = India) , color = "Purple" ,  se = FALSE ) +
+  geom_point( aes( x = Year , y = Canada ) ) +  
+  geom_smooth( aes( x = Year , y = Canada) , color = "Green" ,  se = FALSE ) 
 
 ```
 

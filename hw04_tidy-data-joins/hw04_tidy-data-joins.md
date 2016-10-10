@@ -23,15 +23,16 @@ General data reshaping and relationship to aggregation
 ``` r
 my_gap <- gapminder %>% 
   select( year , country , lifeExp ) %>% 
-  filter( country %in% c( "India" , "Canada" , "United States" , "China" , "Japan" ))
+  filter( country %in% c( "India" , "Canada" , "United States" , "China" , "Japan" ) )
 
 le_by_year <- my_gap %>% 
-  spread ( key = "country" , value = "lifeExp" )
+  spread ( key = "country" , value = "lifeExp" ) %>% 
+  rename( Year = year )
 
-knitr::kable(le_by_year)
+knitr::kable( le_by_year )
 ```
 
-|  year|  Canada|     China|   India|   Japan|  United States|
+|  Year|  Canada|     China|   India|   Japan|  United States|
 |-----:|-------:|---------:|-------:|-------:|--------------:|
 |  1952|  68.750|  44.00000|  37.373|  63.030|         68.440|
 |  1957|  69.960|  50.54896|  40.249|  65.500|         69.490|
@@ -45,3 +46,13 @@ knitr::kable(le_by_year)
 |  1997|  78.610|  70.42600|  61.765|  80.690|         76.810|
 |  2002|  79.770|  72.02800|  62.879|  82.000|         77.310|
 |  2007|  80.653|  72.96100|  64.698|  82.603|         78.242|
+
+``` r
+le_by_year %>% ggplot( ) +
+  geom_point( aes( x = Year , y = India ) ) +  
+  geom_smooth( aes( x = Year , y = India) , color = "Purple" ,  se = FALSE ) +
+  geom_point( aes( x = Year , y = Canada ) ) +  
+  geom_smooth( aes( x = Year , y = Canada) , color = "Green" ,  se = FALSE ) 
+```
+
+![](hw04_tidy-data-joins_files/figure-markdown_github/unnamed-chunk-2-1.png)
