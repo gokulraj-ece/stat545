@@ -76,7 +76,7 @@ le_continents %>% ggplot( ) +
 
 ##Activity #4
 
-#### Countries having lowest and highest life expectancy by year
+#### Continents having lowest and highest life expectancy by year
 
 ```{r}
 min_max_le <- gapminder %>%
@@ -92,3 +92,4 @@ min_max_le_continent <- min_max_le %>%
 knitr::kable( min_max_le_continent )
 ```
 
+##General data reshaping and relationship to aggregation
