@@ -18,14 +18,14 @@ General data reshaping and relationship to aggregation
 
 ### Activity \#2
 
-#### A tibble with one row per year and columns for life expectancy
+#### Life expectancy for different countries by year
 
 ``` r
-my_gap <- gapminder %>% 
+different_countries <- gapminder %>% 
   select( year , country , lifeExp ) %>% 
   filter( country %in% c( "India" , "Canada" , "United States" , "China" , "Japan" ) )
 
-le_by_year <- my_gap %>% 
+le_by_year <- different_countries %>% 
   spread ( key = "country" , value = "lifeExp" ) %>% 
   rename( Year = year )
 
@@ -50,9 +50,81 @@ knitr::kable( le_by_year )
 ``` r
 le_by_year %>% ggplot( ) +
   geom_point( aes( x = Year , y = India ) ) +  
-  geom_smooth( aes( x = Year , y = India) , color = "Purple" ,  se = FALSE ) +
+  geom_smooth( aes( x = Year , y = India ) , color = "Purple" , se = FALSE ) +
   geom_point( aes( x = Year , y = Canada ) ) +  
-  geom_smooth( aes( x = Year , y = Canada) , color = "Green" ,  se = FALSE ) 
+  geom_smooth( aes( x = Year , y = Canada ) , color = "Green" , se = FALSE ) +
+  labs( title = "Life Expectancy over Time" , x = "Year" , y = "lifeExp" )
 ```
 
 ![](hw04_tidy-data-joins_files/figure-markdown_github/unnamed-chunk-2-1.png)
+
+Activity \#3
+------------
+
+#### Mean life expectancy for all years by continent
+
+``` r
+all_continents <- gapminder %>% 
+  select( continent , year , lifeExp ) %>% 
+  group_by( year , continent ) %>% 
+  summarise( mean_lifeExp = mean( lifeExp ) ) %>% 
+  arrange( continent )
+all_continents
+```
+
+    ## Source: local data frame [60 x 3]
+    ## Groups: year [12]
+    ## 
+    ##     year continent mean_lifeExp
+    ##    <int>    <fctr>        <dbl>
+    ## 1   1952    Africa     39.13550
+    ## 2   1957    Africa     41.26635
+    ## 3   1962    Africa     43.31944
+    ## 4   1967    Africa     45.33454
+    ## 5   1972    Africa     47.45094
+    ## 6   1977    Africa     49.58042
+    ## 7   1982    Africa     51.59287
+    ## 8   1987    Africa     53.34479
+    ## 9   1992    Africa     53.62958
+    ## 10  1997    Africa     53.59827
+    ## # ... with 50 more rows
+
+``` r
+le_continents <- all_continents %>% 
+  spread( key = "continent" , value = "mean_lifeExp") %>% 
+  rename( Year = year )
+
+knitr::kable( le_continents )
+```
+
+|  Year|    Africa|  Americas|      Asia|    Europe|  Oceania|
+|-----:|---------:|---------:|---------:|---------:|--------:|
+|  1952|  39.13550|  53.27984|  46.31439|  64.40850|  69.2550|
+|  1957|  41.26635|  55.96028|  49.31854|  66.70307|  70.2950|
+|  1962|  43.31944|  58.39876|  51.56322|  68.53923|  71.0850|
+|  1967|  45.33454|  60.41092|  54.66364|  69.73760|  71.3100|
+|  1972|  47.45094|  62.39492|  57.31927|  70.77503|  71.9100|
+|  1977|  49.58042|  64.39156|  59.61056|  71.93777|  72.8550|
+|  1982|  51.59287|  66.22884|  62.61794|  72.80640|  74.2900|
+|  1987|  53.34479|  68.09072|  64.85118|  73.64217|  75.3200|
+|  1992|  53.62958|  69.56836|  66.53721|  74.44010|  76.9450|
+|  1997|  53.59827|  71.15048|  68.02052|  75.50517|  78.1900|
+|  2002|  53.32523|  72.42204|  69.23388|  76.70060|  79.7400|
+|  2007|  54.80604|  73.60812|  70.72848|  77.64860|  80.7195|
+
+``` r
+le_continents %>% ggplot( ) +
+  geom_point( aes( x = Year , y = Africa ) ) +
+  geom_smooth( aes( x = Year , y = Africa ) , color = "red" , se = FALSE ) +
+  geom_point( aes( x = Year , y = Americas ) ) +
+  geom_smooth( aes( x = Year , y = Americas ) , color = "orange" , se = FALSE ) +
+  geom_point( aes( x = Year , y = Asia ) ) +
+  geom_smooth( aes( x = Year , y = Asia ) , color = "green" , se = FALSE ) +
+  geom_point( aes( x = Year , y = Europe ) ) +
+  geom_smooth( aes( x = Year , y = Europe ) , color = "brown" , se = FALSE ) +
+  geom_point( aes( x = Year , y = Oceania ) ) + 
+  geom_smooth( aes( x = Year , y = Oceania ) , color = "Purple" , se = FALSE ) +
+  labs( title = "Life Expectancy over Time" , x = "Year" , y = "Life Expectancy" )
+```
+
+![](hw04_tidy-data-joins_files/figure-markdown_github/unnamed-chunk-3-1.png)

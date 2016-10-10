@@ -21,14 +21,15 @@ library( gapminder )
 ##General data reshaping and relationship to aggregation
 
 ###Activity #2 
-####A tibble with one row per year and columns for life expectancy
+
+####Life expectancy for different countries by year
 
 ```{r}
-my_gap <- gapminder %>% 
+different_countries <- gapminder %>% 
   select( year , country , lifeExp ) %>% 
   filter( country %in% c( "India" , "Canada" , "United States" , "China" , "Japan" ) )
 
-le_by_year <- my_gap %>% 
+le_by_year <- different_countries %>% 
   spread ( key = "country" , value = "lifeExp" ) %>% 
   rename( Year = year )
 
@@ -36,9 +37,40 @@ knitr::kable( le_by_year )
 
 le_by_year %>% ggplot( ) +
   geom_point( aes( x = Year , y = India ) ) +  
-  geom_smooth( aes( x = Year , y = India) , color = "Purple" ,  se = FALSE ) +
+  geom_smooth( aes( x = Year , y = India ) , color = "Purple" , se = FALSE ) +
   geom_point( aes( x = Year , y = Canada ) ) +  
-  geom_smooth( aes( x = Year , y = Canada) , color = "Green" ,  se = FALSE ) 
+  geom_smooth( aes( x = Year , y = Canada ) , color = "Green" , se = FALSE ) +
+  labs( title = "Life Expectancy over Time" , x = "Year" , y = "lifeExp" )
+```
 
+##Activity #3
+
+####Mean life expectancy for all years by continent
+
+```{r}
+all_continents <- gapminder %>% 
+  select( continent , year , lifeExp ) %>% 
+  group_by( year , continent ) %>% 
+  summarise( mean_lifeExp = mean( lifeExp ) ) %>% 
+  arrange( continent )
+all_continents
+le_continents <- all_continents %>% 
+  spread( key = "continent" , value = "mean_lifeExp") %>% 
+  rename( Year = year )
+
+knitr::kable( le_continents )
+
+le_continents %>% ggplot( ) +
+  geom_point( aes( x = Year , y = Africa ) ) +
+  geom_smooth( aes( x = Year , y = Africa ) , color = "red" , se = FALSE ) +
+  geom_point( aes( x = Year , y = Americas ) ) +
+  geom_smooth( aes( x = Year , y = Americas ) , color = "orange" , se = FALSE ) +
+  geom_point( aes( x = Year , y = Asia ) ) +
+  geom_smooth( aes( x = Year , y = Asia ) , color = "green" , se = FALSE ) +
+  geom_point( aes( x = Year , y = Europe ) ) +
+  geom_smooth( aes( x = Year , y = Europe ) , color = "brown" , se = FALSE ) +
+  geom_point( aes( x = Year , y = Oceania ) ) + 
+  geom_smooth( aes( x = Year , y = Oceania ) , color = "Purple" , se = FALSE ) +
+  labs( title = "Life Expectancy over Time" , x = "Year" , y = "Life Expectancy" )
 ```
 

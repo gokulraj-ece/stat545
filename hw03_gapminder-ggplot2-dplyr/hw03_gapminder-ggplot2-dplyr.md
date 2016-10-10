@@ -1,7 +1,7 @@
 Gapminder, ggplot2 and dplyr single table verbs
 ================
 Gokul Raj Suresh Kumar
-2016-10-04
+2016-10-09
 
 Manipulate and Explore Gapminder with dplyr & ggplot2
 =====================================================
@@ -113,7 +113,7 @@ le_over_time %>%
   ggplot( aes( x = year , y = avg_life_exp ) ) + 
   geom_point( aes( color = continent ) ) + 
   geom_line( aes( color =   continent ) ) +
-  labs( title = "Life Expectancy over Time" , x = "Continent" , y = "Life Expectancy" )
+  labs( title = "Life Expectancy over Time" , x = "Year" , y = "Life Expectancy" )
 ```
 
 ![](hw03_gapminder-ggplot2-dplyr_files/figure-markdown_github/unnamed-chunk-7-1.png)
