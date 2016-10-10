@@ -1,7 +1,7 @@
 Tidy data and joins
 ================
 Gokul Raj Suresh Kumar
-2016-10-09
+2016-10-10
 
 Tidying data and performing joins
 =================================
@@ -48,11 +48,10 @@ knitr::kable( le_by_year )
 |  2007|  80.653|  72.96100|  64.698|  82.603|         78.242|
 
 ``` r
-le_by_year %>% ggplot( ) +
-  geom_point( aes( x = Year , y = India ) ) +  
-  geom_smooth( aes( x = Year , y = India , color = "India"  ) , se = FALSE ) +
-  geom_point( aes( x = Year , y = Canada ) ) +  
-  geom_smooth( aes( x = Year , y = Canada , color = "Canada" ) , se = FALSE ) +
+le_by_year %>% ggplot( aes( x = Year , y = India , color = "India" ) ) +
+  geom_point( ) + geom_line( ) +
+  geom_point( aes( x = Year , y = Canada , color = "Canada" ) ) +  
+  geom_line( aes( x = Year , y = Canada , color = "Canada" ) ) +
   scale_color_manual( name = "" , values = c( "India" = "red" ,
                                               "Canada" = "blue" ) ) +
   labs( title = "Life Expectancy over Time" , x = "Year" , y = "lifeExp" )
@@ -60,8 +59,7 @@ le_by_year %>% ggplot( ) +
 
 ![](hw04_tidy-data-joins_files/figure-markdown_github/unnamed-chunk-2-1.png)
 
-Activity \#3
-------------
+### Activity \#3
 
 #### Mean life expectancy for all years by continent
 
@@ -95,29 +93,27 @@ knitr::kable( le_continents )
 |  2007|  54.80604|  73.60812|  70.72848|  77.64860|  80.7195|
 
 ``` r
-le_continents %>% ggplot( ) +
-  geom_point( aes( x = Year , y = Africa ) ) +
-  geom_smooth( aes( x = Year , y = Africa , color = "Africa" ) , se = FALSE ) +
-  geom_point( aes( x = Year , y = Americas ) ) +
-  geom_smooth( aes( x = Year , y = Americas, color = "Americas" ) , se = FALSE ) +
-  geom_point( aes( x = Year , y = Asia ) ) +
-  geom_smooth( aes( x = Year , y = Asia , color = "Asia" ) , se = FALSE ) +
-  geom_point( aes( x = Year , y = Europe ) ) +
-  geom_smooth( aes( x = Year , y = Europe , color = "Europe") , se = FALSE ) +
-  geom_point( aes( x = Year , y = Oceania ) ) + 
-  geom_smooth( aes( x = Year , y = Oceania , color = "Oceania" ) , se = FALSE ) +
+le_continents %>% ggplot( aes( x = Year , y = Africa , color = "Africa") ) +
+  geom_point( ) + geom_line( ) +
+  geom_point( aes( x = Year , y = Americas , color = "Americas" ) ) +
+  geom_line( aes( x = Year , y = Americas , color = "Americas" ) ) +
+  geom_point( aes( x = Year , y = Asia , color = "Asia" ) ) +
+  geom_line( aes( x = Year , y = Asia , color = "Asia" ) ) +
+  geom_point( aes( x = Year , y = Europe , color = "Europe" ) ) +
+  geom_line( aes( x = Year , y = Europe , color = "Europe" ) ) +
+  geom_point( aes( x = Year , y = Oceania , color = "Oceania" ) ) +
+  geom_line( aes( x = Year , y = Oceania , color = "Oceania" ) ) +
   scale_color_manual( name = "" , values = c( "Africa" = "red" , 
                                               "Americas" = "green" ,
                                               "Asia" = "orange" , 
                                               "Europe" = "blue" ,
-                                              "Oceania" = "purple") ) +
-  labs( title = "Life Expectancy over Time" , x = "Year" , y = "Life Expectancy" )
+                                              "Oceania" = "brown") ) + 
+    labs( title = "Life Expectancy over Time" , x = "Year" , y = "Life Expectancy" )
 ```
 
 ![](hw04_tidy-data-joins_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
-Activity \#4
-------------
+### Activity \#4
 
 #### Continents having lowest and highest life expectancy by year
 
@@ -150,5 +146,201 @@ knitr::kable( min_max_le_continent )
 |  2002|  39.193|  82.000|      NA|
 |  2007|  39.613|  82.603|      NA|
 
-General data reshaping and relationship to aggregation
-------------------------------------------------------
+Join, merge, look up
+--------------------
+
+### Activity \#1
+
+#### Joining Gapminder with a complimentary data frame
+
+``` r
+knitr::kable( gapminder_data <- gapminder %>% 
+  filter( continent == "Asia" , year == 2007 , lifeExp > 75 ) %>% 
+  select( country , lifeExp, gdpPercap ) )
+```
+
+| country          |  lifeExp|  gdpPercap|
+|:-----------------|--------:|----------:|
+| Bahrain          |   75.635|   29796.05|
+| Hong Kong, China |   82.208|   39724.98|
+| Israel           |   80.745|   25523.28|
+| Japan            |   82.603|   31656.07|
+| Korea, Rep.      |   78.623|   23348.14|
+| Kuwait           |   77.588|   47306.99|
+| Oman             |   75.640|   22316.19|
+| Singapore        |   79.972|   47143.18|
+| Taiwan           |   78.400|   28718.28|
+
+``` r
+country_info <- "
+     country, capitol_city, language_spoken
+     Bahrain,       Manama,          Arabic
+       Japan,        Tokyo,        Japanese
+      Israel,    Jerusalem,          Hebrew
+      Taiwan,       Taipei,        Mandarin
+       India,    New Delhi,           Hindi
+    Cambodia,   Phnom Penh,           Khmer
+    Pakistan,    Islamabad,            Urdu
+"
+country_info <- read_csv( country_info , trim_ws = TRUE , skip = 1 )
+
+knitr::kable( country_info )
+```
+
+| country  | capitol\_city | language\_spoken |
+|:---------|:--------------|:-----------------|
+| Bahrain  | Manama        | Arabic           |
+| Japan    | Tokyo         | Japanese         |
+| Israel   | Jerusalem     | Hebrew           |
+| Taiwan   | Taipei        | Mandarin         |
+| India    | New Delhi     | Hindi            |
+| Cambodia | Phnom Penh    | Khmer            |
+| Pakistan | Islamabad     | Urdu             |
+
+``` r
+knitr::kable( inner_join( gapminder_data , country_info ) )
+```
+
+    ## Joining, by = "country"
+
+    ## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y): joining
+    ## factor and character vector, coercing into character vector
+
+| country |  lifeExp|  gdpPercap| capitol\_city | language\_spoken |
+|:--------|--------:|----------:|:--------------|:-----------------|
+| Bahrain |   75.635|   29796.05| Manama        | Arabic           |
+| Israel  |   80.745|   25523.28| Jerusalem     | Hebrew           |
+| Japan   |   82.603|   31656.07| Tokyo         | Japanese         |
+| Taiwan  |   78.400|   28718.28| Taipei        | Mandarin         |
+
+``` r
+knitr::kable( semi_join( gapminder_data , country_info ) )
+```
+
+    ## Joining, by = "country"
+
+| country |  lifeExp|  gdpPercap|
+|:--------|--------:|----------:|
+| Bahrain |   75.635|   29796.05|
+| Japan   |   82.603|   31656.07|
+| Israel  |   80.745|   25523.28|
+| Taiwan  |   78.400|   28718.28|
+
+``` r
+knitr::kable( left_join( gapminder_data , country_info ) )
+```
+
+    ## Joining, by = "country"
+
+    ## Warning in left_join_impl(x, y, by$x, by$y, suffix$x, suffix$y): joining
+    ## character vector and factor, coercing into character vector
+
+| country          |  lifeExp|  gdpPercap| capitol\_city | language\_spoken |
+|:-----------------|--------:|----------:|:--------------|:-----------------|
+| Bahrain          |   75.635|   29796.05| Manama        | Arabic           |
+| Hong Kong, China |   82.208|   39724.98| NA            | NA               |
+| Israel           |   80.745|   25523.28| Jerusalem     | Hebrew           |
+| Japan            |   82.603|   31656.07| Tokyo         | Japanese         |
+| Korea, Rep.      |   78.623|   23348.14| NA            | NA               |
+| Kuwait           |   77.588|   47306.99| NA            | NA               |
+| Oman             |   75.640|   22316.19| NA            | NA               |
+| Singapore        |   79.972|   47143.18| NA            | NA               |
+| Taiwan           |   78.400|   28718.28| Taipei        | Mandarin         |
+
+``` r
+knitr::kable( anti_join( gapminder_data , country_info ) )
+```
+
+    ## Joining, by = "country"
+
+| country          |  lifeExp|  gdpPercap|
+|:-----------------|--------:|----------:|
+| Hong Kong, China |   82.208|   39724.98|
+| Korea, Rep.      |   78.623|   23348.14|
+| Kuwait           |   77.588|   47306.99|
+| Oman             |   75.640|   22316.19|
+| Singapore        |   79.972|   47143.18|
+
+``` r
+knitr::kable( inner_join( country_info , gapminder_data ) )
+```
+
+    ## Joining, by = "country"
+
+    ## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y): joining
+    ## character vector and factor, coercing into character vector
+
+| country | capitol\_city | language\_spoken |  lifeExp|  gdpPercap|
+|:--------|:--------------|:-----------------|--------:|----------:|
+| Bahrain | Manama        | Arabic           |   75.635|   29796.05|
+| Japan   | Tokyo         | Japanese         |   82.603|   31656.07|
+| Israel  | Jerusalem     | Hebrew           |   80.745|   25523.28|
+| Taiwan  | Taipei        | Mandarin         |   78.400|   28718.28|
+
+``` r
+knitr::kable( semi_join( country_info , gapminder_data ) )
+```
+
+    ## Joining, by = "country"
+
+| country | capitol\_city | language\_spoken |
+|:--------|:--------------|:-----------------|
+| Bahrain | Manama        | Arabic           |
+| Israel  | Jerusalem     | Hebrew           |
+| Japan   | Tokyo         | Japanese         |
+| Taiwan  | Taipei        | Mandarin         |
+
+``` r
+knitr::kable( left_join( country_info , gapminder_data ) )
+```
+
+    ## Joining, by = "country"
+
+    ## Warning in left_join_impl(x, y, by$x, by$y, suffix$x, suffix$y): joining
+    ## factor and character vector, coercing into character vector
+
+| country  | capitol\_city | language\_spoken |  lifeExp|  gdpPercap|
+|:---------|:--------------|:-----------------|--------:|----------:|
+| Bahrain  | Manama        | Arabic           |   75.635|   29796.05|
+| Japan    | Tokyo         | Japanese         |   82.603|   31656.07|
+| Israel   | Jerusalem     | Hebrew           |   80.745|   25523.28|
+| Taiwan   | Taipei        | Mandarin         |   78.400|   28718.28|
+| India    | New Delhi     | Hindi            |       NA|         NA|
+| Cambodia | Phnom Penh    | Khmer            |       NA|         NA|
+| Pakistan | Islamabad     | Urdu             |       NA|         NA|
+
+``` r
+knitr::kable( anti_join( country_info , gapminder_data ) )
+```
+
+    ## Joining, by = "country"
+
+| country  | capitol\_city | language\_spoken |
+|:---------|:--------------|:-----------------|
+| Cambodia | Phnom Penh    | Khmer            |
+| India    | New Delhi     | Hindi            |
+| Pakistan | Islamabad     | Urdu             |
+
+``` r
+knitr::kable( full_join( country_info , gapminder_data ) )
+```
+
+    ## Joining, by = "country"
+
+    ## Warning in full_join_impl(x, y, by$x, by$y, suffix$x, suffix$y): joining
+    ## factor and character vector, coercing into character vector
+
+| country          | capitol\_city | language\_spoken |  lifeExp|  gdpPercap|
+|:-----------------|:--------------|:-----------------|--------:|----------:|
+| Bahrain          | Manama        | Arabic           |   75.635|   29796.05|
+| Japan            | Tokyo         | Japanese         |   82.603|   31656.07|
+| Israel           | Jerusalem     | Hebrew           |   80.745|   25523.28|
+| Taiwan           | Taipei        | Mandarin         |   78.400|   28718.28|
+| India            | New Delhi     | Hindi            |       NA|         NA|
+| Cambodia         | Phnom Penh    | Khmer            |       NA|         NA|
+| Pakistan         | Islamabad     | Urdu             |       NA|         NA|
+| Hong Kong, China | NA            | NA               |   82.208|   39724.98|
+| Korea, Rep.      | NA            | NA               |   78.623|   23348.14|
+| Kuwait           | NA            | NA               |   77.588|   47306.99|
+| Oman             | NA            | NA               |   75.640|   22316.19|
+| Singapore        | NA            | NA               |   79.972|   47143.18|

@@ -35,17 +35,16 @@ le_by_year <- different_countries %>%
 
 knitr::kable( le_by_year )
 
-le_by_year %>% ggplot( ) +
-  geom_point( aes( x = Year , y = India ) ) +  
-  geom_smooth( aes( x = Year , y = India , color = "India"  ) , se = FALSE ) +
-  geom_point( aes( x = Year , y = Canada ) ) +  
-  geom_smooth( aes( x = Year , y = Canada , color = "Canada" ) , se = FALSE ) +
+le_by_year %>% ggplot( aes( x = Year , y = India , color = "India" ) ) +
+  geom_point( ) + geom_line( ) +
+  geom_point( aes( x = Year , y = Canada , color = "Canada" ) ) +  
+  geom_line( aes( x = Year , y = Canada , color = "Canada" ) ) +
   scale_color_manual( name = "" , values = c( "India" = "red" ,
                                               "Canada" = "blue" ) ) +
   labs( title = "Life Expectancy over Time" , x = "Year" , y = "lifeExp" )
 ```
 
-##Activity #3
+###Activity #3
 
 ####Mean life expectancy for all years by continent
 
@@ -62,26 +61,25 @@ le_continents <- all_continents %>%
 
 knitr::kable( le_continents )
 
-le_continents %>% ggplot( ) +
-  geom_point( aes( x = Year , y = Africa ) ) +
-  geom_smooth( aes( x = Year , y = Africa , color = "Africa" ) , se = FALSE ) +
-  geom_point( aes( x = Year , y = Americas ) ) +
-  geom_smooth( aes( x = Year , y = Americas, color = "Americas" ) , se = FALSE ) +
-  geom_point( aes( x = Year , y = Asia ) ) +
-  geom_smooth( aes( x = Year , y = Asia , color = "Asia" ) , se = FALSE ) +
-  geom_point( aes( x = Year , y = Europe ) ) +
-  geom_smooth( aes( x = Year , y = Europe , color = "Europe") , se = FALSE ) +
-  geom_point( aes( x = Year , y = Oceania ) ) + 
-  geom_smooth( aes( x = Year , y = Oceania , color = "Oceania" ) , se = FALSE ) +
+le_continents %>% ggplot( aes( x = Year , y = Africa , color = "Africa") ) +
+  geom_point( ) + geom_line( ) +
+  geom_point( aes( x = Year , y = Americas , color = "Americas" ) ) +
+  geom_line( aes( x = Year , y = Americas , color = "Americas" ) ) +
+  geom_point( aes( x = Year , y = Asia , color = "Asia" ) ) +
+  geom_line( aes( x = Year , y = Asia , color = "Asia" ) ) +
+  geom_point( aes( x = Year , y = Europe , color = "Europe" ) ) +
+  geom_line( aes( x = Year , y = Europe , color = "Europe" ) ) +
+  geom_point( aes( x = Year , y = Oceania , color = "Oceania" ) ) +
+  geom_line( aes( x = Year , y = Oceania , color = "Oceania" ) ) +
   scale_color_manual( name = "" , values = c( "Africa" = "red" , 
                                               "Americas" = "green" ,
                                               "Asia" = "orange" , 
                                               "Europe" = "blue" ,
-                                              "Oceania" = "purple") ) +
-  labs( title = "Life Expectancy over Time" , x = "Year" , y = "Life Expectancy" )
+                                              "Oceania" = "brown") ) + 
+    labs( title = "Life Expectancy over Time" , x = "Year" , y = "Life Expectancy" )
 ```
 
-##Activity #4
+###Activity #4
 
 #### Continents having lowest and highest life expectancy by year
 
@@ -99,4 +97,48 @@ min_max_le_continent <- min_max_le %>%
 knitr::kable( min_max_le_continent )
 ```
 
-##General data reshaping and relationship to aggregation
+##Join, merge, look up
+
+###Activity #1
+
+####Joining Gapminder with a complimentary data frame
+
+```{r}
+knitr::kable( gapminder_data <- gapminder %>% 
+  filter( continent == "Asia" , year == 2007 , lifeExp > 75 ) %>% 
+  select( country , lifeExp, gdpPercap ) )
+
+country_info <- "
+     country, capitol_city, language_spoken
+     Bahrain,       Manama,          Arabic
+       Japan,        Tokyo,        Japanese
+      Israel,    Jerusalem,          Hebrew
+      Taiwan,       Taipei,        Mandarin
+       India,    New Delhi,           Hindi
+    Cambodia,   Phnom Penh,           Khmer
+    Pakistan,    Islamabad,            Urdu
+"
+country_info <- read_csv( country_info , trim_ws = TRUE , skip = 1 )
+
+knitr::kable( country_info )
+
+knitr::kable( inner_join( gapminder_data , country_info ) )
+
+knitr::kable( semi_join( gapminder_data , country_info ) )
+
+knitr::kable( left_join( gapminder_data , country_info ) )
+
+knitr::kable( anti_join( gapminder_data , country_info ) )
+
+knitr::kable( inner_join( country_info , gapminder_data ) )
+
+knitr::kable( semi_join( country_info , gapminder_data ) )
+
+knitr::kable( left_join( country_info , gapminder_data ) )
+
+knitr::kable( anti_join( country_info , gapminder_data ) )
+
+knitr::kable( full_join( country_info , gapminder_data ) )
+```
+
+
