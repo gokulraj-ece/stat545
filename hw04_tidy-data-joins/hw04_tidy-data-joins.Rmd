@@ -1,0 +1,39 @@
+---
+title: "Tidy data and joins"
+author: "Gokul Raj Suresh Kumar"
+date: "`r format(Sys.Date())`"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Tidying data and performing joins
+
+####Loading the tidyverse and gapminder packages
+
+```{r message=FALSE}
+library( tidyverse )
+library( gapminder )
+```
+
+##General data reshaping and relationship to aggregation
+
+###Activity #2 
+####A tibble with one row per year and columns for life expectancy
+
+```{r}
+my_gap <- gapminder %>% 
+  select( year , country , lifeExp ) %>% 
+  filter( country %in% c( "India" , "Canada" , "United States" , "China" , "Japan" ))
+
+le_by_year <- my_gap %>% 
+  spread ( key = "country" , value = "lifeExp" ) %>% 
+  rename( Year = year )
+
+knitr::kable( le_by_year )
+
+
+```
+
