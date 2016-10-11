@@ -1,7 +1,7 @@
 Tidy data and joins
 ================
 Gokul Raj Suresh Kumar
-2016-10-10
+2016-10-11
 
 Tidying data and performing joins
 =================================
@@ -21,14 +21,33 @@ General data reshaping and relationship to aggregation
 #### Life expectancy for different countries by year
 
 ``` r
+# filtering down to 5 countries to make life easier
 different_countries <- gapminder %>% 
   select( year , country , lifeExp ) %>% 
-  filter( country %in% c( "India" , "Canada" , "United States" , "China" , "Japan" ) )
+  filter( country %in% c( "India" , "Canada" , "United States" , "China" , "Japan" ) ) %>% 
+  print( n = 10 )
+```
 
+    ## # A tibble: 60 × 3
+    ##     year country lifeExp
+    ##    <int>  <fctr>   <dbl>
+    ## 1   1952  Canada   68.75
+    ## 2   1957  Canada   69.96
+    ## 3   1962  Canada   71.30
+    ## 4   1967  Canada   72.13
+    ## 5   1972  Canada   72.88
+    ## 6   1977  Canada   74.21
+    ## 7   1982  Canada   75.76
+    ## 8   1987  Canada   76.86
+    ## 9   1992  Canada   77.95
+    ## 10  1997  Canada   78.61
+    ## # ... with 50 more rows
+
+``` r
+# making a tibble with one row per year and columns for life expectancy for 5 countries
 le_by_year <- different_countries %>% 
   spread ( key = "country" , value = "lifeExp" ) %>% 
   rename( Year = year )
-
 knitr::kable( le_by_year )
 ```
 
@@ -48,6 +67,7 @@ knitr::kable( le_by_year )
 |  2007|  80.653|  72.96100|  64.698|  82.603|         78.242|
 
 ``` r
+# plotting life expectancy for India against that for Canada
 le_by_year %>% ggplot( aes( x = Year , y = India , color = "India" ) ) +
   geom_point( ) + geom_line( ) +
   geom_point( aes( x = Year , y = Canada , color = "Canada" ) ) +  
@@ -64,16 +84,37 @@ le_by_year %>% ggplot( aes( x = Year , y = India , color = "India" ) ) +
 #### Mean life expectancy for all years by continent
 
 ``` r
+# mean life expectancy for each continent by year
 all_continents <- gapminder %>% 
   select( continent , year , lifeExp ) %>% 
   group_by( year , continent ) %>% 
   summarise( mean_lifeExp = mean( lifeExp ) ) %>% 
-  arrange( continent )
+  arrange( continent ) %>% 
+  print( n = 10 )
+```
 
+    ## Source: local data frame [60 x 3]
+    ## Groups: year [12]
+    ## 
+    ##     year continent mean_lifeExp
+    ##    <int>    <fctr>        <dbl>
+    ## 1   1952    Africa     39.13550
+    ## 2   1957    Africa     41.26635
+    ## 3   1962    Africa     43.31944
+    ## 4   1967    Africa     45.33454
+    ## 5   1972    Africa     47.45094
+    ## 6   1977    Africa     49.58042
+    ## 7   1982    Africa     51.59287
+    ## 8   1987    Africa     53.34479
+    ## 9   1992    Africa     53.62958
+    ## 10  1997    Africa     53.59827
+    ## # ... with 50 more rows
+
+``` r
+# reshaping to one row per year and one variable for each continent
 le_continents <- all_continents %>% 
   spread( key = "continent" , value = "mean_lifeExp") %>% 
   rename( Year = year )
-
 knitr::kable( le_continents )
 ```
 
@@ -93,6 +134,9 @@ knitr::kable( le_continents )
 |  2007|  54.80604|  73.60812|  70.72848|  77.64860|  80.7195|
 
 ``` r
+# trying to plot the life expectancy over time for different continents !
+# this attempt is definitely not the most efficient way to go about this ! 
+# is there a better way ? I wonder . .
 le_continents %>% ggplot( aes( x = Year , y = Africa , color = "Africa") ) +
   geom_point( ) + geom_line( ) +
   geom_point( aes( x = Year , y = Americas , color = "Americas" ) ) +
@@ -118,16 +162,38 @@ le_continents %>% ggplot( aes( x = Year , y = Africa , color = "Africa") ) +
 #### Continents having lowest and highest life expectancy by year
 
 ``` r
+# the tibble referred-to by Jenny, modified to give continent with 
+# lowest and highest life expectancy by year
 min_max_le <- gapminder %>%
   select( year , continent , lifeExp ) %>%
   group_by( year ) %>%
   filter( min_rank( desc( lifeExp) ) == 1 | min_rank( lifeExp ) == 1 ) %>% 
-  arrange( year )
+  arrange( year ) %>% 
+  print( n = 10 )
+```
 
+    ## Source: local data frame [24 x 3]
+    ## Groups: year [12]
+    ## 
+    ##     year continent lifeExp
+    ##    <int>    <fctr>   <dbl>
+    ## 1   1952      Asia  28.801
+    ## 2   1952    Europe  72.670
+    ## 3   1957      Asia  30.332
+    ## 4   1957    Europe  73.470
+    ## 5   1962      Asia  31.997
+    ## 6   1962    Europe  73.680
+    ## 7   1967      Asia  34.020
+    ## 8   1967    Europe  74.160
+    ## 9   1972    Africa  35.400
+    ## 10  1972    Europe  74.720
+    ## # ... with 14 more rows
+
+``` r
+# reshaping the above tibble to get one row per year 
 min_max_le_continent <- min_max_le %>% 
   spread( key = "continent" , value = "lifeExp" ) %>% 
   rename( Year = year )
-
 knitr::kable( min_max_le_continent )
 ```
 
@@ -154,6 +220,7 @@ Join, merge, look up
 #### Joining Gapminder with a complimentary data frame
 
 ``` r
+# filtering Asian countries which had life expectancy greater than 75 in 2007
 knitr::kable( gapminder_data <- gapminder %>% 
   filter( continent == "Asia" , year == 2007 , lifeExp > 75 ) %>% 
   select( country , lifeExp, gdpPercap ) )
@@ -172,6 +239,7 @@ knitr::kable( gapminder_data <- gapminder %>%
 | Taiwan           |   78.400|   28718.28|
 
 ``` r
+# creating the complementary dataframe for gapminder
 country_info <- "
      country, capitol_city, language_spoken
      Bahrain,       Manama,          Arabic
@@ -183,7 +251,6 @@ country_info <- "
     Pakistan,    Islamabad,            Urdu
 "
 country_info <- read_csv( country_info , trim_ws = TRUE , skip = 1 )
-
 knitr::kable( country_info )
 ```
 
@@ -198,6 +265,7 @@ knitr::kable( country_info )
 | Pakistan | Islamabad     | Urdu             |
 
 ``` r
+# inner_join( gapminder_data , country_info )
 knitr::kable( inner_join( gapminder_data , country_info ) )
 ```
 
@@ -214,6 +282,7 @@ knitr::kable( inner_join( gapminder_data , country_info ) )
 | Taiwan  |   78.400|   28718.28| Taipei        | Mandarin         |
 
 ``` r
+# semi_join( gapminder_data , country_info )
 knitr::kable( semi_join( gapminder_data , country_info ) )
 ```
 
@@ -227,6 +296,7 @@ knitr::kable( semi_join( gapminder_data , country_info ) )
 | Taiwan  |   78.400|   28718.28|
 
 ``` r
+# left_join( gapminder_data , country_info )
 knitr::kable( left_join( gapminder_data , country_info ) )
 ```
 
@@ -248,6 +318,7 @@ knitr::kable( left_join( gapminder_data , country_info ) )
 | Taiwan           |   78.400|   28718.28| Taipei        | Mandarin         |
 
 ``` r
+# anti_join( gapminder_data , country_info )
 knitr::kable( anti_join( gapminder_data , country_info ) )
 ```
 
@@ -262,6 +333,7 @@ knitr::kable( anti_join( gapminder_data , country_info ) )
 | Singapore        |   79.972|   47143.18|
 
 ``` r
+# inner_join( country_info , gapminder_data )
 knitr::kable( inner_join( country_info , gapminder_data ) )
 ```
 
@@ -278,6 +350,7 @@ knitr::kable( inner_join( country_info , gapminder_data ) )
 | Taiwan  | Taipei        | Mandarin         |   78.400|   28718.28|
 
 ``` r
+# semi_join( country_info , gapminder_data )
 knitr::kable( semi_join( country_info , gapminder_data ) )
 ```
 
@@ -291,6 +364,7 @@ knitr::kable( semi_join( country_info , gapminder_data ) )
 | Taiwan  | Taipei        | Mandarin         |
 
 ``` r
+# left_join( country_info , gapminder_data )
 knitr::kable( left_join( country_info , gapminder_data ) )
 ```
 
@@ -310,6 +384,7 @@ knitr::kable( left_join( country_info , gapminder_data ) )
 | Pakistan | Islamabad     | Urdu             |       NA|         NA|
 
 ``` r
+# anti_join( country_info , gapminder_data )
 knitr::kable( anti_join( country_info , gapminder_data ) )
 ```
 
@@ -322,6 +397,7 @@ knitr::kable( anti_join( country_info , gapminder_data ) )
 | Pakistan | Islamabad     | Urdu             |
 
 ``` r
+# full_join( country_info , gapminder_data )
 knitr::kable( full_join( country_info , gapminder_data ) )
 ```
 

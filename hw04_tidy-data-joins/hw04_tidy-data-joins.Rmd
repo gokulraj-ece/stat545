@@ -25,16 +25,17 @@ library( gapminder )
 ####Life expectancy for different countries by year
 
 ```{r}
+# filtering down to 5 countries to make life easier
 different_countries <- gapminder %>% 
   select( year , country , lifeExp ) %>% 
-  filter( country %in% c( "India" , "Canada" , "United States" , "China" , "Japan" ) )
-
+  filter( country %in% c( "India" , "Canada" , "United States" , "China" , "Japan" ) ) %>% 
+  print( n = 10 )
+# making a tibble with one row per year and columns for life expectancy for 5 countries
 le_by_year <- different_countries %>% 
   spread ( key = "country" , value = "lifeExp" ) %>% 
   rename( Year = year )
-
 knitr::kable( le_by_year )
-
+# plotting life expectancy for India against that for Canada
 le_by_year %>% ggplot( aes( x = Year , y = India , color = "India" ) ) +
   geom_point( ) + geom_line( ) +
   geom_point( aes( x = Year , y = Canada , color = "Canada" ) ) +  
@@ -49,18 +50,21 @@ le_by_year %>% ggplot( aes( x = Year , y = India , color = "India" ) ) +
 ####Mean life expectancy for all years by continent
 
 ```{r}
+# mean life expectancy for each continent by year
 all_continents <- gapminder %>% 
   select( continent , year , lifeExp ) %>% 
   group_by( year , continent ) %>% 
   summarise( mean_lifeExp = mean( lifeExp ) ) %>% 
-  arrange( continent )
-
+  arrange( continent ) %>% 
+  print( n = 10 )
+# reshaping to one row per year and one variable for each continent
 le_continents <- all_continents %>% 
   spread( key = "continent" , value = "mean_lifeExp") %>% 
   rename( Year = year )
-
 knitr::kable( le_continents )
-
+# trying to plot the life expectancy over time for different continents !
+# this attempt is definitely not the most efficient way to go about this ! 
+# is there a better way ? I wonder . .
 le_continents %>% ggplot( aes( x = Year , y = Africa , color = "Africa") ) +
   geom_point( ) + geom_line( ) +
   geom_point( aes( x = Year , y = Americas , color = "Americas" ) ) +
@@ -84,16 +88,18 @@ le_continents %>% ggplot( aes( x = Year , y = Africa , color = "Africa") ) +
 #### Continents having lowest and highest life expectancy by year
 
 ```{r}
+# the tibble referred-to by Jenny, modified to give continent with 
+# lowest and highest life expectancy by year
 min_max_le <- gapminder %>%
   select( year , continent , lifeExp ) %>%
   group_by( year ) %>%
   filter( min_rank( desc( lifeExp) ) == 1 | min_rank( lifeExp ) == 1 ) %>% 
-  arrange( year )
-
+  arrange( year ) %>% 
+  print( n = 10 )
+# reshaping the above tibble to get one row per year 
 min_max_le_continent <- min_max_le %>% 
   spread( key = "continent" , value = "lifeExp" ) %>% 
   rename( Year = year )
-
 knitr::kable( min_max_le_continent )
 ```
 
@@ -104,10 +110,11 @@ knitr::kable( min_max_le_continent )
 ####Joining Gapminder with a complimentary data frame
 
 ```{r}
+# filtering Asian countries which had life expectancy greater than 75 in 2007
 knitr::kable( gapminder_data <- gapminder %>% 
   filter( continent == "Asia" , year == 2007 , lifeExp > 75 ) %>% 
   select( country , lifeExp, gdpPercap ) )
-
+# creating the complementary dataframe for gapminder
 country_info <- "
      country, capitol_city, language_spoken
      Bahrain,       Manama,          Arabic
@@ -119,25 +126,24 @@ country_info <- "
     Pakistan,    Islamabad,            Urdu
 "
 country_info <- read_csv( country_info , trim_ws = TRUE , skip = 1 )
-
 knitr::kable( country_info )
-
+# inner_join( gapminder_data , country_info )
 knitr::kable( inner_join( gapminder_data , country_info ) )
-
+# semi_join( gapminder_data , country_info )
 knitr::kable( semi_join( gapminder_data , country_info ) )
-
+# left_join( gapminder_data , country_info )
 knitr::kable( left_join( gapminder_data , country_info ) )
-
+# anti_join( gapminder_data , country_info )
 knitr::kable( anti_join( gapminder_data , country_info ) )
-
+# inner_join( country_info , gapminder_data )
 knitr::kable( inner_join( country_info , gapminder_data ) )
-
+# semi_join( country_info , gapminder_data )
 knitr::kable( semi_join( country_info , gapminder_data ) )
-
+# left_join( country_info , gapminder_data )
 knitr::kable( left_join( country_info , gapminder_data ) )
-
+# anti_join( country_info , gapminder_data )
 knitr::kable( anti_join( country_info , gapminder_data ) )
-
+# full_join( country_info , gapminder_data )
 knitr::kable( full_join( country_info , gapminder_data ) )
 ```
 
