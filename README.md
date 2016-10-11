@@ -42,6 +42,12 @@ Apart from that, I wanted to learn R.
 + The resultant Markdown document:
 [`hw03_gapminder-ggplot2-dplyr.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw03_gapminder-ggplot2-dplyr/hw03_gapminder-ggplot2-dplyr.md).
 
+## Documents to verify - Assignment 4
++ Main R Markdown document:
+[`hw04_tidy-data-joins.Rmd`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw04_tidy-data-joins/hw04_tidy-data-joins.Rmd).
++ The resultant Markdown document:
+[`hw04_tidy-data-joins.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw04_tidy-data-joins/hw04_tidy-data-joins.md).
+
 ## How I edited my README.md
 
 I used RStudio to:
