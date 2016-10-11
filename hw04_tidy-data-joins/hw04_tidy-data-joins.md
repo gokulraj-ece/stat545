@@ -157,6 +157,10 @@ le_continents %>% ggplot( aes( x = Year , y = Africa , color = "Africa") ) +
 
 ![](hw04_tidy-data-joins_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
+**Take home message**:
+
+**Listen to Jenny**. When she said that **tidy data is integral to efficient data analysis and visualization**, she meant it.
+
 ### Activity \#4
 
 #### Continents having lowest and highest life expectancy by year
@@ -211,6 +215,8 @@ knitr::kable( min_max_le_continent )
 |  1997|  36.087|  80.690|      NA|
 |  2002|  39.193|  82.000|      NA|
 |  2007|  39.613|  82.603|      NA|
+
+`NA`'s are returned for countries that don't have the minimum or maximum life expectancy for a specific year.
 
 Join, merge, look up
 --------------------
@@ -281,6 +287,8 @@ knitr::kable( inner_join( gapminder_data , country_info ) )
 | Japan   |   82.603|   31656.07| Tokyo         | Japanese         |
 | Taiwan  |   78.400|   28718.28| Taipei        | Mandarin         |
 
+We lose `Hong Kong`, `Korea`, `Kuwait`, `Oman` and `Singapore` because their names don't appear in `country_info`. The result has all variables from `gapminder_data` plus `capitol_city` and `language_spoken` from `country_info`.
+
 ``` r
 # semi_join( gapminder_data , country_info )
 knitr::kable( semi_join( gapminder_data , country_info ) )
@@ -294,6 +302,8 @@ knitr::kable( semi_join( gapminder_data , country_info ) )
 | Japan   |   82.603|   31656.07|
 | Israel  |   80.745|   25523.28|
 | Taiwan  |   78.400|   28718.28|
+
+Results are similar to the above `inner_join`'s result, but variables from`country_info` are not returned.
 
 ``` r
 # left_join( gapminder_data , country_info )
@@ -317,6 +327,8 @@ knitr::kable( left_join( gapminder_data , country_info ) )
 | Singapore        |   79.972|   47143.18| NA            | NA               |
 | Taiwan           |   78.400|   28718.28| Taipei        | Mandarin         |
 
+`gapminder_data` is returned along with `capitol_city` and `language_spoken` from `country_info` with `NA`'s for countries that don't appear in `country_info`.
+
 ``` r
 # anti_join( gapminder_data , country_info )
 knitr::kable( anti_join( gapminder_data , country_info ) )
@@ -331,6 +343,8 @@ knitr::kable( anti_join( gapminder_data , country_info ) )
 | Kuwait           |   77.588|   47306.99|
 | Oman             |   75.640|   22316.19|
 | Singapore        |   79.972|   47143.18|
+
+Countries from `gapminder_data` that don't appear in `country_info` are returned, without `capitol_city` and `language_spoken`.
 
 ``` r
 # inner_join( country_info , gapminder_data )
@@ -349,6 +363,8 @@ knitr::kable( inner_join( country_info , gapminder_data ) )
 | Israel  | Jerusalem     | Hebrew           |   80.745|   25523.28|
 | Taiwan  | Taipei        | Mandarin         |   78.400|   28718.28|
 
+We lose `Hong Kong`, `Korea`, `Kuwait`, `Oman` and `Singapore` because their names don't appear in `country_info`. The result has all variables from `country_info` plus `lifeExp` and `gdpPercap` from `gapminder_data`.
+
 ``` r
 # semi_join( country_info , gapminder_data )
 knitr::kable( semi_join( country_info , gapminder_data ) )
@@ -362,6 +378,8 @@ knitr::kable( semi_join( country_info , gapminder_data ) )
 | Israel  | Jerusalem     | Hebrew           |
 | Japan   | Tokyo         | Japanese         |
 | Taiwan  | Taipei        | Mandarin         |
+
+Results are similar to the above `inner_join`'s result, but variables from`gapminder_data` are not returned.
 
 ``` r
 # left_join( country_info , gapminder_data )
@@ -383,6 +401,8 @@ knitr::kable( left_join( country_info , gapminder_data ) )
 | Cambodia | Phnom Penh    | Khmer            |       NA|         NA|
 | Pakistan | Islamabad     | Urdu             |       NA|         NA|
 
+`country_info` is returned along with `lifeExp` and `gdpPercap` from `gapminder_data` with `NA`'s for countries that don't appear in `gapminder_data`.
+
 ``` r
 # anti_join( country_info , gapminder_data )
 knitr::kable( anti_join( country_info , gapminder_data ) )
@@ -396,27 +416,40 @@ knitr::kable( anti_join( country_info , gapminder_data ) )
 | India    | New Delhi     | Hindi            |
 | Pakistan | Islamabad     | Urdu             |
 
+Countries from `country_info` that don't appear in `gapminder_data` are returned, without `lifeExp` and `gdpPercap`.
+
 ``` r
-# full_join( country_info , gapminder_data )
-knitr::kable( full_join( country_info , gapminder_data ) )
+# full_join( gapminder_data , country_info )
+knitr::kable( full_join( gapminder_data , country_info ) )
 ```
 
     ## Joining, by = "country"
 
     ## Warning in full_join_impl(x, y, by$x, by$y, suffix$x, suffix$y): joining
-    ## factor and character vector, coercing into character vector
+    ## character vector and factor, coercing into character vector
 
-| country          | capitol\_city | language\_spoken |  lifeExp|  gdpPercap|
-|:-----------------|:--------------|:-----------------|--------:|----------:|
-| Bahrain          | Manama        | Arabic           |   75.635|   29796.05|
-| Japan            | Tokyo         | Japanese         |   82.603|   31656.07|
-| Israel           | Jerusalem     | Hebrew           |   80.745|   25523.28|
-| Taiwan           | Taipei        | Mandarin         |   78.400|   28718.28|
-| India            | New Delhi     | Hindi            |       NA|         NA|
-| Cambodia         | Phnom Penh    | Khmer            |       NA|         NA|
-| Pakistan         | Islamabad     | Urdu             |       NA|         NA|
-| Hong Kong, China | NA            | NA               |   82.208|   39724.98|
-| Korea, Rep.      | NA            | NA               |   78.623|   23348.14|
-| Kuwait           | NA            | NA               |   77.588|   47306.99|
-| Oman             | NA            | NA               |   75.640|   22316.19|
-| Singapore        | NA            | NA               |   79.972|   47143.18|
+| country          |  lifeExp|  gdpPercap| capitol\_city | language\_spoken |
+|:-----------------|--------:|----------:|:--------------|:-----------------|
+| Bahrain          |   75.635|   29796.05| Manama        | Arabic           |
+| Hong Kong, China |   82.208|   39724.98| NA            | NA               |
+| Israel           |   80.745|   25523.28| Jerusalem     | Hebrew           |
+| Japan            |   82.603|   31656.07| Tokyo         | Japanese         |
+| Korea, Rep.      |   78.623|   23348.14| NA            | NA               |
+| Kuwait           |   77.588|   47306.99| NA            | NA               |
+| Oman             |   75.640|   22316.19| NA            | NA               |
+| Singapore        |   79.972|   47143.18| NA            | NA               |
+| Taiwan           |   78.400|   28718.28| Taipei        | Mandarin         |
+| India            |       NA|         NA| New Delhi     | Hindi            |
+| Cambodia         |       NA|         NA| Phnom Penh    | Khmer            |
+| Pakistan         |       NA|         NA| Islamabad     | Urdu             |
+
+We get all rows of `gapminder_data` and 3 rows from `country_info` (`India`, `Cambodia` and `Pakistan`) with columns `capitol_city` and `language_spoken`. `NA`'s are returned for rows that derive solely from either tables.
+
+Reflections
+-----------
+
+I got super curious and ended up solving multiple prompts. Apologies if my lengthy document having so many activities annoys the reviewer. Knowledge gained through this assignment was huge!
+
+Jenny's [ggplot2 tutorial](https://github.com/jennybc/ggplot2-tutorial) and her [Cheatsheet for dplyr join functions](http://stat545.com/bit001_dplyr-cheatsheet.html) were of massive help. I wonder how the figures in her tutorial look so polished ! I tried !
+
+I referred to [Beautiful plotting in R: A ggplot2 cheatsheet](http://www.cs.utexas.edu/~cannata/dataVis/Class%20Notes/Beautiful%20plotting%20in%20R_%20A%20ggplot2%20cheatsheet%20_%20Technical%20Tidbits%20From%20Spatial%20Analysis%20&%20Data%20Science.pdf) to manually set colors in plots.

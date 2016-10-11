@@ -83,6 +83,10 @@ le_continents %>% ggplot( aes( x = Year , y = Africa , color = "Africa") ) +
     labs( title = "Life Expectancy over Time" , x = "Year" , y = "Life Expectancy" )
 ```
 
+**Take home message**:
+
+**Listen to Jenny**. When she said that **tidy data is integral to efficient data analysis and visualization**, she meant it.
+
 ###Activity #4
 
 #### Continents having lowest and highest life expectancy by year
@@ -102,6 +106,8 @@ min_max_le_continent <- min_max_le %>%
   rename( Year = year )
 knitr::kable( min_max_le_continent )
 ```
+
+`NA`'s are returned for countries that don't have the minimum or maximum life expectancy for a specific year.
 
 ##Join, merge, look up
 
@@ -127,24 +133,76 @@ country_info <- "
 "
 country_info <- read_csv( country_info , trim_ws = TRUE , skip = 1 )
 knitr::kable( country_info )
-# inner_join( gapminder_data , country_info )
-knitr::kable( inner_join( gapminder_data , country_info ) )
-# semi_join( gapminder_data , country_info )
-knitr::kable( semi_join( gapminder_data , country_info ) )
-# left_join( gapminder_data , country_info )
-knitr::kable( left_join( gapminder_data , country_info ) )
-# anti_join( gapminder_data , country_info )
-knitr::kable( anti_join( gapminder_data , country_info ) )
-# inner_join( country_info , gapminder_data )
-knitr::kable( inner_join( country_info , gapminder_data ) )
-# semi_join( country_info , gapminder_data )
-knitr::kable( semi_join( country_info , gapminder_data ) )
-# left_join( country_info , gapminder_data )
-knitr::kable( left_join( country_info , gapminder_data ) )
-# anti_join( country_info , gapminder_data )
-knitr::kable( anti_join( country_info , gapminder_data ) )
-# full_join( country_info , gapminder_data )
-knitr::kable( full_join( country_info , gapminder_data ) )
 ```
 
+```{r}
+# inner_join( gapminder_data , country_info )
+knitr::kable( inner_join( gapminder_data , country_info ) )
+```
 
+We lose `Hong Kong`, `Korea`, `Kuwait`, `Oman` and `Singapore` because their names don't appear in `country_info`. The result has all variables from `gapminder_data` plus `capitol_city` and `language_spoken` from `country_info`.
+
+```{r}
+# semi_join( gapminder_data , country_info )
+knitr::kable( semi_join( gapminder_data , country_info ) )
+```
+
+Results are similar to the above `inner_join`'s result, but variables from`country_info` are not returned.
+
+```{r}
+# left_join( gapminder_data , country_info )
+knitr::kable( left_join( gapminder_data , country_info ) )
+```
+
+`gapminder_data` is returned along with `capitol_city` and `language_spoken` from `country_info` with `NA`'s for countries that don't appear in `country_info`.
+
+```{r}
+# anti_join( gapminder_data , country_info )
+knitr::kable( anti_join( gapminder_data , country_info ) )
+```
+
+Countries from `gapminder_data` that don't appear in `country_info` are returned, without `capitol_city` and `language_spoken`.
+
+```{r}
+# inner_join( country_info , gapminder_data )
+knitr::kable( inner_join( country_info , gapminder_data ) )
+```
+
+We lose `Hong Kong`, `Korea`, `Kuwait`, `Oman` and `Singapore` because their names don't appear in `country_info`. The result has all variables from `country_info` plus `lifeExp` and `gdpPercap` from `gapminder_data`.
+
+```{r}
+# semi_join( country_info , gapminder_data )
+knitr::kable( semi_join( country_info , gapminder_data ) )
+```
+
+Results are similar to the above `inner_join`'s result, but variables from`gapminder_data` are not returned.
+
+```{r}
+# left_join( country_info , gapminder_data )
+knitr::kable( left_join( country_info , gapminder_data ) )
+```
+
+`country_info` is returned along with `lifeExp` and `gdpPercap` from `gapminder_data` with `NA`'s for countries that don't appear in `gapminder_data`.
+
+
+```{r}
+# anti_join( country_info , gapminder_data )
+knitr::kable( anti_join( country_info , gapminder_data ) )
+```
+
+Countries from `country_info` that don't appear in `gapminder_data` are returned, without `lifeExp` and `gdpPercap`.
+
+```{r}
+# full_join( gapminder_data , country_info )
+knitr::kable( full_join( gapminder_data , country_info ) )
+```
+
+We get all rows of `gapminder_data` and 3 rows from `country_info` (`India`, `Cambodia` and `Pakistan`) with columns `capitol_city` and `language_spoken`. `NA`'s are returned for rows that derive solely from either tables.
+
+##Reflections
+
+I got super curious and ended up solving multiple prompts. Apologies if my lengthy document having so many activities annoys the reviewer. Knowledge gained through this assignment was huge! 
+
+Jenny's [ggplot2 tutorial](https://github.com/jennybc/ggplot2-tutorial) and her [Cheatsheet for dplyr join functions](http://stat545.com/bit001_dplyr-cheatsheet.html) were of massive help. I wonder how the figures in her tutorial look so polished ! I tried ! 
+
+I referred to [Beautiful plotting in R: A ggplot2 cheatsheet](http://www.cs.utexas.edu/~cannata/dataVis/Class%20Notes/Beautiful%20plotting%20in%20R_%20A%20ggplot2%20cheatsheet%20_%20Technical%20Tidbits%20From%20Spatial%20Analysis%20&%20Data%20Science.pdf) to manually set colors in plots. 
