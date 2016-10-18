@@ -95,7 +95,7 @@ hist(gapminder$lifeExp)
 
 The variables **continent** and **country**  have been chosen as categorical variables for this analysis.
 
-```{r}
+```{r dev='CairoPNG'}
 summary(gapminder$continent)
 class(gapminder$continent)
 levels(gapminder$continent)
@@ -117,28 +117,28 @@ library(ggplot2)
 
 ####Scatterplots
 
-```{r}
+```{r dev='CairoPNG'}
 p <- ggplot(filter(gapminder,continent == "Asia"), aes(x = gdpPercap , y = lifeExp))
 p + geom_point(alpha = 1/4, size = 4) + scale_x_log10() + geom_smooth(lwd = 2, se = FALSE)
 ```
 
 ####Stripplots
 
-```{r}
+```{r dev='CairoPNG'}
 p <- ggplot(gapminder, aes(x = continent, y = pop)) 
 p + geom_jitter()
 ```
 
 ####Boxplots
 
-```{r}
+```{r dev='CairoPNG'}
 p <- ggplot(filter(gapminder, continent != "Asia"), aes(x = continent, y = lifeExp)) 
 p + geom_boxplot()
 ```
 
 ####Histogram
 
-```{r}
+```{r dev='CairoPNG'}
 p <- ggplot(gapminder , aes(x = pop)) 
 p + geom_histogram() + scale_x_log10()
 ```
@@ -186,7 +186,7 @@ p + geom_boxplot()
 ```
 Implementing the above boxplot I had done earlier, using the pipe.
 
-```{r}
+```{r dev='CairoPNG'}
 p <- gapminder %>% filter(continent != "Asia") %>% ggplot(aes(x = continent, y = lifeExp))
 p + geom_boxplot()
 ```
