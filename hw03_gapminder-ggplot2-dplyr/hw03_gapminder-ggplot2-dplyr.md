@@ -1,7 +1,7 @@
 Gapminder, ggplot2 and dplyr single table verbs
 ================
 Gokul Raj Suresh Kumar
-2016-10-09
+2016-10-18
 
 Manipulate and Explore Gapminder with dplyr & ggplot2
 =====================================================

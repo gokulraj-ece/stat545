@@ -32,7 +32,7 @@ min_max_gdp <- my_gap %>%
 knitr::kable( min_max_gdp ) #displaying data in a nice table
 ```
 
-```{r}
+```{r dev='CairoPNG'}
 min_max_gdp %>% 
   ggplot( aes( x = continent , y = min_gdp_percap ) ) +
   geom_bar( width = 0.10 , stat = "identity" ) + 
@@ -53,7 +53,7 @@ le_wt_mean <- my_gap %>%
   print( n = Inf ) #prints all the results
 ```
 
-```{r}
+```{r dev='CairoPNG'}
 le_wt_mean %>% 
   ggplot( aes( x = continent , y = mean_wt_le ) ) +
   geom_bar( width = 0.10 , stat = "identity" ) +
@@ -70,7 +70,7 @@ le_over_time <- my_gap %>%
   print( n = 10 ) #prints the first 10 results alone 
 ```
 
-```{r}
+```{r dev='CairoPNG'}
 le_over_time %>%
   ggplot( aes( x = year , y = avg_life_exp ) ) + 
   geom_point( aes( color = continent ) ) + 
@@ -104,7 +104,7 @@ rel_abundance <- rel_le %>%
   print( n = 10 ) #prints the first 10 results alone 
 ```
 
-```{r}
+```{r dev='CairoPNG'}
 rel_abundance %>%
   ggplot( aes( x = year , y = n_countries , fill = continent ) ) + 
   geom_bar( stat = "identity" , position = "stack" ) +
@@ -129,7 +129,7 @@ rel_abundance <- rel_le %>%
   print( n = 10 )
 ```
 
-```{r}
+```{r dev='CairoPNG'}
 rel_abundance %>%
   ggplot( aes( x = year , y = n_countries , fill = continent ) ) + 
   geom_bar( stat = "identity" , position = "stack" ) +
