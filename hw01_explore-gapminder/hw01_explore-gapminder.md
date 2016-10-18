@@ -1,7 +1,7 @@
 Exploring Gapminder Data
 ================
 Gokul Raj Suresh Kumar
-2016-10-03
+2016-10-18
 
 Loading the Gapminder data
 --------------------------

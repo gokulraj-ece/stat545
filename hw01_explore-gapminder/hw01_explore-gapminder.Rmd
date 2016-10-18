@@ -24,19 +24,19 @@ summary(gapminder)
 
 ## Observations associated with each continent
 
-```{r}
+```{r dev='CairoPNG'}
 barplot(table(gapminder$continent))
 ```
 
 ## Life Expectancy vs GDP per capita 
 
-```{r}
+```{r dev='CairoPNG'}
 plot(lifeExp ~ log(gdpPercap), gapminder)
 ```
 
 ## Life Expectancy vs GDP per capita - Segregated View
 
-```{r}
+```{r dev='CairoPNG'}
 library(ggplot2)
 p <- ggplot(subset(gapminder),
             aes(x = gdpPercap, y = lifeExp)) 
@@ -47,13 +47,13 @@ geom_smooth(lwd = 1.5, se = FALSE)
 
 ## Frequency of occurence of Life Expectancy 
 
-```{r}
+```{r dev='CairoPNG'}
 hist(gapminder$lifeExp)
 ```
 
 ## Life Expectancy vs Year for India
 
-```{r}
+```{r dev='CairoPNG'}
 p <- ggplot(subset(gapminder, country == "India"),
            aes(x = year, y = lifeExp)) 
 p + geom_point() + geom_smooth(lwd = 1.5, se = FALSE, method = "lm")
