@@ -1,7 +1,7 @@
 Tidy data and joins
 ================
 Gokul Raj Suresh Kumar
-2016-10-11
+2016-10-18
 
 Tidying data and performing joins
 =================================
@@ -451,5 +451,7 @@ Reflections
 I got super curious and ended up solving multiple prompts. Apologies if my lengthy document having so many activities annoys the reviewer. Knowledge gained through this assignment was huge!
 
 Jenny's [ggplot2 tutorial](https://github.com/jennybc/ggplot2-tutorial) and her [Cheatsheet for dplyr join functions](http://stat545.com/bit001_dplyr-cheatsheet.html) were of massive help. I wonder how the figures in her tutorial look so polished ! I tried !
+
+Update\[18 Oct 2016\]: I was able to enable aliasing on windows using `Cairo` to get nice plots.
 
 I referred to [Beautiful plotting in R: A ggplot2 cheatsheet](http://www.cs.utexas.edu/~cannata/dataVis/Class%20Notes/Beautiful%20plotting%20in%20R_%20A%20ggplot2%20cheatsheet%20_%20Technical%20Tidbits%20From%20Spatial%20Analysis%20&%20Data%20Science.pdf) to manually set colors in plots.
