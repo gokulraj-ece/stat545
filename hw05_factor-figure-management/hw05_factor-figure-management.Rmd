@@ -33,7 +33,7 @@ nlevels( gapminder$continent )
 nlevels( gapminder$country )
 ```
 
-####Oceania's details 
+####Oceania's details (for manual validation)
 
 ```{r}
 just_oceania <- gapminder %>%
@@ -56,7 +56,7 @@ nlevels( just_oceania$country )
 # The tibble shows that Oceania has been removed
 without_oceania %>%
   count( continent )
-# 1704 - 24 (All continents - Oceania)
+# 1704 - 24 (Observations for all continents - Observations for Oceania)
 nrow( without_oceania )
 # 5 - 1 (All continents - Oceania)
 nlevels( without_oceania$continent )
@@ -64,4 +64,70 @@ nlevels( without_oceania$continent )
 nlevels( without_oceania$country )
 ```
 
-###Reordering the levels of `country` 
+###Reordering the levels of `country`
+
+####Extracting maximum population of Countries in Europe (between 1952 and 2007)
+
+```{r}
+europe_max_pop <- gapminder %>%
+  filter( continent == "Europe" ) %>%
+  group_by( country ) %>% 
+  summarize( max_pop = max( pop ) ) %>%
+  droplevels()
+
+head( europe_max_pop )
+
+nrow( europe_max_pop )
+
+europe_max_pop$country %>%
+  levels() %>%
+  head()
+
+europe_max_pop %>% 
+  ggplot( aes( x = max_pop , y = country ) ) + geom_point()
+```
+
+####Reordering factor levels of European countries based on descending order of maximum population
+
+```{r}
+pop_desc_reorder <- fct_reorder( europe_max_pop$country , europe_max_pop$max_pop , .desc = TRUE ) %>%
+  levels()
+
+head(pop_desc_reorder)
+```
+
+####Exploring the effects of `arrange()`
+
+```{r}
+pop_desc_data <- europe_max_pop %>% arrange( desc( max_pop ) ) 
+
+head(pop_desc_data)
+
+pop_desc_data$country %>% 
+  levels() %>% 
+  head()
+
+pop_desc_data %>%
+  ggplot( aes( x = max_pop , y = country ) ) + geom_point()
+```
+
+####Exploring the effects of reordering a factor( without `arrange()`)
+
+```{r}
+europe_max_pop$country %>%
+  levels() %>%
+  head()
+
+europe_max_pop %>% 
+  ggplot( aes( x = max_pop , y = fct_reorder( country,max_pop ) ) ) + geom_point()
+```
+
+####Exploring the effects of factor reordering with `arrange()`
+
+```{r}
+head(pop_desc_data)
+
+pop_desc_data %>% 
+  ggplot( aes( x = max_pop, y = fct_reorder( country,max_pop ) ) ) + geom_point()
+```
+

@@ -53,7 +53,7 @@ nlevels( gapminder$country )
 
     ## [1] 142
 
-#### Oceania's details
+#### Oceania's details (for manual validation)
 
 ``` r
 just_oceania <- gapminder %>%
@@ -125,7 +125,7 @@ without_oceania %>%
     ## 4    Europe   360
 
 ``` r
-# 1704 - 24 (All continents - Oceania)
+# 1704 - 24 (Observations for all continents - Observations for Oceania)
 nrow( without_oceania )
 ```
 
@@ -146,3 +146,137 @@ nlevels( without_oceania$country )
     ## [1] 140
 
 ### Reordering the levels of `country`
+
+#### Extracting maximum population of Countries in Europe (between 1952 and 2007)
+
+``` r
+europe_max_pop <- gapminder %>%
+  filter( continent == "Europe" ) %>%
+  group_by( country ) %>% 
+  summarize( max_pop = max( pop ) ) %>%
+  droplevels()
+
+head( europe_max_pop )
+```
+
+    ## # A tibble: 6 × 2
+    ##                  country  max_pop
+    ##                   <fctr>    <int>
+    ## 1                Albania  3600523
+    ## 2                Austria  8199783
+    ## 3                Belgium 10392226
+    ## 4 Bosnia and Herzegovina  4552198
+    ## 5               Bulgaria  8971958
+    ## 6                Croatia  4494013
+
+``` r
+nrow( europe_max_pop )
+```
+
+    ## [1] 30
+
+``` r
+europe_max_pop$country %>%
+  levels() %>%
+  head()
+```
+
+    ## [1] "Albania"                "Austria"               
+    ## [3] "Belgium"                "Bosnia and Herzegovina"
+    ## [5] "Bulgaria"               "Croatia"
+
+``` r
+europe_max_pop %>% 
+  ggplot( aes( x = max_pop , y = country ) ) + geom_point()
+```
+
+![](hw05_factor-figure-management_files/figure-markdown_github/unnamed-chunk-5-1.png)
+
+#### Reordering factor levels of European countries based on descending order of maximum population
+
+``` r
+pop_desc_reorder <- fct_reorder( europe_max_pop$country , europe_max_pop$max_pop , .desc = TRUE ) %>%
+  levels()
+
+head(pop_desc_reorder)
+```
+
+    ## [1] "Germany"        "Turkey"         "France"         "United Kingdom"
+    ## [5] "Italy"          "Spain"
+
+#### Exploring the effects of `arrange()`
+
+``` r
+pop_desc_data <- europe_max_pop %>% arrange( desc( max_pop ) ) 
+
+head(pop_desc_data)
+```
+
+    ## # A tibble: 6 × 2
+    ##          country  max_pop
+    ##           <fctr>    <int>
+    ## 1        Germany 82400996
+    ## 2         Turkey 71158647
+    ## 3         France 61083916
+    ## 4 United Kingdom 60776238
+    ## 5          Italy 58147733
+    ## 6          Spain 40448191
+
+``` r
+pop_desc_data$country %>% 
+  levels() %>% 
+  head()
+```
+
+    ## [1] "Albania"                "Austria"               
+    ## [3] "Belgium"                "Bosnia and Herzegovina"
+    ## [5] "Bulgaria"               "Croatia"
+
+``` r
+pop_desc_data %>%
+  ggplot( aes( x = max_pop , y = country ) ) + geom_point()
+```
+
+![](hw05_factor-figure-management_files/figure-markdown_github/unnamed-chunk-7-1.png)
+
+#### Exploring the effects of reordering a factor( without `arrange()`)
+
+``` r
+europe_max_pop$country %>%
+  levels() %>%
+  head()
+```
+
+    ## [1] "Albania"                "Austria"               
+    ## [3] "Belgium"                "Bosnia and Herzegovina"
+    ## [5] "Bulgaria"               "Croatia"
+
+``` r
+europe_max_pop %>% 
+  ggplot( aes( x = max_pop , y = fct_reorder( country,max_pop ) ) ) + geom_point()
+```
+
+![](hw05_factor-figure-management_files/figure-markdown_github/unnamed-chunk-8-1.png)
+
+#### Exploring the effects of factor reordering with `arrange()`
+
+``` r
+head(pop_desc_data)
+```
+
+    ## # A tibble: 6 × 2
+    ##          country  max_pop
+    ##           <fctr>    <int>
+    ## 1        Germany 82400996
+    ## 2         Turkey 71158647
+    ## 3         France 61083916
+    ## 4 United Kingdom 60776238
+    ## 5          Italy 58147733
+    ## 6          Spain 40448191
+
+``` r
+pop_desc_data %>% 
+  ggplot( aes( x = max_pop, y = fct_reorder( country,max_pop ) ) ) + geom_point()
+```
+
+![](hw05_factor-figure-management_files/figure-markdown_github/unnamed-chunk-9-1.png)
