@@ -21,7 +21,7 @@ library(forcats)
 
 ##Factor Management
 
-###Drop Oceania
+###Dropping Oceania
 
 ####Gapminder's details
 
@@ -41,6 +41,7 @@ just_oceania <- gapminder %>%
   droplevels()
 just_oceania %>%
   count( continent )
+nrow( just_oceania )
 nlevels( just_oceania$continent )
 nlevels( just_oceania$country )
 ```
@@ -48,13 +49,19 @@ nlevels( just_oceania$country )
 ####Details after dropping Oceania
 
 ```{r}
-without_oceania <- gapminder %>%
+# Dropping Oceania and it's factor levels
+(without_oceania <- gapminder %>%
   filter( continent != "Oceania" ) %>%
-  droplevels()
+  droplevels())
+# The tibble shows that Oceania has been removed
 without_oceania %>%
   count( continent )
+# 1704 - 24 (All continents - Oceania)
 nrow( without_oceania )
+# 5 - 1 (All continents - Oceania)
 nlevels( without_oceania$continent )
+# 142 - 2 (All countries - (New Zealand + Australia))
 nlevels( without_oceania$country )
 ```
 
+###Reordering the levels of `country` 
