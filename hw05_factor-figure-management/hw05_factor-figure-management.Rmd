@@ -1,0 +1,21 @@
+---
+title: "Factor and Figure Management"
+author: "Gokul Raj Suresh Kumar"
+date: "`r format(Sys.Date())`"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Factor and Figure Management
+
+####Loading the required packages
+
+```{r message=FALSE}
+library(gapminder)
+library(tidyverse)
+library(forcats)
+```
+
