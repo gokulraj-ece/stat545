@@ -19,3 +19,26 @@ library(tidyverse)
 library(forcats)
 ```
 
+###Factor Management
+
+####Drop Oceania
+
+```{r}
+##Before dropping Oceania
+summary(gapminder)
+nrow(gapminder)
+nlevels(gapminder$continent)
+nlevels(gapminder$country)
+##Details of Oceania alone
+just_oceania <- gapminder %>% filter(continent == "Oceania") %>% droplevels()
+summary(just_oceania)
+nlevels(just_oceania$continent)
+nlevels(just_oceania$country)
+#After dropping Oceania
+without_oceania <- gapminder %>% filter(continent != "Oceania") %>% droplevels()
+summary(without_oceania)
+nrow(without_oceania)
+nlevels(without_oceania$continent)
+nlevels(without_oceania$country)
+```
+
