@@ -304,3 +304,4 @@ Problem solved !
 
 - I can confidently handle factors henceforth, thanks to this extremely informative assignment.
 - Made extensive use of Jenny's [Be the boss of your factors](http://stat545.com/block029_factors.html) and [Writing figures to file](http://stat545.com/block017_write-figure-to-file.html) to get insight to solve the prompts.
+- Excited for STAT 547!!
