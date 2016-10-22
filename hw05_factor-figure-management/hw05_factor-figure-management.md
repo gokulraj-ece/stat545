@@ -268,8 +268,10 @@ pop_reorder_europe$country %>%
     ## [5] "Italy"          "Spain"
 
 ``` r
-pop_reorder_europe %>% 
+p <- pop_reorder_europe %>% 
   ggplot( aes( x = max_pop , y = country ) ) + geom_point()
+
+p
 ```
 
 ![](hw05_factor-figure-management_files/figure-markdown_github/unnamed-chunk-8-1.png)
@@ -447,11 +449,44 @@ rel_abundance %>%
 ### Partitioning the above into small multiple bar charts (One chart per continent)
 
 ``` r
-rel_abundance %>%
+q <- rel_abundance %>% 
   ggplot( aes( x = year , y = n_countries ) ) + 
-  geom_bar( width = 2 , stat = "identity" ) + 
+  geom_bar( width = 1 , stat = "identity" ) + 
   facet_wrap( ~continent , nrow = 3 ) + 
   labs( title = "No. of Countries having lifeExp < India" , x = "Year" , y = "Number of Countries" )
+
+q
 ```
 
 ![](hw05_factor-figure-management_files/figure-markdown_github/unnamed-chunk-16-1.png)
+
+Writing figures to a file
+-------------------------
+
+### Using `ggsave()` to write a figure to a file Explicitly
+
+``` r
+ggsave( "max_pop_europe.png" , plot = p )
+```
+
+    ## Saving 7 x 5 in image
+
+### Changing size of the plot to be saved using the `width=` and `height=` argument to `ggsave()`
+
+``` r
+ggsave( "resized_max_pop_europe.png" , plot = p , height = 10 , width = 10 )
+```
+
+### Scenario where explicit provision of the plot object matters
+
+``` r
+ggsave( "rel_lifeExp_lt_India.png" )
+```
+
+    ## Saving 7 x 5 in image
+
+``` r
+ggsave( "rel_lifeExp_lt_India_for_sure.png" , plot = q )
+```
+
+    ## Saving 7 x 5 in image
