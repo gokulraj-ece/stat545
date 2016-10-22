@@ -180,3 +180,42 @@ head( eur_txt_data )
 head( levels( eur_txt_data$country ) )
 ```
 
+##Visualization design
+
+###Code to generate the number of countries having relative life expectancy < India
+
+```{r}
+my_gap <- gapminder
+
+benchmark_country <- my_gap %>% 
+  filter( country == "India" )
+
+rel_le <- my_gap %>% 
+  mutate( temp = rep( benchmark_country$lifeExp , nlevels( country ) ), 
+          lifeExpRel = lifeExp/temp, 
+          temp = NULL )
+
+rel_abundance <- rel_le %>%
+  group_by( continent , year ) %>% 
+  filter( lifeExpRel < 1 ) %>% 
+  summarise( n_countries = n_distinct( country ) )
+```
+
+###Oops! I have used a stacked barplot in assignment 3
+
+```{r dev='CairoPNG'}
+rel_abundance %>%
+  ggplot( aes( x = year , y = n_countries , fill = continent ) ) + 
+  geom_bar( stat = "identity" , position = "stack" ) +
+  labs( title = "No. of Countries having lifeExp < India" , x = "Year" , y = "Number of Countries" )
+```
+
+###Partitioning the above into small multiple bar charts (One chart per continent)
+
+```{r dev='CairoPNG', fig.width=8, fig.height=6}
+rel_abundance %>%
+  ggplot( aes( x = year , y = n_countries ) ) + 
+  geom_bar( width = 2 , stat = "identity" ) + 
+  facet_wrap( ~continent , nrow = 3 ) + 
+  labs( title = "No. of Countries having lifeExp < India" , x = "Year" , y = "Number of Countries" )
+```
