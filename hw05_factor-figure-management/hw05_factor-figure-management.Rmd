@@ -92,7 +92,7 @@ max_pop_europe <- gapminder %>%
 head( max_pop_europe )
 # total number of countries in Europe according to Gapminder
 nrow( max_pop_europe )
-# first 5 levels of the factor 'country'
+# first 6 levels of the factor 'country'
 max_pop_europe$country %>%
   levels() %>%
   head()
@@ -104,7 +104,7 @@ max_pop_europe$country %>%
 # reordering levels of the factors 
 pop_reorder_europe <- max_pop_europe %>% 
   mutate( country = fct_reorder( country , max_pop , .desc = TRUE ) )
-# first 5 levels of the reordered factor 'country'
+# first 6 levels of the reordered factor 'country'
 head( levels( pop_reorder_europe$country ) )
 # order of pop_reorder_europe doesn't change!
 head( pop_reorder_europe )
@@ -118,7 +118,7 @@ pop_arr_europe <- max_pop_europe %>%
   arrange( desc( max_pop ) ) 
 # sanity check
 head(pop_arr_europe)
-# first 5 levels of the factor 'country' ! Levels have not changed !
+# first 6 levels of the factor 'country' ! Levels have not changed !
 pop_arr_europe$country %>% 
   levels() %>% 
   head()
@@ -132,7 +132,7 @@ From the above plot, we can infer that merely arranging the data doesn't have an
 ####Exploring the effects of reordering a factor( without `arrange()`)
 
 ```{r}
-# displaying the first 5 levels of the reordered data for reference
+# displaying the first 6 levels of the reordered data for reference
 pop_reorder_europe$country %>%
   levels() %>%
   head()
@@ -146,7 +146,7 @@ From the above plot, we can infer that we can obtain better plots by just reorde
 ####Exploring the effects of factor reordering with `arrange()`
 
 ```{r}
-# displaying the first 5 levels of arranged data without level reorder
+# displaying the first 6 levels of arranged data without level reorder
 head(pop_arr_europe)
 # plotting arranged data with level reorder
 pop_arr_europe %>% 
@@ -299,3 +299,8 @@ Problem solved !
 - Removed unnecessary downstream stuff
 - Left the generated csv, txt and RDS files since they're part of the workflow for HW5
 - Same applies to the generated images for HW5 as well, as I have linked them to the markdown document
+
+## Reflection
+
+- I can confidently handle factors henceforth, thanks to this extremely informative assignment.
+- Made extensive use of Jenny's [Be the boss of your factors](http://stat545.com/block029_factors.html) and [Writing figures to file](http://stat545.com/block017_write-figure-to-file.html) to get insight to solve the prompts.

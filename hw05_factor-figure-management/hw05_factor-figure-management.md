@@ -190,7 +190,7 @@ nrow( max_pop_europe )
     ## [1] 30
 
 ``` r
-# first 5 levels of the factor 'country'
+# first 6 levels of the factor 'country'
 max_pop_europe$country %>%
   levels() %>%
   head()
@@ -206,7 +206,7 @@ max_pop_europe$country %>%
 # reordering levels of the factors 
 pop_reorder_europe <- max_pop_europe %>% 
   mutate( country = fct_reorder( country , max_pop , .desc = TRUE ) )
-# first 5 levels of the reordered factor 'country'
+# first 6 levels of the reordered factor 'country'
 head( levels( pop_reorder_europe$country ) )
 ```
 
@@ -249,7 +249,7 @@ head(pop_arr_europe)
     ## 6          Spain 40448191
 
 ``` r
-# first 5 levels of the factor 'country' ! Levels have not changed !
+# first 6 levels of the factor 'country' ! Levels have not changed !
 pop_arr_europe$country %>% 
   levels() %>% 
   head()
@@ -272,7 +272,7 @@ From the above plot, we can infer that merely arranging the data doesn't have an
 #### Exploring the effects of reordering a factor( without `arrange()`)
 
 ``` r
-# displaying the first 5 levels of the reordered data for reference
+# displaying the first 6 levels of the reordered data for reference
 pop_reorder_europe$country %>%
   levels() %>%
   head()
@@ -294,7 +294,7 @@ From the above plot, we can infer that we can obtain better plots by just reorde
 #### Exploring the effects of factor reordering with `arrange()`
 
 ``` r
-# displaying the first 5 levels of arranged data without level reorder
+# displaying the first 6 levels of arranged data without level reorder
 head(pop_arr_europe)
 ```
 
@@ -488,7 +488,7 @@ Stacked bar charts appeared under the **No no's** in Jenny's [Do's and Don'ts fo
 
 ![](hw05_factor-figure-management_files/figure-markdown_github/unnamed-chunk-16-1.png)
 
-This approach of visualization was inspired from Tamara Munzner's presentation on [Visualization Analysis and Design](http://www.cs.ubc.ca/~tmm/talks/minicourse14/vad16bryan.pdf), from the section about **Partitioning: List Alignment**
+This approach of visualization was inspired from Tamara Munzner's presentation on [Visualization Analysis and Design](http://www.cs.ubc.ca/~tmm/talks/minicourse14/vad16bryan.pdf), from the section about **Partitioning: List Alignment**. Using continent colors didn't seem to be the best thing to do for my scenario, since the facetted plot displays all the essentials and any further information would be redundant.
 
 Writing figures to a file
 -------------------------
@@ -540,3 +540,11 @@ ggsave( "rel_lifeExp_lt_India_for_sure.png" , plot = q )
 ![rel\_lifeExp\_lt\_India\_for\_sure](rel_lifeExp_lt_India_for_sure.png)
 
 Problem solved !
+
+Cleaning up the repo
+--------------------
+
+-   Added a table of contents in the README.md
+-   Removed unnecessary downstream stuff
+-   Left the generated csv, txt and RDS files since they're part of the workflow for HW5
+-   Same applies to the generated images for HW5 as well, as I have linked them to the markdown document

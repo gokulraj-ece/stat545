@@ -24,44 +24,43 @@ These lines pointed out by [Jennifer Bryan](https://github.com/jennybc) in the f
 
 Apart from that, I wanted to learn R.
 
-## Documents to verify - Assignment 1
+## Table of Contents - STAT 545A
+
+#### Editing README.md and using R Markdown
 
 + Main R Markdown document: [`hw01_explore-gapminder.Rmd`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw01_explore-gapminder/hw01_explore-gapminder.Rmd). 
 + The resultant Markdown document:
 [`hw01_explore-gapminder.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw01_explore-gapminder/hw01_explore-gapminder.md).
 
-## Documents to verify - Assignment 2
+#### Exploring Gapminder and using `dplyr`
+
 + Main R Markdown document:
 [`hw02_explore_gapminder_dplyr.Rmd`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw02_explore-gapminder-dplyr/hw02_explore_gapminder_dplyr.Rmd).
 + The resultant Markdown document:
 [`hw02_explore_gapminder_dplyr.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw02_explore-gapminder-dplyr/hw02_explore_gapminder_dplyr.md).
 
-## Documents to verify - Assignment 3
+#### Exploring and Manipulating data using `dplyr` and `ggplot2`
+
 + Main R Markdown document:
 [`hw03_gapminder-ggplot2-dplyr.Rmd`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw03_gapminder-ggplot2-dplyr/hw03_gapminder-ggplot2-dplyr.Rmd).
 + The resultant Markdown document:
 [`hw03_gapminder-ggplot2-dplyr.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw03_gapminder-ggplot2-dplyr/hw03_gapminder-ggplot2-dplyr.md).
 
-## Documents to verify - Assignment 4
+#### Tidy data and Joins
+
 + Main R Markdown document:
 [`hw04_tidy-data-joins.Rmd`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw04_tidy-data-joins/hw04_tidy-data-joins.Rmd).
 + The resultant Markdown document:
 [`hw04_tidy-data-joins.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw04_tidy-data-joins/hw04_tidy-data-joins.md).
 
-## How I edited my README.md
+#### Factor and figure management
 
-I used RStudio to:
++ Main R Markdown document:
+[`hw04_factor-figure-management.Rmd`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw05_factor-figure-management/hw05_factor-figure-management.Rmd).
++ The resultant Markdown document:
+[`hw04_factor-figure-management.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw05_factor-figure-management/hw05_factor-figure-management.md).
 
-1. Pull my assigned repo from github. 
-2. Edit the README.md file locally.
-3. Save and Commit the edited file.
-4. Push the file to github.
 
-I felt that [Happy Git with R](http://happygitwithr.com/) provided a comprehensive explanation to get through the painful part. 
-
-I played around with the examples provided in [Basic care and feeding of data in R](http://stat545.com/block006_care-feeding-data.html), and made minor modifications to it to produce my R markdown document.
-
-The resources offered were sufficient enough for me to get past this hurdle.
 
 
 
