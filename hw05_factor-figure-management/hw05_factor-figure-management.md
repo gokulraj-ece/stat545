@@ -150,13 +150,14 @@ nlevels( without_oceania$country )
 #### Extracting maximum population of Countries in Europe (between 1952 and 2007)
 
 ``` r
-europe_max_pop <- gapminder %>%
+max_pop_europe <- gapminder %>%
   filter( continent == "Europe" ) %>%
   group_by( country ) %>% 
   summarize( max_pop = max( pop ) ) %>%
-  droplevels()
-
-head( europe_max_pop )
+  droplevels() %>%
+  ungroup()
+  
+head( max_pop_europe )
 ```
 
     ## # A tibble: 6 × 2
@@ -170,13 +171,13 @@ head( europe_max_pop )
     ## 6                Croatia  4494013
 
 ``` r
-nrow( europe_max_pop )
+nrow( max_pop_europe )
 ```
 
     ## [1] 30
 
 ``` r
-europe_max_pop$country %>%
+max_pop_europe$country %>%
   levels() %>%
   head()
 ```
@@ -185,31 +186,47 @@ europe_max_pop$country %>%
     ## [3] "Belgium"                "Bosnia and Herzegovina"
     ## [5] "Bulgaria"               "Croatia"
 
-``` r
-europe_max_pop %>% 
-  ggplot( aes( x = max_pop , y = country ) ) + geom_point()
-```
-
-![](hw05_factor-figure-management_files/figure-markdown_github/unnamed-chunk-5-1.png)
-
 #### Reordering factor levels of European countries based on descending order of maximum population
 
 ``` r
-pop_desc_reorder <- fct_reorder( europe_max_pop$country , europe_max_pop$max_pop , .desc = TRUE ) %>%
-  levels()
+head( levels( max_pop_europe$country ) )
+```
 
-head(pop_desc_reorder)
+    ## [1] "Albania"                "Austria"               
+    ## [3] "Belgium"                "Bosnia and Herzegovina"
+    ## [5] "Bulgaria"               "Croatia"
+
+``` r
+pop_reorder_europe <- max_pop_europe %>% 
+  mutate( country = fct_reorder( country , max_pop , .desc = TRUE ) )
+
+head( levels( pop_reorder_europe$country ) )
 ```
 
     ## [1] "Germany"        "Turkey"         "France"         "United Kingdom"
     ## [5] "Italy"          "Spain"
 
+``` r
+head( pop_reorder_europe )
+```
+
+    ## # A tibble: 6 × 2
+    ##                  country  max_pop
+    ##                   <fctr>    <int>
+    ## 1                Albania  3600523
+    ## 2                Austria  8199783
+    ## 3                Belgium 10392226
+    ## 4 Bosnia and Herzegovina  4552198
+    ## 5               Bulgaria  8971958
+    ## 6                Croatia  4494013
+
 #### Exploring the effects of `arrange()`
 
 ``` r
-pop_desc_data <- europe_max_pop %>% arrange( desc( max_pop ) ) 
+pop_arr_europe <- max_pop_europe %>%
+  arrange( desc( max_pop ) ) 
 
-head(pop_desc_data)
+head(pop_arr_europe)
 ```
 
     ## # A tibble: 6 × 2
@@ -223,7 +240,7 @@ head(pop_desc_data)
     ## 6          Spain 40448191
 
 ``` r
-pop_desc_data$country %>% 
+pop_arr_europe$country %>% 
   levels() %>% 
   head()
 ```
@@ -233,7 +250,7 @@ pop_desc_data$country %>%
     ## [5] "Bulgaria"               "Croatia"
 
 ``` r
-pop_desc_data %>%
+pop_arr_europe %>%
   ggplot( aes( x = max_pop , y = country ) ) + geom_point()
 ```
 
@@ -242,18 +259,17 @@ pop_desc_data %>%
 #### Exploring the effects of reordering a factor( without `arrange()`)
 
 ``` r
-europe_max_pop$country %>%
+pop_reorder_europe$country %>%
   levels() %>%
   head()
 ```
 
-    ## [1] "Albania"                "Austria"               
-    ## [3] "Belgium"                "Bosnia and Herzegovina"
-    ## [5] "Bulgaria"               "Croatia"
+    ## [1] "Germany"        "Turkey"         "France"         "United Kingdom"
+    ## [5] "Italy"          "Spain"
 
 ``` r
-europe_max_pop %>% 
-  ggplot( aes( x = max_pop , y = fct_reorder( country,max_pop ) ) ) + geom_point()
+pop_reorder_europe %>% 
+  ggplot( aes( x = max_pop , y = country ) ) + geom_point()
 ```
 
 ![](hw05_factor-figure-management_files/figure-markdown_github/unnamed-chunk-8-1.png)
@@ -261,7 +277,7 @@ europe_max_pop %>%
 #### Exploring the effects of factor reordering with `arrange()`
 
 ``` r
-head(pop_desc_data)
+head(pop_arr_europe)
 ```
 
     ## # A tibble: 6 × 2
@@ -275,8 +291,122 @@ head(pop_desc_data)
     ## 6          Spain 40448191
 
 ``` r
-pop_desc_data %>% 
-  ggplot( aes( x = max_pop, y = fct_reorder( country,max_pop ) ) ) + geom_point()
+pop_arr_europe %>% 
+  ggplot( aes( x = max_pop, y = fct_reorder( country , max_pop , .desc = TRUE ) ) ) + geom_point()
 ```
 
 ![](hw05_factor-figure-management_files/figure-markdown_github/unnamed-chunk-9-1.png)
+
+File I/O
+--------
+
+### Data to be used for experimentation
+
+``` r
+head( pop_reorder_europe )
+```
+
+    ## # A tibble: 6 × 2
+    ##                  country  max_pop
+    ##                   <fctr>    <int>
+    ## 1                Albania  3600523
+    ## 2                Austria  8199783
+    ## 3                Belgium 10392226
+    ## 4 Bosnia and Herzegovina  4552198
+    ## 5               Bulgaria  8971958
+    ## 6                Croatia  4494013
+
+``` r
+head( levels( pop_reorder_europe$country ) )
+```
+
+    ## [1] "Germany"        "Turkey"         "France"         "United Kingdom"
+    ## [5] "Italy"          "Spain"
+
+### Writing to (`write_csv()`) and reading from (`read_csv()`) a comma-delimited file
+
+``` r
+write_csv( pop_reorder_europe , "pop_reorder_europe.csv" )
+
+eur_csv_data <- read_csv( "pop_reorder_europe.csv" )
+```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   country = col_character(),
+    ##   max_pop = col_integer()
+    ## )
+
+``` r
+head( eur_csv_data )
+```
+
+    ## # A tibble: 6 × 2
+    ##                  country  max_pop
+    ##                    <chr>    <int>
+    ## 1                Albania  3600523
+    ## 2                Austria  8199783
+    ## 3                Belgium 10392226
+    ## 4 Bosnia and Herzegovina  4552198
+    ## 5               Bulgaria  8971958
+    ## 6                Croatia  4494013
+
+``` r
+head( levels( eur_csv_data$country ) )
+```
+
+    ## NULL
+
+### Writing to (`saveRDS()`) and reading from (`readRDS()`) a file while preserving factor levels
+
+``` r
+saveRDS( pop_reorder_europe , "pop_reorder_europe.rds" )
+
+eur_rds_data <- readRDS( "pop_reorder_europe.rds" )
+
+head( eur_rds_data )
+```
+
+    ## # A tibble: 6 × 2
+    ##                  country  max_pop
+    ##                   <fctr>    <int>
+    ## 1                Albania  3600523
+    ## 2                Austria  8199783
+    ## 3                Belgium 10392226
+    ## 4 Bosnia and Herzegovina  4552198
+    ## 5               Bulgaria  8971958
+    ## 6                Croatia  4494013
+
+``` r
+head( levels( eur_rds_data$country ) )
+```
+
+    ## [1] "Germany"        "Turkey"         "France"         "United Kingdom"
+    ## [5] "Italy"          "Spain"
+
+### Writing to (`dput()`) and reading from (`dget()`) a file while preserving factor levels
+
+``` r
+dput( pop_reorder_europe , "pop_reorder_europe-dput.txt" )
+
+eur_txt_data <- dget( "pop_reorder_europe-dput.txt" )
+
+head( eur_txt_data )
+```
+
+    ## # A tibble: 6 × 2
+    ##                  country  max_pop
+    ##                   <fctr>    <int>
+    ## 1                Albania  3600523
+    ## 2                Austria  8199783
+    ## 3                Belgium 10392226
+    ## 4 Bosnia and Herzegovina  4552198
+    ## 5               Bulgaria  8971958
+    ## 6                Croatia  4494013
+
+``` r
+head( levels( eur_txt_data$country ) )
+```
+
+    ## [1] "Germany"        "Turkey"         "France"         "United Kingdom"
+    ## [5] "Italy"          "Spain"

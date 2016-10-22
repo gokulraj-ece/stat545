@@ -69,65 +69,114 @@ nlevels( without_oceania$country )
 ####Extracting maximum population of Countries in Europe (between 1952 and 2007)
 
 ```{r}
-europe_max_pop <- gapminder %>%
+max_pop_europe <- gapminder %>%
   filter( continent == "Europe" ) %>%
   group_by( country ) %>% 
   summarize( max_pop = max( pop ) ) %>%
-  droplevels()
+  droplevels() %>%
+  ungroup()
+  
+head( max_pop_europe )
 
-head( europe_max_pop )
+nrow( max_pop_europe )
 
-nrow( europe_max_pop )
-
-europe_max_pop$country %>%
+max_pop_europe$country %>%
   levels() %>%
   head()
-
-europe_max_pop %>% 
-  ggplot( aes( x = max_pop , y = country ) ) + geom_point()
 ```
 
 ####Reordering factor levels of European countries based on descending order of maximum population
 
 ```{r}
-pop_desc_reorder <- fct_reorder( europe_max_pop$country , europe_max_pop$max_pop , .desc = TRUE ) %>%
-  levels()
+head( levels( max_pop_europe$country ) )
 
-head(pop_desc_reorder)
+pop_reorder_europe <- max_pop_europe %>% 
+  mutate( country = fct_reorder( country , max_pop , .desc = TRUE ) )
+
+head( levels( pop_reorder_europe$country ) )
+
+head( pop_reorder_europe )
 ```
 
 ####Exploring the effects of `arrange()`
 
 ```{r}
-pop_desc_data <- europe_max_pop %>% arrange( desc( max_pop ) ) 
+pop_arr_europe <- max_pop_europe %>%
+  arrange( desc( max_pop ) ) 
 
-head(pop_desc_data)
+head(pop_arr_europe)
 
-pop_desc_data$country %>% 
+pop_arr_europe$country %>% 
   levels() %>% 
   head()
 
-pop_desc_data %>%
+pop_arr_europe %>%
   ggplot( aes( x = max_pop , y = country ) ) + geom_point()
 ```
 
 ####Exploring the effects of reordering a factor( without `arrange()`)
 
 ```{r}
-europe_max_pop$country %>%
+pop_reorder_europe$country %>%
   levels() %>%
   head()
 
-europe_max_pop %>% 
-  ggplot( aes( x = max_pop , y = fct_reorder( country,max_pop ) ) ) + geom_point()
+pop_reorder_europe %>% 
+  ggplot( aes( x = max_pop , y = country ) ) + geom_point()
 ```
 
 ####Exploring the effects of factor reordering with `arrange()`
 
 ```{r}
-head(pop_desc_data)
+head(pop_arr_europe)
 
-pop_desc_data %>% 
-  ggplot( aes( x = max_pop, y = fct_reorder( country,max_pop ) ) ) + geom_point()
+pop_arr_europe %>% 
+  ggplot( aes( x = max_pop, y = fct_reorder( country , max_pop , .desc = TRUE ) ) ) + geom_point()
+```
+
+##File I/O
+
+###Data to be used for experimentation
+
+```{r}
+head( pop_reorder_europe )
+
+head( levels( pop_reorder_europe$country ) )
+```
+
+###Writing to (`write_csv()`) and reading from (`read_csv()`) a comma-delimited file 
+
+```{r}
+write_csv( pop_reorder_europe , "pop_reorder_europe.csv" )
+
+eur_csv_data <- read_csv( "pop_reorder_europe.csv" )
+
+head( eur_csv_data )
+
+head( levels( eur_csv_data$country ) )
+```
+
+###Writing to (`saveRDS()`) and reading from (`readRDS()`) a file while preserving factor levels
+
+```{r}
+saveRDS( pop_reorder_europe , "pop_reorder_europe.rds" )
+
+eur_rds_data <- readRDS( "pop_reorder_europe.rds" )
+
+head( eur_rds_data )
+
+head( levels( eur_rds_data$country ) )
+```
+
+###Writing to (`dput()`) and reading from (`dget()`) a file while preserving factor levels
+
+```{r}
+dput( pop_reorder_europe , "pop_reorder_europe-dput.txt" )
+
+eur_txt_data <- dget( "pop_reorder_europe-dput.txt" )
+
+head( eur_txt_data )
+
+head( levels( eur_txt_data$country ) )
 ```
 
