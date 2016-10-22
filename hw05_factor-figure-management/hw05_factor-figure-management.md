@@ -548,3 +548,10 @@ Cleaning up the repo
 -   Removed unnecessary downstream stuff
 -   Left the generated csv, txt and RDS files since they're part of the workflow for HW5
 -   Same applies to the generated images for HW5 as well, as I have linked them to the markdown document
+
+Reflection
+----------
+
+-   I can confidently handle factors henceforth, thanks to this extremely informative assignment.
+-   Made extensive use of Jenny's [Be the boss of your factors](http://stat545.com/block029_factors.html) and [Writing figures to file](http://stat545.com/block017_write-figure-to-file.html) to get insight to solve the prompts.
+-   Excited for STAT 547!!
