@@ -56,9 +56,9 @@ Apart from that, I wanted to learn R.
 #### Factor and figure management
 
 + Main R Markdown document:
-[`hw04_factor-figure-management.Rmd`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw05_factor-figure-management/hw05_factor-figure-management.Rmd).
+[`hw05_factor-figure-management.Rmd`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw05_factor-figure-management/hw05_factor-figure-management.Rmd).
 + The resultant Markdown document:
-[`hw04_factor-figure-management.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw05_factor-figure-management/hw05_factor-figure-management.md).
+[`hw05_factor-figure-management.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw05_factor-figure-management/hw05_factor-figure-management.md).
 
 
 
