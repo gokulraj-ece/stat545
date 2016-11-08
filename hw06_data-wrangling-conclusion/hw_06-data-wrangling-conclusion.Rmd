@@ -1,0 +1,55 @@
+---
+title: "Data Wrangling Conclusion"
+author: "Gokul Raj Suresh Kumar"
+date: "`r format(Sys.Date())`"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Data Wrangling Conclusion
+
+####Loading the required packages
+
+```{r message=FALSE}
+library(gapminder)
+library(tidyverse)
+library(dplyr)
+library(stringr)
+library(testthat)
+library(ggplot2)
+library(MASS)
+```
+
+
+##Writing Functions
+
+```{r dev='CairoPNG'}
+selected_country <- "China"
+
+( selected_country_info <- gapminder %>% 
+    filter( country == selected_country ) )
+
+p <- selected_country_info %>% 
+  ggplot( aes( x = year , y = lifeExp ) )
+
+p + geom_point( ) + geom_smooth( method = "lm" , aes( color = "lm" ) , lwd = 0.5 ) + 
+  geom_smooth( method = "rlm" , aes( color = "rlm" ) , lwd = 0.5 )
+
+robust_fit <- rlm( lifeExp ~ I( year - 1952 ) , data = selected_country_info )
+
+coef( robust_fit )
+
+le_robust_fit <- function( data, offset = 1952 ) {
+  robust_fit <- rlm( lifeExp ~ I(year - offset) , data = data )
+  setNames( coef( robust_fit ) , c( "Intercept" , "Slope" ) )
+}
+
+le_robust_fit(selected_country_info)
+``` 
+http://www.alastairsanderson.com/R/tutorials/robust-regression-in-R/
+
+
+
