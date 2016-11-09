@@ -1,7 +1,7 @@
 Data Wrangling Conclusion
 ================
 Gokul Raj Suresh Kumar
-2016-11-07
+2016-11-08
 
 Data Wrangling Conclusion
 =========================
@@ -23,6 +23,7 @@ library(stringr)
 library(testthat)
 library(ggplot2)
 library(MASS)
+library(broom)
 ```
 
 Writing Functions
@@ -82,4 +83,8 @@ le_robust_fit(selected_country_info)
     ##  Intercept      Slope 
     ## 48.0172254  0.5120964
 
-<http://www.alastairsanderson.com/R/tutorials/robust-regression-in-R/>
+<http://www.alastairsanderson.com/R/tutorials/robust-regression-in-R>
+
+<http://statistics.ats.ucla.edu/stat/r/faq/smooths.htm>
+
+<http://www.theanalysisfactor.com/r-tutorial-4/>
