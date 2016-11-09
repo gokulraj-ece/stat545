@@ -36,19 +36,30 @@ selected_country <- "China"
 p <- selected_country_info %>% 
   ggplot( aes( x = year , y = lifeExp ) )
 
-p + geom_point( ) + geom_smooth( method = "lm" , aes( color = "lm" ) , lwd = 0.5 ) + 
-  geom_smooth( method = "rlm" , aes( color = "rlm" ) , lwd = 0.5 )
+linear_fit <- lm( lifeExp ~ I( year - 1952 ) , data = selected_country_info )
 
+coef( linear_fit )
+
+p + geom_point( ) + geom_smooth( method = "lm" , aes( color = "lm" ) , lwd = 0.5 )
+ 
 robust_fit <- rlm( lifeExp ~ I( year - 1952 ) , data = selected_country_info )
 
 coef( robust_fit )
 
 le_robust_fit <- function( data, offset = 1952 ) {
-  robust_fit <- rlm( lifeExp ~ I(year - offset) , data = data )
+  robust_fit <- rlm( lifeExp ~ I( year - offset ) , data = data )
   setNames( coef( robust_fit ) , c( "Intercept" , "Slope" ) )
 }
 
-le_robust_fit(selected_country_info)
+p + geom_point( ) + geom_smooth( method = "rlm" , aes( color = "rlm" ) , lwd = 0.5 )
+
+le_robust_fit( selected_country_info )
+
+quadratic_fit <- lm( lifeExp ~ I( year - 1952 ) + I( ( year - 1952 )^2) , data = selected_country_info )
+
+coef( quadratic_fit )
+
+p + geom_point( ) + geom_smooth( method = "lm" , formula = y ~ x + I( x^2 ) , aes( color = "lm" ) , lwd = 0.5 )
 ``` 
 
 http://www.alastairsanderson.com/R/tutorials/robust-regression-in-R

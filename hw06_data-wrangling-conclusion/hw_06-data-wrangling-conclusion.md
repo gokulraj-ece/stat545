@@ -1,7 +1,7 @@
 Data Wrangling Conclusion
 ================
 Gokul Raj Suresh Kumar
-2016-11-08
+2016-11-09
 
 Data Wrangling Conclusion
 =========================
@@ -56,8 +56,16 @@ selected_country <- "China"
 p <- selected_country_info %>% 
   ggplot( aes( x = year , y = lifeExp ) )
 
-p + geom_point( ) + geom_smooth( method = "lm" , aes( color = "lm" ) , lwd = 0.5 ) + 
-  geom_smooth( method = "rlm" , aes( color = "rlm" ) , lwd = 0.5 )
+linear_fit <- lm( lifeExp ~ I( year - 1952 ) , data = selected_country_info )
+
+coef( linear_fit )
+```
+
+    ##    (Intercept) I(year - 1952) 
+    ##     47.1904815      0.5307149
+
+``` r
+p + geom_point( ) + geom_smooth( method = "lm" , aes( color = "lm" ) , lwd = 0.5 )
 ```
 
 ![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-2-1.png)
@@ -73,15 +81,36 @@ coef( robust_fit )
 
 ``` r
 le_robust_fit <- function( data, offset = 1952 ) {
-  robust_fit <- rlm( lifeExp ~ I(year - offset) , data = data )
+  robust_fit <- rlm( lifeExp ~ I( year - offset ) , data = data )
   setNames( coef( robust_fit ) , c( "Intercept" , "Slope" ) )
 }
 
-le_robust_fit(selected_country_info)
+p + geom_point( ) + geom_smooth( method = "rlm" , aes( color = "rlm" ) , lwd = 0.5 )
+```
+
+![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-2-2.png)
+
+``` r
+le_robust_fit( selected_country_info )
 ```
 
     ##  Intercept      Slope 
     ## 48.0172254  0.5120964
+
+``` r
+quadratic_fit <- lm( lifeExp ~ I( year - 1952 ) + I( ( year - 1952 )^2) , data = selected_country_info )
+
+coef( quadratic_fit )
+```
+
+    ##        (Intercept)     I(year - 1952) I((year - 1952)^2) 
+    ##        43.24529473         1.00413727        -0.00860768
+
+``` r
+p + geom_point( ) + geom_smooth( method = "lm" , formula = y ~ x + I( x^2 ) , aes( color = "lm" ) , lwd = 0.5 )
+```
+
+![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-2-3.png)
 
 <http://www.alastairsanderson.com/R/tutorials/robust-regression-in-R>
 
