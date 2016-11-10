@@ -36,31 +36,135 @@ selected_country <- "China"
 p <- selected_country_info %>% 
   ggplot( aes( x = year , y = lifeExp ) )
 
+# linear
 linear_fit <- lm( lifeExp ~ I( year - 1952 ) , data = selected_country_info )
 
 coef( linear_fit )
 
+le_linear_fit <- function( data , offset = 1952 ){
+  linear_fit <- lm( lifeExp ~ I( year - offset ) , data = data )
+  #setNames( coef( linear_fit ) , c( "Intercept" , "Slope" ) )
+}
+
+le_linear_fit( selected_country_info )
+
 p + geom_point( ) + geom_smooth( method = "lm" , aes( color = "lm" ) , lwd = 0.5 )
- 
+
+# robust 
 robust_fit <- rlm( lifeExp ~ I( year - 1952 ) , data = selected_country_info )
 
 coef( robust_fit )
 
-le_robust_fit <- function( data, offset = 1952 ) {
+le_robust_fit <- function( data , offset = 1952 ) {
   robust_fit <- rlm( lifeExp ~ I( year - offset ) , data = data )
-  setNames( coef( robust_fit ) , c( "Intercept" , "Slope" ) )
+  #setNames( coef( robust_fit ) , c( "Intercept" , "Slope" ) )
 }
-
-p + geom_point( ) + geom_smooth( method = "rlm" , aes( color = "rlm" ) , lwd = 0.5 )
 
 le_robust_fit( selected_country_info )
 
+p + geom_point( ) + geom_smooth( method = "rlm" , aes( color = "rlm" ) , lwd = 0.5 )
+
+# quadratic
 quadratic_fit <- lm( lifeExp ~ I( year - 1952 ) + I( ( year - 1952 )^2) , data = selected_country_info )
 
 coef( quadratic_fit )
 
+le_quadratic_fit <- function( data , offset = 1952 ){
+  quadratic_fit <- lm( lifeExp ~ I( year - offset ) + I( ( year - offset )^2) , data = data )
+  #coef( quadratic_fit )
+}
+
+le_quadratic_fit( selected_country_info )
+
 p + geom_point( ) + geom_smooth( method = "lm" , formula = y ~ x + I( x^2 ) , aes( color = "lm" ) , lwd = 0.5 )
 ``` 
+
+##Working with a nested data frame
+
+```{r}
+( nested_gap <- gapminder %>% 
+    group_by( continent , country ) %>% 
+    nest( ) )
+
+# linear
+le_linear_fit( nested_gap$data[[25]] )
+
+le_linear_res <- map( nested_gap$data[1:2] , le_linear_fit )
+
+le_lin_fit_all <- nested_gap %>% 
+  mutate( linear_fit = map( data , le_linear_fit ) )
+
+le_lin_fit_all$linear_fit[[25]]
+
+tidy( le_lin_fit_all$linear_fit[[25]] )
+
+le_lin_fit_all <- le_lin_fit_all %>% 
+  mutate( tidy = map( linear_fit , tidy ) )
+
+le_lin_fit_all$tidy[[25]]
+
+le_lin_coefs <- le_lin_fit_all %>% 
+  dplyr::select( continent , country , tidy ) %>% 
+  unnest( tidy )
+
+le_lin_ests <- le_lin_coefs %>% 
+  dplyr::select( continent:estimate ) %>% 
+  spread( key = "term" , value = "estimate" )
+
+le_lin_ests
+
+# robust
+
+le_robust_fit( nested_gap$data[[25]] )
+
+le_robust_res <- map( nested_gap$data[1:2] , le_robust_fit )
+
+le_rob_fit_all <- nested_gap %>% 
+  mutate( robust_fit = map( data , le_robust_fit ) )
+
+le_rob_fit_all$robust_fit[[25]]
+
+le_rob_fit_all <- le_rob_fit_all %>% 
+  mutate( tidy = map( robust_fit , tidy ) )
+
+le_rob_fit_all$tidy[[25]]
+
+le_rob_coefs <- le_rob_fit_all %>% 
+  dplyr::select( continent , country , tidy ) %>% 
+  unnest( tidy )
+
+le_rob_ests <- le_rob_coefs %>% 
+  dplyr::select( continent:estimate ) %>% 
+  spread( key = "term" , value = "estimate" )
+
+le_rob_ests
+
+#quadratic
+le_quadratic_fit( nested_gap$data[[25]] )
+
+le_quad_res <- map( nested_gap$data[1:2] , le_quadratic_fit )
+
+le_quad_fit_all <- nested_gap %>% 
+  mutate( quadratic_fit = map( data , le_quadratic_fit ) )
+
+le_quad_fit_all$quadratic_fit[[25]]
+
+le_quad_fit_all <- le_quad_fit_all %>% 
+  mutate( tidy = map( quadratic_fit , tidy ) )
+
+le_quad_fit_all$tidy[[25]]
+
+le_quad_coefs <- le_quad_fit_all %>% 
+  dplyr::select( continent , country , tidy ) %>% 
+  unnest( tidy )
+
+le_quad_ests <- le_quad_coefs %>% 
+  dplyr::select( continent:estimate ) %>% 
+  spread( key = "term" , value = "estimate" )
+
+le_quad_ests
+```
+
 
 http://www.alastairsanderson.com/R/tutorials/robust-regression-in-R
 
