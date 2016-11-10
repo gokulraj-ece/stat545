@@ -111,7 +111,7 @@ le_lin_ests <- le_lin_coefs %>%
   dplyr::select( continent:estimate ) %>% 
   spread( key = "term" , value = "estimate" )
 
-le_lin_ests
+knitr::kable( le_lin_ests %>% head( ) )
 
 # robust
 
@@ -137,7 +137,7 @@ le_rob_ests <- le_rob_coefs %>%
   dplyr::select( continent:estimate ) %>% 
   spread( key = "term" , value = "estimate" )
 
-le_rob_ests
+knitr::kable( le_rob_ests %>% head( ) )
 
 #quadratic
 le_quadratic_fit( nested_gap$data[[25]] )
@@ -162,7 +162,7 @@ le_quad_ests <- le_quad_coefs %>%
   dplyr::select( continent:estimate ) %>% 
   spread( key = "term" , value = "estimate" )
 
-le_quad_ests
+knitr::kable( le_quad_ests %>% head( ) )
 ```
 
 ##Working with a list

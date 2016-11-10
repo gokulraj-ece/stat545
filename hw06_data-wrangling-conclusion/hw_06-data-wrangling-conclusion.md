@@ -189,23 +189,17 @@ le_lin_ests <- le_lin_coefs %>%
   dplyr::select( continent:estimate ) %>% 
   spread( key = "term" , value = "estimate" )
 
-le_lin_ests
+knitr::kable( le_lin_ests %>% head( ) )
 ```
 
-    ## # A tibble: 142 × 4
-    ##    continent                  country `(Intercept)` `I(year - offset)`
-    ## *     <fctr>                   <fctr>         <dbl>              <dbl>
-    ## 1     Africa                  Algeria      43.37497         0.56927972
-    ## 2     Africa                   Angola      32.12665         0.20933986
-    ## 3     Africa                    Benin      39.58851         0.33423287
-    ## 4     Africa                 Botswana      52.92912         0.06066853
-    ## 5     Africa             Burkina Faso      34.68469         0.36397483
-    ## 6     Africa                  Burundi      40.57864         0.15413427
-    ## 7     Africa                 Cameroon      41.24946         0.25014685
-    ## 8     Africa Central African Republic      38.80951         0.18390559
-    ## 9     Africa                     Chad      39.80937         0.25324406
-    ## 10    Africa                  Comoros      39.99600         0.45039091
-    ## # ... with 132 more rows
+| continent | country      |  (Intercept)|  I(year - offset)|
+|:----------|:-------------|------------:|-----------------:|
+| Africa    | Algeria      |     43.37497|         0.5692797|
+| Africa    | Angola       |     32.12665|         0.2093399|
+| Africa    | Benin        |     39.58851|         0.3342329|
+| Africa    | Botswana     |     52.92912|         0.0606685|
+| Africa    | Burkina Faso |     34.68469|         0.3639748|
+| Africa    | Burundi      |     40.57864|         0.1541343|
 
 ``` r
 # robust
@@ -251,23 +245,17 @@ le_rob_ests <- le_rob_coefs %>%
   dplyr::select( continent:estimate ) %>% 
   spread( key = "term" , value = "estimate" )
 
-le_rob_ests
+knitr::kable( le_rob_ests %>% head( ) )
 ```
 
-    ## # A tibble: 142 × 4
-    ##    continent                  country `(Intercept)` `I(year - offset)`
-    ## *     <fctr>                   <fctr>         <dbl>              <dbl>
-    ## 1     Africa                  Algeria      43.15800         0.57583135
-    ## 2     Africa                   Angola      32.13493         0.20903132
-    ## 3     Africa                    Benin      39.58851         0.33423287
-    ## 4     Africa                 Botswana      52.92912         0.06066853
-    ## 5     Africa             Burkina Faso      34.68469         0.36397483
-    ## 6     Africa                  Burundi      40.57864         0.15413427
-    ## 7     Africa                 Cameroon      41.24348         0.24965733
-    ## 8     Africa Central African Republic      38.80951         0.18390559
-    ## 9     Africa                     Chad      39.77558         0.25527161
-    ## 10    Africa                  Comoros      39.98423         0.45117882
-    ## # ... with 132 more rows
+| continent | country      |  (Intercept)|  I(year - offset)|
+|:----------|:-------------|------------:|-----------------:|
+| Africa    | Algeria      |     43.15800|         0.5758313|
+| Africa    | Angola       |     32.13493|         0.2090313|
+| Africa    | Benin        |     39.58851|         0.3342329|
+| Africa    | Botswana     |     52.92912|         0.0606685|
+| Africa    | Burkina Faso |     34.68469|         0.3639748|
+| Africa    | Burundi      |     40.57864|         0.1541343|
 
 ``` r
 #quadratic
@@ -311,23 +299,17 @@ le_quad_ests <- le_quad_coefs %>%
   dplyr::select( continent:estimate ) %>% 
   spread( key = "term" , value = "estimate" )
 
-le_quad_ests
+knitr::kable( le_quad_ests %>% head( ) )
 ```
 
-    ## # A tibble: 142 × 5
-    ##    continent                  country `(Intercept)` `I((year - offset)^2)`
-    ## *     <fctr>                   <fctr>         <dbl>                  <dbl>
-    ## 1     Africa                  Algeria      41.94224           -0.003125974
-    ## 2     Africa                   Angola      30.11767           -0.004383237
-    ## 3     Africa                    Benin      37.86994           -0.003749620
-    ## 4     Africa                 Botswana      44.91197           -0.017491948
-    ## 5     Africa             Burkina Faso      31.54945           -0.006840539
-    ## 6     Africa                  Burundi      39.26621           -0.002863477
-    ## 7     Africa                 Cameroon      36.75949           -0.009796304
-    ## 8     Africa Central African Republic      33.86187           -0.010794855
-    ## 9     Africa                     Chad      37.15506           -0.005791219
-    ## 10    Africa                  Comoros      40.64126            0.001407842
-    ## # ... with 132 more rows, and 1 more variables: `I(year - offset)` <dbl>
+| continent | country      |  (Intercept)|  I((year - offset)^2)|  I(year - offset)|
+|:----------|:-------------|------------:|---------------------:|-----------------:|
+| Africa    | Algeria      |     41.94224|            -0.0031260|         0.7412083|
+| Africa    | Angola       |     30.11767|            -0.0043832|         0.4504179|
+| Africa    | Benin        |     37.86994|            -0.0037496|         0.5404620|
+| Africa    | Botswana     |     44.91197|            -0.0174919|         1.0227257|
+| Africa    | Burkina Faso |     31.54945|            -0.0068405|         0.7402045|
+| Africa    | Burundi      |     39.26621|            -0.0028635|         0.3116255|
 
 Working with a list
 -------------------
