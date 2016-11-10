@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ####Loading the required packages
 
-```{r message=FALSE}
+```{r warning=FALSE, message=FALSE}
 library(gapminder)
 library(tidyverse)
 library(dplyr)
@@ -81,7 +81,7 @@ p + geom_point( ) + geom_smooth( method = "lm" , formula = y ~ x + I( x^2 ) , ae
 
 ##Working with a nested data frame
 
-```{r}
+```{r warning=FALSE}
 ( nested_gap <- gapminder %>% 
     group_by( continent , country ) %>% 
     nest( ) )
@@ -164,6 +164,66 @@ le_quad_ests <- le_quad_coefs %>%
 
 le_quad_ests
 ```
+
+##Working with a list
+
+####Trump Android Tweets
+
+```{r}
+load( url( "http://varianceexplained.org/files/trump_tweets_df.rda" ) )
+
+glimpse( trump_tweets_df )
+
+tweets <- trump_tweets_df$text
+
+tweets %>% head( ) %>% strtrim( 70 )
+
+regex <- "badly|crazy|weak|spent|strong|dumb|joke|guns|funny|dead"
+
+( tweets <- tweets[ c( 1 , 2 , 5 , 6 , 198 , 347 , 919 ) ] )
+
+( matches <- gregexpr( regex , tweets ) )
+
+lengths( matches )
+
+map_int( matches , length )
+
+( m <- matches[[7]] )
+
+attr( m , which = "match.length" )
+
+ml <- function( x ) attr( x , which = "match.length" )
+
+( matches_length <- map( matches , ml ) )
+
+m <- function( x ) sum( x > 0 )
+
+map_int( matches , m )
+
+( matches_first <- map( matches , as.vector ) )
+
+( tweet <- tweets[[7]] )
+
+( t_first <- matches_first[[7]] )
+
+( t_length <- matches_length[[7]] )
+
+( t_last <- t_first + t_length - 1 ) 
+
+substring( tweet , t_first , t_last )
+
+mlast <- function( x , y ) x + y - 1
+
+matches_last <- map2( matches_first, matches_length , mlast )
+
+matches_list <- list(text = tweets , first = matches_first , last = matches_last)
+
+pmap( matches_list , substring )
+```
+
+
+
+
 
 
 http://www.alastairsanderson.com/R/tutorials/robust-regression-in-R

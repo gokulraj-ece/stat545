@@ -11,13 +11,6 @@ Data Wrangling Conclusion
 ``` r
 library(gapminder)
 library(tidyverse)
-```
-
-    ## Warning: package 'tidyverse' was built under R version 3.3.2
-
-    ## Warning: package 'dplyr' was built under R version 3.3.2
-
-``` r
 library(dplyr)
 library(stringr)
 library(testthat)
@@ -223,18 +216,7 @@ le_robust_res <- map( nested_gap$data[1:2] , le_robust_fit )
 
 le_rob_fit_all <- nested_gap %>% 
   mutate( robust_fit = map( data , le_robust_fit ) )
-```
 
-    ## Warning in rlm.default(x, y, weights, method = method, wt.method =
-    ## wt.method, : 'rlm' failed to converge in 20 steps
-
-    ## Warning in rlm.default(x, y, weights, method = method, wt.method =
-    ## wt.method, : 'rlm' failed to converge in 20 steps
-
-    ## Warning in rlm.default(x, y, weights, method = method, wt.method =
-    ## wt.method, : 'rlm' failed to converge in 20 steps
-
-``` r
 le_rob_fit_all$robust_fit[[25]]
 ```
 
@@ -346,6 +328,265 @@ le_quad_ests
     ## 9     Africa                     Chad      37.15506           -0.005791219
     ## 10    Africa                  Comoros      40.64126            0.001407842
     ## # ... with 132 more rows, and 1 more variables: `I(year - offset)` <dbl>
+
+Working with a list
+-------------------
+
+#### Trump Android Tweets
+
+``` r
+load( url( "http://varianceexplained.org/files/trump_tweets_df.rda" ) )
+
+glimpse( trump_tweets_df )
+```
+
+    ## Observations: 1,512
+    ## Variables: 16
+    ## $ text          <chr> "My economic policy speech will be carried live ...
+    ## $ favorited     <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,...
+    ## $ favoriteCount <dbl> 9214, 6981, 15724, 19837, 34051, 29831, 19223, 1...
+    ## $ replyToSN     <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+    ## $ created       <dttm> 2016-08-08 15:20:44, 2016-08-08 13:28:20, 2016-...
+    ## $ truncated     <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,...
+    ## $ replyToSID    <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+    ## $ id            <chr> "762669882571980801", "762641595439190016", "762...
+    ## $ replyToUID    <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+    ## $ statusSource  <chr> "<a href=\"http://twitter.com/download/android\"...
+    ## $ screenName    <chr> "realDonaldTrump", "realDonaldTrump", "realDonal...
+    ## $ retweetCount  <dbl> 3107, 2390, 6691, 6402, 11717, 9892, 5784, 7930,...
+    ## $ isRetweet     <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,...
+    ## $ retweeted     <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,...
+    ## $ longitude     <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+    ## $ latitude      <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+
+``` r
+tweets <- trump_tweets_df$text
+
+tweets %>% head( ) %>% strtrim( 70 )
+```
+
+    ## [1] "My economic policy speech will be carried live at 12:15 P.M. Enjoy!"   
+    ## [2] "Join me in Fayetteville, North Carolina tomorrow evening at 6pm. Ticke"
+    ## [3] "#ICYMI: \"Will Media Apologize to Trump?\" https://t.co/ia7rKBmioA"    
+    ## [4] "Michael Morell, the lightweight former Acting Director of C.I.A., and "
+    ## [5] "The media is going crazy. They totally distort so many things on purpo"
+    ## [6] "I see where Mayor Stephanie Rawlings-Blake of Baltimore is pushing Cro"
+
+``` r
+regex <- "badly|crazy|weak|spent|strong|dumb|joke|guns|funny|dead"
+
+( tweets <- tweets[ c( 1 , 2 , 5 , 6 , 198 , 347 , 919 ) ] )
+```
+
+    ## [1] "My economic policy speech will be carried live at 12:15 P.M. Enjoy!"                                                                         
+    ## [2] "Join me in Fayetteville, North Carolina tomorrow evening at 6pm. Tickets now available at: https://t.co/Z80d4MYIg8"                          
+    ## [3] "The media is going crazy. They totally distort so many things on purpose. Crimea, nuclear, \"the baby\" and so much more. Very dishonest!"   
+    ## [4] "I see where Mayor Stephanie Rawlings-Blake of Baltimore is pushing Crooked hard. Look at the job she has done in Baltimore. She is a joke!"  
+    ## [5] "Bernie Sanders started off strong, but with the selection of Kaine for V.P., is ending really weak. So much for a movement! TOTAL DISRESPECT"
+    ## [6] "Crooked Hillary Clinton is unfit to serve as President of the U.S. Her temperament is weak and her opponents are strong. BAD JUDGEMENT!"     
+    ## [7] "The Cruz-Kasich pact is under great strain. This joke of a deal is falling apart, not being honored and almost dead. Very dumb!"
+
+``` r
+( matches <- gregexpr( regex , tweets ) )
+```
+
+    ## [[1]]
+    ## [1] -1
+    ## attr(,"match.length")
+    ## [1] -1
+    ## attr(,"useBytes")
+    ## [1] TRUE
+    ## 
+    ## [[2]]
+    ## [1] -1
+    ## attr(,"match.length")
+    ## [1] -1
+    ## attr(,"useBytes")
+    ## [1] TRUE
+    ## 
+    ## [[3]]
+    ## [1] 20
+    ## attr(,"match.length")
+    ## [1] 5
+    ## attr(,"useBytes")
+    ## [1] TRUE
+    ## 
+    ## [[4]]
+    ## [1] 134
+    ## attr(,"match.length")
+    ## [1] 4
+    ## attr(,"useBytes")
+    ## [1] TRUE
+    ## 
+    ## [[5]]
+    ## [1] 28 95
+    ## attr(,"match.length")
+    ## [1] 6 4
+    ## attr(,"useBytes")
+    ## [1] TRUE
+    ## 
+    ## [[6]]
+    ## [1]  87 114
+    ## attr(,"match.length")
+    ## [1] 4 6
+    ## attr(,"useBytes")
+    ## [1] TRUE
+    ## 
+    ## [[7]]
+    ## [1]  50 112 123
+    ## attr(,"match.length")
+    ## [1] 4 4 4
+    ## attr(,"useBytes")
+    ## [1] TRUE
+
+``` r
+lengths( matches )
+```
+
+    ## [1] 1 1 1 1 2 2 3
+
+``` r
+map_int( matches , length )
+```
+
+    ## [1] 1 1 1 1 2 2 3
+
+``` r
+( m <- matches[[7]] )
+```
+
+    ## [1]  50 112 123
+    ## attr(,"match.length")
+    ## [1] 4 4 4
+    ## attr(,"useBytes")
+    ## [1] TRUE
+
+``` r
+attr( m , which = "match.length" )
+```
+
+    ## [1] 4 4 4
+
+``` r
+ml <- function( x ) attr( x , which = "match.length" )
+
+( matches_length <- map( matches , ml ) )
+```
+
+    ## [[1]]
+    ## [1] -1
+    ## 
+    ## [[2]]
+    ## [1] -1
+    ## 
+    ## [[3]]
+    ## [1] 5
+    ## 
+    ## [[4]]
+    ## [1] 4
+    ## 
+    ## [[5]]
+    ## [1] 6 4
+    ## 
+    ## [[6]]
+    ## [1] 4 6
+    ## 
+    ## [[7]]
+    ## [1] 4 4 4
+
+``` r
+m <- function( x ) sum( x > 0 )
+
+map_int( matches , m )
+```
+
+    ## [1] 0 0 1 1 2 2 3
+
+``` r
+( matches_first <- map( matches , as.vector ) )
+```
+
+    ## [[1]]
+    ## [1] -1
+    ## 
+    ## [[2]]
+    ## [1] -1
+    ## 
+    ## [[3]]
+    ## [1] 20
+    ## 
+    ## [[4]]
+    ## [1] 134
+    ## 
+    ## [[5]]
+    ## [1] 28 95
+    ## 
+    ## [[6]]
+    ## [1]  87 114
+    ## 
+    ## [[7]]
+    ## [1]  50 112 123
+
+``` r
+( tweet <- tweets[[7]] )
+```
+
+    ## [1] "The Cruz-Kasich pact is under great strain. This joke of a deal is falling apart, not being honored and almost dead. Very dumb!"
+
+``` r
+( t_first <- matches_first[[7]] )
+```
+
+    ## [1]  50 112 123
+
+``` r
+( t_length <- matches_length[[7]] )
+```
+
+    ## [1] 4 4 4
+
+``` r
+( t_last <- t_first + t_length - 1 ) 
+```
+
+    ## [1]  53 115 126
+
+``` r
+substring( tweet , t_first , t_last )
+```
+
+    ## [1] "joke" "dead" "dumb"
+
+``` r
+mlast <- function( x , y ) x + y - 1
+
+matches_last <- map2( matches_first, matches_length , mlast )
+
+matches_list <- list(text = tweets , first = matches_first , last = matches_last)
+
+pmap( matches_list , substring )
+```
+
+    ## [[1]]
+    ## [1] ""
+    ## 
+    ## [[2]]
+    ## [1] ""
+    ## 
+    ## [[3]]
+    ## [1] "crazy"
+    ## 
+    ## [[4]]
+    ## [1] "joke"
+    ## 
+    ## [[5]]
+    ## [1] "strong" "weak"  
+    ## 
+    ## [[6]]
+    ## [1] "weak"   "strong"
+    ## 
+    ## [[7]]
+    ## [1] "joke" "dead" "dumb"
 
 <http://www.alastairsanderson.com/R/tutorials/robust-regression-in-R>
 
