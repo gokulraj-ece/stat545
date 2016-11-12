@@ -1,7 +1,7 @@
 Data Wrangling Conclusion
 ================
 Gokul Raj Suresh Kumar
-2016-11-09
+2016-11-12
 
 Data Wrangling Conclusion
 =========================
@@ -61,12 +61,17 @@ coef( linear_fit )
 ``` r
 le_linear_fit <- function( data , offset = 1952 ){
   linear_fit <- lm( lifeExp ~ I( year - offset ) , data = data )
-  #setNames( coef( linear_fit ) , c( "Intercept" , "Slope" ) )
+  setNames( coef( linear_fit ) , c( "intercept" , "slope" ) )
 }
 
 le_linear_fit( selected_country_info )
+```
 
-p + geom_point( ) + geom_smooth( method = "lm" , aes( color = "lm" ) , lwd = 0.5 )
+    ##  intercept      slope 
+    ## 47.1904815  0.5307149
+
+``` r
+p + geom_point( ) + geom_smooth( method = "lm" , lwd = 0.5 )
 ```
 
 ![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-2-1.png)
@@ -84,19 +89,24 @@ coef( robust_fit )
 ``` r
 le_robust_fit <- function( data , offset = 1952 ) {
   robust_fit <- rlm( lifeExp ~ I( year - offset ) , data = data )
-  #setNames( coef( robust_fit ) , c( "Intercept" , "Slope" ) )
+  setNames( coef( robust_fit ) , c( "intercept" , "slope" ) )
 }
 
 le_robust_fit( selected_country_info )
+```
 
-p + geom_point( ) + geom_smooth( method = "rlm" , aes( color = "rlm" ) , lwd = 0.5 )
+    ##  intercept      slope 
+    ## 48.0172254  0.5120964
+
+``` r
+p + geom_point( ) + geom_smooth( method = "rlm" , lwd = 0.5 )
 ```
 
 ![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-2-2.png)
 
 ``` r
 # quadratic
-quadratic_fit <- lm( lifeExp ~ I( year - 1952 ) + I( ( year - 1952 )^2) , data = selected_country_info )
+quadratic_fit <- lm( lifeExp ~ I( year - 1952 ) + I( ( year - 1952 )^2 ) , data = selected_country_info )
 
 coef( quadratic_fit )
 ```
@@ -106,13 +116,18 @@ coef( quadratic_fit )
 
 ``` r
 le_quadratic_fit <- function( data , offset = 1952 ){
-  quadratic_fit <- lm( lifeExp ~ I( year - offset ) + I( ( year - offset )^2) , data = data )
-  #coef( quadratic_fit )
+  quadratic_fit <- lm( lifeExp ~ I( year - offset ) + I( ( year - offset )^2 ) , data = data )
+  setNames( coef( quadratic_fit ) , c( "intercept" , "slope 1" , "slope 2" ) )
 }
 
 le_quadratic_fit( selected_country_info )
+```
 
-p + geom_point( ) + geom_smooth( method = "lm" , formula = y ~ x + I( x^2 ) , aes( color = "lm" ) , lwd = 0.5 )
+    ##   intercept     slope 1     slope 2 
+    ## 43.24529473  1.00413727 -0.00860768
+
+``` r
+p + geom_point( ) + geom_smooth( method = "lm" , formula = y ~ x + I( x^2 ) , lwd = 0.5 )
 ```
 
 ![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-2-3.png)
@@ -144,7 +159,12 @@ Working with a nested data frame
 ``` r
 # linear
 le_linear_fit( nested_gap$data[[25]] )
+```
 
+    ##  intercept      slope 
+    ## 47.1904815  0.5307149
+
+``` r
 le_linear_res <- map( nested_gap$data[1:2] , le_linear_fit )
 
 le_lin_fit_all <- nested_gap %>% 
@@ -153,21 +173,18 @@ le_lin_fit_all <- nested_gap %>%
 le_lin_fit_all$linear_fit[[25]]
 ```
 
-    ## 
-    ## Call:
-    ## lm(formula = lifeExp ~ I(year - offset), data = data)
-    ## 
-    ## Coefficients:
-    ##      (Intercept)  I(year - offset)  
-    ##          47.1905            0.5307
+    ##  intercept      slope 
+    ## 47.1904815  0.5307149
 
 ``` r
 tidy( le_lin_fit_all$linear_fit[[25]] )
 ```
 
-    ##               term   estimate  std.error statistic      p.value
-    ## 1      (Intercept) 47.1904815 2.09442675 22.531455 6.673840e-10
-    ## 2 I(year - offset)  0.5307149 0.06450755  8.227174 9.206217e-06
+    ## # A tibble: 2 × 2
+    ##       names          x
+    ##       <chr>      <dbl>
+    ## 1 intercept 47.1904815
+    ## 2     slope  0.5307149
 
 ``` r
 le_lin_fit_all <- le_lin_fit_all %>% 
@@ -176,9 +193,11 @@ le_lin_fit_all <- le_lin_fit_all %>%
 le_lin_fit_all$tidy[[25]]
 ```
 
-    ##               term   estimate  std.error statistic      p.value
-    ## 1      (Intercept) 47.1904815 2.09442675 22.531455 6.673840e-10
-    ## 2 I(year - offset)  0.5307149 0.06450755  8.227174 9.206217e-06
+    ## # A tibble: 2 × 2
+    ##       names          x
+    ##       <chr>      <dbl>
+    ## 1 intercept 47.1904815
+    ## 2     slope  0.5307149
 
 ``` r
 le_lin_coefs <- le_lin_fit_all %>% 
@@ -186,26 +205,56 @@ le_lin_coefs <- le_lin_fit_all %>%
   unnest( tidy )
 
 le_lin_ests <- le_lin_coefs %>% 
-  dplyr::select( continent:estimate ) %>% 
-  spread( key = "term" , value = "estimate" )
+  dplyr::select( continent:x ) %>% 
+  spread( key = "names" , value = "x" )
 
 knitr::kable( le_lin_ests %>% head( ) )
 ```
 
-| continent | country      |  (Intercept)|  I(year - offset)|
-|:----------|:-------------|------------:|-----------------:|
-| Africa    | Algeria      |     43.37497|         0.5692797|
-| Africa    | Angola       |     32.12665|         0.2093399|
-| Africa    | Benin        |     39.58851|         0.3342329|
-| Africa    | Botswana     |     52.92912|         0.0606685|
-| Africa    | Burkina Faso |     34.68469|         0.3639748|
-| Africa    | Burundi      |     40.57864|         0.1541343|
+| continent | country      |  intercept|      slope|
+|:----------|:-------------|----------:|----------:|
+| Africa    | Algeria      |   43.37497|  0.5692797|
+| Africa    | Angola       |   32.12665|  0.2093399|
+| Africa    | Benin        |   39.58851|  0.3342329|
+| Africa    | Botswana     |   52.92912|  0.0606685|
+| Africa    | Burkina Faso |   34.68469|  0.3639748|
+| Africa    | Burundi      |   40.57864|  0.1541343|
+
+``` r
+le_lin_fit_broom <- gapminder %>% 
+  group_by( continent , country ) %>% 
+  do( fit = lm( lifeExp ~ I( year - 1952 ) , . ) )
+
+le_lin_fit_broom %>% 
+  tidy( fit )
+```
+
+    ## Source: local data frame [284 x 7]
+    ## Groups: continent, country [142]
+    ## 
+    ##    continent      country           term    estimate  std.error  statistic
+    ##       <fctr>       <fctr>          <chr>       <dbl>      <dbl>      <dbl>
+    ## 1     Africa      Algeria    (Intercept) 43.37497436 0.71842024 60.3754908
+    ## 2     Africa      Algeria I(year - 1952)  0.56927972 0.02212707 25.7277493
+    ## 3     Africa       Angola    (Intercept) 32.12665385 0.76403549 42.0486406
+    ## 4     Africa       Angola I(year - 1952)  0.20933986 0.02353200  8.8959644
+    ## 5     Africa        Benin    (Intercept) 39.58851282 0.63788186 62.0624528
+    ## 6     Africa        Benin I(year - 1952)  0.33423287 0.01964652 17.0123200
+    ## 7     Africa     Botswana    (Intercept) 52.92911538 3.31904058 15.9471131
+    ## 8     Africa     Botswana I(year - 1952)  0.06066853 0.10222519  0.5934793
+    ## 9     Africa Burkina Faso    (Intercept) 34.68469231 1.11161365 31.2021109
+    ## 10    Africa Burkina Faso I(year - 1952)  0.36397483 0.03423728 10.6309510
+    ## # ... with 274 more rows, and 1 more variables: p.value <dbl>
 
 ``` r
 # robust
-
 le_robust_fit( nested_gap$data[[25]] )
+```
 
+    ##  intercept      slope 
+    ## 48.0172254  0.5120964
+
+``` r
 le_robust_res <- map( nested_gap$data[1:2] , le_robust_fit )
 
 le_rob_fit_all <- nested_gap %>% 
@@ -214,16 +263,8 @@ le_rob_fit_all <- nested_gap %>%
 le_rob_fit_all$robust_fit[[25]]
 ```
 
-    ## Call:
-    ## rlm(formula = lifeExp ~ I(year - offset), data = data)
-    ## Converged in 7 iterations
-    ## 
-    ## Coefficients:
-    ##      (Intercept) I(year - offset) 
-    ##       48.0172254        0.5120964 
-    ## 
-    ## Degrees of freedom: 12 total; 10 residual
-    ## Scale estimate: 3.58
+    ##  intercept      slope 
+    ## 48.0172254  0.5120964
 
 ``` r
 le_rob_fit_all <- le_rob_fit_all %>% 
@@ -232,9 +273,11 @@ le_rob_fit_all <- le_rob_fit_all %>%
 le_rob_fit_all$tidy[[25]]
 ```
 
-    ##               term   estimate  std.error statistic
-    ## 1      (Intercept) 48.0172254 2.12822457  22.56210
-    ## 2 I(year - offset)  0.5120964 0.06554851   7.81248
+    ## # A tibble: 2 × 2
+    ##       names          x
+    ##       <chr>      <dbl>
+    ## 1 intercept 48.0172254
+    ## 2     slope  0.5120964
 
 ``` r
 le_rob_coefs <- le_rob_fit_all %>% 
@@ -242,25 +285,56 @@ le_rob_coefs <- le_rob_fit_all %>%
   unnest( tidy )
 
 le_rob_ests <- le_rob_coefs %>% 
-  dplyr::select( continent:estimate ) %>% 
-  spread( key = "term" , value = "estimate" )
+  dplyr::select( continent:x ) %>% 
+  spread( key = "names" , value = "x" )
 
 knitr::kable( le_rob_ests %>% head( ) )
 ```
 
-| continent | country      |  (Intercept)|  I(year - offset)|
-|:----------|:-------------|------------:|-----------------:|
-| Africa    | Algeria      |     43.15800|         0.5758313|
-| Africa    | Angola       |     32.13493|         0.2090313|
-| Africa    | Benin        |     39.58851|         0.3342329|
-| Africa    | Botswana     |     52.92912|         0.0606685|
-| Africa    | Burkina Faso |     34.68469|         0.3639748|
-| Africa    | Burundi      |     40.57864|         0.1541343|
+| continent | country      |  intercept|      slope|
+|:----------|:-------------|----------:|----------:|
+| Africa    | Algeria      |   43.15800|  0.5758313|
+| Africa    | Angola       |   32.13493|  0.2090313|
+| Africa    | Benin        |   39.58851|  0.3342329|
+| Africa    | Botswana     |   52.92912|  0.0606685|
+| Africa    | Burkina Faso |   34.68469|  0.3639748|
+| Africa    | Burundi      |   40.57864|  0.1541343|
+
+``` r
+le_rob_fit_broom <- gapminder %>% 
+  group_by( continent , country ) %>% 
+  do( fit = rlm( lifeExp ~ I( year - 1952 ) , . ) )
+
+le_rob_fit_broom %>% 
+  tidy( fit )
+```
+
+    ## Source: local data frame [284 x 6]
+    ## Groups: continent, country [142]
+    ## 
+    ##    continent      country           term    estimate  std.error  statistic
+    ##       <fctr>       <fctr>          <chr>       <dbl>      <dbl>      <dbl>
+    ## 1     Africa      Algeria    (Intercept) 43.15800264 0.60099398 71.8110394
+    ## 2     Africa      Algeria I(year - 1952)  0.57583135 0.01851039 31.1085536
+    ## 3     Africa       Angola    (Intercept) 32.13492594 0.94094528 34.1517479
+    ## 4     Africa       Angola I(year - 1952)  0.20903132 0.02898076  7.2127625
+    ## 5     Africa        Benin    (Intercept) 39.58851282 0.63788186 62.0624528
+    ## 6     Africa        Benin I(year - 1952)  0.33423287 0.01964652 17.0123200
+    ## 7     Africa     Botswana    (Intercept) 52.92911538 3.31904058 15.9471131
+    ## 8     Africa     Botswana I(year - 1952)  0.06066853 0.10222519  0.5934793
+    ## 9     Africa Burkina Faso    (Intercept) 34.68469231 1.11161365 31.2021109
+    ## 10    Africa Burkina Faso I(year - 1952)  0.36397483 0.03423728 10.6309510
+    ## # ... with 274 more rows
 
 ``` r
 #quadratic
 le_quadratic_fit( nested_gap$data[[25]] )
+```
 
+    ##   intercept     slope 1     slope 2 
+    ## 43.24529473  1.00413727 -0.00860768
+
+``` r
 le_quad_res <- map( nested_gap$data[1:2] , le_quadratic_fit )
 
 le_quad_fit_all <- nested_gap %>% 
@@ -269,14 +343,8 @@ le_quad_fit_all <- nested_gap %>%
 le_quad_fit_all$quadratic_fit[[25]]
 ```
 
-    ## 
-    ## Call:
-    ## lm(formula = lifeExp ~ I(year - offset) + I((year - offset)^2), 
-    ##     data = data)
-    ## 
-    ## Coefficients:
-    ##          (Intercept)      I(year - offset)  I((year - offset)^2)  
-    ##            43.245295              1.004137             -0.008608
+    ##   intercept     slope 1     slope 2 
+    ## 43.24529473  1.00413727 -0.00860768
 
 ``` r
 le_quad_fit_all <- le_quad_fit_all %>% 
@@ -285,10 +353,12 @@ le_quad_fit_all <- le_quad_fit_all %>%
 le_quad_fit_all$tidy[[25]]
 ```
 
-    ##                   term    estimate   std.error statistic      p.value
-    ## 1          (Intercept) 43.24529473 2.298321138 18.816037 1.554212e-08
-    ## 2     I(year - offset)  1.00413727 0.194270208  5.168766 5.881359e-04
-    ## 3 I((year - offset)^2) -0.00860768 0.003403364 -2.529168 3.227941e-02
+    ## # A tibble: 3 × 2
+    ##       names           x
+    ##       <chr>       <dbl>
+    ## 1 intercept 43.24529473
+    ## 2   slope 1  1.00413727
+    ## 3   slope 2 -0.00860768
 
 ``` r
 le_quad_coefs <- le_quad_fit_all %>% 
@@ -296,20 +366,89 @@ le_quad_coefs <- le_quad_fit_all %>%
   unnest( tidy )
 
 le_quad_ests <- le_quad_coefs %>% 
-  dplyr::select( continent:estimate ) %>% 
-  spread( key = "term" , value = "estimate" )
+  dplyr::select( continent:x ) %>% 
+  spread( key = "names" , value = "x" ) 
 
 knitr::kable( le_quad_ests %>% head( ) )
 ```
 
-| continent | country      |  (Intercept)|  I((year - offset)^2)|  I(year - offset)|
-|:----------|:-------------|------------:|---------------------:|-----------------:|
-| Africa    | Algeria      |     41.94224|            -0.0031260|         0.7412083|
-| Africa    | Angola       |     30.11767|            -0.0043832|         0.4504179|
-| Africa    | Benin        |     37.86994|            -0.0037496|         0.5404620|
-| Africa    | Botswana     |     44.91197|            -0.0174919|         1.0227257|
-| Africa    | Burkina Faso |     31.54945|            -0.0068405|         0.7402045|
-| Africa    | Burundi      |     39.26621|            -0.0028635|         0.3116255|
+| continent | country      |  intercept|    slope 1|     slope 2|
+|:----------|:-------------|----------:|----------:|-----------:|
+| Africa    | Algeria      |   41.94224|  0.7412083|  -0.0031260|
+| Africa    | Angola       |   30.11767|  0.4504179|  -0.0043832|
+| Africa    | Benin        |   37.86994|  0.5404620|  -0.0037496|
+| Africa    | Botswana     |   44.91197|  1.0227257|  -0.0174919|
+| Africa    | Burkina Faso |   31.54945|  0.7402045|  -0.0068405|
+| Africa    | Burundi      |   39.26621|  0.3116255|  -0.0028635|
+
+``` r
+le_quad_fit_broom <- gapminder %>% 
+  group_by( continent , country ) %>% 
+  do( fit = rlm( lifeExp ~ I( year - 1952 ) + I( ( year - 1952 )^2 ) , . ) )
+
+le_quad_fit_broom %>% 
+  tidy( fit )
+```
+
+    ## Source: local data frame [426 x 6]
+    ## Groups: continent, country [142]
+    ## 
+    ##    continent  country               term     estimate    std.error
+    ##       <fctr>   <fctr>              <chr>        <dbl>        <dbl>
+    ## 1     Africa  Algeria        (Intercept) 41.951551299 0.8291322824
+    ## 2     Africa  Algeria     I(year - 1952)  0.739640586 0.0700840706
+    ## 3     Africa  Algeria I((year - 1952)^2) -0.003100787 0.0012277828
+    ## 4     Africa   Angola        (Intercept) 30.043042009 0.4447693000
+    ## 5     Africa   Angola     I(year - 1952)  0.464016821 0.0375950179
+    ## 6     Africa   Angola I((year - 1952)^2) -0.004714918 0.0006586164
+    ## 7     Africa    Benin        (Intercept) 37.891662339 0.2193079128
+    ## 8     Africa    Benin     I(year - 1952)  0.532687034 0.0185374416
+    ## 9     Africa    Benin I((year - 1952)^2) -0.003481666 0.0003247522
+    ## 10    Africa Botswana        (Intercept) 44.935569344 2.8656565176
+    ## # ... with 416 more rows, and 1 more variables: statistic <dbl>
+
+``` r
+#linear and robust comparison
+
+ggplot( le_lin_ests , aes( x = intercept , y = slope ) ) +
+  geom_point( ) +
+  geom_smooth( se = FALSE )
+```
+
+![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-3-1.png)
+
+``` r
+ggplot( le_rob_ests , aes( x = intercept , y = slope ) ) +
+  geom_point( ) +
+  geom_smooth( se = FALSE )
+```
+
+![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-3-2.png)
+
+``` r
+le_lin_rob_est <- left_join( le_lin_ests , le_rob_ests , by = c( "continent", "country" ) )
+
+le_lin_rob_est <- le_lin_rob_est %>% 
+  mutate( slope_diff = (slope.x - slope.y ) , intercept_diff = (intercept.x - intercept.y ) ) %>%  
+  dplyr::select( country , slope_diff , intercept_diff )
+
+knitr::kable( le_lin_rob_est %>% head( ) )
+```
+
+| country      |  slope\_diff|  intercept\_diff|
+|:-------------|------------:|----------------:|
+| Algeria      |   -0.0065516|        0.2169717|
+| Angola       |    0.0003085|       -0.0082721|
+| Benin        |    0.0000000|        0.0000000|
+| Botswana     |    0.0000000|        0.0000000|
+| Burkina Faso |    0.0000000|        0.0000000|
+| Burundi      |    0.0000000|        0.0000000|
+
+``` r
+ggplot( le_lin_rob_est , aes( x = intercept_diff , y = slope_diff ) ) + geom_point( ) 
+```
+
+![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-3-3.png)
 
 Working with a list
 -------------------
@@ -575,3 +714,5 @@ pmap( matches_list , substring )
 <http://statistics.ats.ucla.edu/stat/r/faq/smooths.htm>
 
 <http://www.theanalysisfactor.com/r-tutorial-4/>
+
+<http://www.stat.yale.edu/Courses/1997-98/101/linreg.htm>

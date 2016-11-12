@@ -43,12 +43,12 @@ coef( linear_fit )
 
 le_linear_fit <- function( data , offset = 1952 ){
   linear_fit <- lm( lifeExp ~ I( year - offset ) , data = data )
-  #setNames( coef( linear_fit ) , c( "Intercept" , "Slope" ) )
+  setNames( coef( linear_fit ) , c( "intercept" , "slope" ) )
 }
 
 le_linear_fit( selected_country_info )
 
-p + geom_point( ) + geom_smooth( method = "lm" , aes( color = "lm" ) , lwd = 0.5 )
+p + geom_point( ) + geom_smooth( method = "lm" , lwd = 0.5 )
 
 # robust 
 robust_fit <- rlm( lifeExp ~ I( year - 1952 ) , data = selected_country_info )
@@ -57,31 +57,31 @@ coef( robust_fit )
 
 le_robust_fit <- function( data , offset = 1952 ) {
   robust_fit <- rlm( lifeExp ~ I( year - offset ) , data = data )
-  #setNames( coef( robust_fit ) , c( "Intercept" , "Slope" ) )
+  setNames( coef( robust_fit ) , c( "intercept" , "slope" ) )
 }
 
 le_robust_fit( selected_country_info )
 
-p + geom_point( ) + geom_smooth( method = "rlm" , aes( color = "rlm" ) , lwd = 0.5 )
+p + geom_point( ) + geom_smooth( method = "rlm" , lwd = 0.5 )
 
 # quadratic
-quadratic_fit <- lm( lifeExp ~ I( year - 1952 ) + I( ( year - 1952 )^2) , data = selected_country_info )
+quadratic_fit <- lm( lifeExp ~ I( year - 1952 ) + I( ( year - 1952 )^2 ) , data = selected_country_info )
 
 coef( quadratic_fit )
 
 le_quadratic_fit <- function( data , offset = 1952 ){
-  quadratic_fit <- lm( lifeExp ~ I( year - offset ) + I( ( year - offset )^2) , data = data )
-  #coef( quadratic_fit )
+  quadratic_fit <- lm( lifeExp ~ I( year - offset ) + I( ( year - offset )^2 ) , data = data )
+  setNames( coef( quadratic_fit ) , c( "intercept" , "slope 1" , "slope 2" ) )
 }
 
 le_quadratic_fit( selected_country_info )
 
-p + geom_point( ) + geom_smooth( method = "lm" , formula = y ~ x + I( x^2 ) , aes( color = "lm" ) , lwd = 0.5 )
+p + geom_point( ) + geom_smooth( method = "lm" , formula = y ~ x + I( x^2 ) , lwd = 0.5 )
 ``` 
 
 ##Working with a nested data frame
 
-```{r warning=FALSE}
+```{r warning=FALSE,dev='CairoPNG'}
 ( nested_gap <- gapminder %>% 
     group_by( continent , country ) %>% 
     nest( ) )
@@ -108,13 +108,19 @@ le_lin_coefs <- le_lin_fit_all %>%
   unnest( tidy )
 
 le_lin_ests <- le_lin_coefs %>% 
-  dplyr::select( continent:estimate ) %>% 
-  spread( key = "term" , value = "estimate" )
+  dplyr::select( continent:x ) %>% 
+  spread( key = "names" , value = "x" )
 
 knitr::kable( le_lin_ests %>% head( ) )
 
-# robust
+le_lin_fit_broom <- gapminder %>% 
+  group_by( continent , country ) %>% 
+  do( fit = lm( lifeExp ~ I( year - 1952 ) , . ) )
 
+le_lin_fit_broom %>% 
+  tidy( fit )
+
+# robust
 le_robust_fit( nested_gap$data[[25]] )
 
 le_robust_res <- map( nested_gap$data[1:2] , le_robust_fit )
@@ -134,10 +140,17 @@ le_rob_coefs <- le_rob_fit_all %>%
   unnest( tidy )
 
 le_rob_ests <- le_rob_coefs %>% 
-  dplyr::select( continent:estimate ) %>% 
-  spread( key = "term" , value = "estimate" )
+  dplyr::select( continent:x ) %>% 
+  spread( key = "names" , value = "x" )
 
 knitr::kable( le_rob_ests %>% head( ) )
+
+le_rob_fit_broom <- gapminder %>% 
+  group_by( continent , country ) %>% 
+  do( fit = rlm( lifeExp ~ I( year - 1952 ) , . ) )
+
+le_rob_fit_broom %>% 
+  tidy( fit )
 
 #quadratic
 le_quadratic_fit( nested_gap$data[[25]] )
@@ -159,10 +172,38 @@ le_quad_coefs <- le_quad_fit_all %>%
   unnest( tidy )
 
 le_quad_ests <- le_quad_coefs %>% 
-  dplyr::select( continent:estimate ) %>% 
-  spread( key = "term" , value = "estimate" )
+  dplyr::select( continent:x ) %>% 
+  spread( key = "names" , value = "x" ) 
 
 knitr::kable( le_quad_ests %>% head( ) )
+
+le_quad_fit_broom <- gapminder %>% 
+  group_by( continent , country ) %>% 
+  do( fit = rlm( lifeExp ~ I( year - 1952 ) + I( ( year - 1952 )^2 ) , . ) )
+
+le_quad_fit_broom %>% 
+  tidy( fit )
+
+#linear and robust comparison
+
+ggplot( le_lin_ests , aes( x = intercept , y = slope ) ) +
+  geom_point( ) +
+  geom_smooth( se = FALSE )
+
+
+ggplot( le_rob_ests , aes( x = intercept , y = slope ) ) +
+  geom_point( ) +
+  geom_smooth( se = FALSE )
+
+le_lin_rob_est <- left_join( le_lin_ests , le_rob_ests , by = c( "continent", "country" ) )
+
+le_lin_rob_est <- le_lin_rob_est %>% 
+  mutate( slope_diff = (slope.x - slope.y ) , intercept_diff = (intercept.x - intercept.y ) ) %>%  
+  dplyr::select( country , slope_diff , intercept_diff )
+
+knitr::kable( le_lin_rob_est %>% head( ) )
+
+ggplot( le_lin_rob_est , aes( x = intercept_diff , y = slope_diff ) ) + geom_point( ) 
 ```
 
 ##Working with a list
@@ -231,6 +272,8 @@ http://www.alastairsanderson.com/R/tutorials/robust-regression-in-R
 http://statistics.ats.ucla.edu/stat/r/faq/smooths.htm
 
 http://www.theanalysisfactor.com/r-tutorial-4/
+
+http://www.stat.yale.edu/Courses/1997-98/101/linreg.htm
 
 
 
