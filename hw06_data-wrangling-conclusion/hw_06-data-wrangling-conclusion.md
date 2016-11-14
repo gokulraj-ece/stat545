@@ -1,7 +1,7 @@
 Data Wrangling Conclusion
 ================
 Gokul Raj Suresh Kumar
-2016-11-13
+2016-11-14
 
 Data Wrangling Conclusion
 =========================
@@ -46,6 +46,15 @@ selected_country <- "China"
 p <- selected_country_info %>% 
   ggplot( aes( x = year , y = lifeExp ) )
 
+p + geom_point( ) + 
+  geom_smooth( method = "lm" , aes( colour = "lm" ) , lwd = 0.5 , se = FALSE ) + 
+  geom_smooth( method = "rlm" , aes( colour = "rlm" ) , lwd = 0.5 , se = FALSE ) +
+  geom_smooth( method = "lm" , formula = y ~ x + I( x^2 ) , lwd = 0.5 , se = FALSE )
+```
+
+![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-2-1.png)
+
+``` r
 # linear
 linear_fit <- lm( lifeExp ~ I( year - 1952 ) , data = selected_country_info )
 
@@ -66,12 +75,6 @@ le_linear_fit( selected_country_info )
 
     ##  intercept      slope 
     ## 47.1904815  0.5307149
-
-``` r
-p + geom_point( ) + geom_smooth( method = "lm" , lwd = 0.5 )
-```
-
-![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-2-1.png)
 
 ``` r
 # robust 
@@ -96,12 +99,6 @@ le_robust_fit( selected_country_info )
     ## 48.0172254  0.5120964
 
 ``` r
-p + geom_point( ) + geom_smooth( method = "rlm" , lwd = 0.5 )
-```
-
-![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-2-2.png)
-
-``` r
 # quadratic
 quadratic_fit <- lm( lifeExp ~ I( year - 1952 ) + I( ( year - 1952 )^2 ) , data = selected_country_info )
 
@@ -122,12 +119,6 @@ le_quadratic_fit( selected_country_info )
 
     ##   intercept     slope 1     slope 2 
     ## 43.24529473  1.00413727 -0.00860768
-
-``` r
-p + geom_point( ) + geom_smooth( method = "lm" , formula = y ~ x + I( x^2 ) , lwd = 0.5 )
-```
-
-![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-2-3.png)
 
 Working with a nested data frame
 --------------------------------
@@ -407,22 +398,6 @@ le_quad_fit_broom %>%
 ``` r
 #linear and robust comparison
 
-ggplot( le_lin_ests , aes( x = intercept , y = slope ) ) +
-  geom_point( ) +
-  geom_smooth( se = FALSE )
-```
-
-![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-3-1.png)
-
-``` r
-ggplot( le_rob_ests , aes( x = intercept , y = slope ) ) +
-  geom_point( ) +
-  geom_smooth( se = FALSE )
-```
-
-![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-3-2.png)
-
-``` r
 le_lin_rob_est <- left_join( le_lin_ests , le_rob_ests , by = c( "continent", "country" ) )
 
 le_lin_rob_est <- le_lin_rob_est %>% 
@@ -442,10 +417,60 @@ knitr::kable( le_lin_rob_est %>% head( ) )
 | Burundi      |    0.0000000|        0.0000000|
 
 ``` r
-ggplot( le_lin_rob_est , aes( x = intercept_diff , y = slope_diff ) ) + geom_point( ) 
+ggplot( le_lin_rob_est , aes( x = intercept_diff , y = slope_diff ) ) + geom_point( )
 ```
 
-![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-3-3.png)
+![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-3-1.png)
+
+``` r
+le_lin_rob_est %>% filter( ( intercept_diff < -1 ) | ( slope_diff < -0.075 ) )
+```
+
+    ## # A tibble: 7 × 3
+    ##        country  slope_diff intercept_diff
+    ##         <fctr>       <dbl>          <dbl>
+    ## 1      Lesotho -0.10111163      1.6412003
+    ## 2    Mauritius  0.03618484     -1.4281125
+    ## 3       Rwanda -0.07820998      0.4262397
+    ## 4 South Africa -0.11163269      1.8028066
+    ## 5    Swaziland -0.11509240      1.8377640
+    ## 6     Cambodia  0.02418151     -2.5259164
+    ## 7     Bulgaria  0.04791736     -1.8368321
+
+``` r
+interesting_countries <- 
+  c( "Mauritius" , "Cambodia" , "Bulgaria" , "Lesotho" , "Rwanda" , "South Africa" , "Swaziland" )  
+
+( interesting_countries_info <- gapminder %>% 
+    filter( country %in% interesting_countries ) )
+```
+
+    ## # A tibble: 84 × 6
+    ##     country continent  year lifeExp     pop gdpPercap
+    ##      <fctr>    <fctr> <int>   <dbl>   <int>     <dbl>
+    ## 1  Bulgaria    Europe  1952   59.60 7274900  2444.287
+    ## 2  Bulgaria    Europe  1957   66.61 7651254  3008.671
+    ## 3  Bulgaria    Europe  1962   69.51 8012946  4254.338
+    ## 4  Bulgaria    Europe  1967   70.42 8310226  5577.003
+    ## 5  Bulgaria    Europe  1972   70.90 8576200  6597.494
+    ## 6  Bulgaria    Europe  1977   70.81 8797022  7612.240
+    ## 7  Bulgaria    Europe  1982   71.08 8892098  8224.192
+    ## 8  Bulgaria    Europe  1987   71.34 8971958  8239.855
+    ## 9  Bulgaria    Europe  1992   71.19 8658506  6302.623
+    ## 10 Bulgaria    Europe  1997   70.32 8066057  5970.389
+    ## # ... with 74 more rows
+
+``` r
+p <- interesting_countries_info %>% 
+  ggplot( aes( x = year , y = lifeExp ) )
+
+p + geom_point( ) + 
+  facet_wrap( ~ country ) + 
+  geom_smooth( method = "lm" , lwd = 0.5 , aes( colour = "lm" ) , se = FALSE ) + 
+  geom_smooth( method = "rlm" , lwd = 0.5 , aes( colour = "rlm" ) , se = FALSE )
+```
+
+![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-3-2.png)
 
 <http://www.alastairsanderson.com/R/tutorials/robust-regression-in-R>
 
