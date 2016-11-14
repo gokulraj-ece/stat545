@@ -192,13 +192,11 @@ knitr::kable( le_lin_rob_est %>% head( ) )
 
 ggplot( le_lin_rob_est , aes( x = intercept_diff , y = slope_diff ) ) + geom_point( )
 
-le_lin_rob_est %>% filter( ( intercept_diff < -1 ) | ( slope_diff < -0.075 ) )
+interesting_countries <- le_lin_rob_est %>% filter( ( intercept_diff < -1 ) | ( slope_diff < -0.075 ) )
 
-interesting_countries <- 
-  c( "Mauritius" , "Cambodia" , "Bulgaria" , "Lesotho" , "Rwanda" , "South Africa" , "Swaziland" )  
+interesting_countries_info <-  semi_join( gapminder , interesting_countries , by = "country" )
 
-( interesting_countries_info <- gapminder %>% 
-    filter( country %in% interesting_countries ) )
+knitr::kable( interesting_countries_info %>% head( ) )
 
 p <- interesting_countries_info %>% 
   ggplot( aes( x = year , y = lifeExp ) )
@@ -207,8 +205,6 @@ p + geom_point( ) +
   facet_wrap( ~ country ) + 
   geom_smooth( method = "lm" , lwd = 0.5 , aes( colour = "lm" ) , se = FALSE ) + 
   geom_smooth( method = "rlm" , lwd = 0.5 , aes( colour = "rlm" ) , se = FALSE )
-
-
 ```
 
 

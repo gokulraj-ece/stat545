@@ -423,42 +423,21 @@ ggplot( le_lin_rob_est , aes( x = intercept_diff , y = slope_diff ) ) + geom_poi
 ![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
 ``` r
-le_lin_rob_est %>% filter( ( intercept_diff < -1 ) | ( slope_diff < -0.075 ) )
+interesting_countries <- le_lin_rob_est %>% filter( ( intercept_diff < -1 ) | ( slope_diff < -0.075 ) )
+
+interesting_countries_info <-  semi_join( gapminder , interesting_countries , by = "country" )
+
+knitr::kable( interesting_countries_info %>% head( ) )
 ```
 
-    ## # A tibble: 7 × 3
-    ##        country  slope_diff intercept_diff
-    ##         <fctr>       <dbl>          <dbl>
-    ## 1      Lesotho -0.10111163      1.6412003
-    ## 2    Mauritius  0.03618484     -1.4281125
-    ## 3       Rwanda -0.07820998      0.4262397
-    ## 4 South Africa -0.11163269      1.8028066
-    ## 5    Swaziland -0.11509240      1.8377640
-    ## 6     Cambodia  0.02418151     -2.5259164
-    ## 7     Bulgaria  0.04791736     -1.8368321
-
-``` r
-interesting_countries <- 
-  c( "Mauritius" , "Cambodia" , "Bulgaria" , "Lesotho" , "Rwanda" , "South Africa" , "Swaziland" )  
-
-( interesting_countries_info <- gapminder %>% 
-    filter( country %in% interesting_countries ) )
-```
-
-    ## # A tibble: 84 × 6
-    ##     country continent  year lifeExp     pop gdpPercap
-    ##      <fctr>    <fctr> <int>   <dbl>   <int>     <dbl>
-    ## 1  Bulgaria    Europe  1952   59.60 7274900  2444.287
-    ## 2  Bulgaria    Europe  1957   66.61 7651254  3008.671
-    ## 3  Bulgaria    Europe  1962   69.51 8012946  4254.338
-    ## 4  Bulgaria    Europe  1967   70.42 8310226  5577.003
-    ## 5  Bulgaria    Europe  1972   70.90 8576200  6597.494
-    ## 6  Bulgaria    Europe  1977   70.81 8797022  7612.240
-    ## 7  Bulgaria    Europe  1982   71.08 8892098  8224.192
-    ## 8  Bulgaria    Europe  1987   71.34 8971958  8239.855
-    ## 9  Bulgaria    Europe  1992   71.19 8658506  6302.623
-    ## 10 Bulgaria    Europe  1997   70.32 8066057  5970.389
-    ## # ... with 74 more rows
+| country | continent |  year|  lifeExp|      pop|  gdpPercap|
+|:--------|:----------|-----:|--------:|--------:|----------:|
+| Lesotho | Africa    |  1952|   42.138|   748747|   298.8462|
+| Lesotho | Africa    |  1957|   45.047|   813338|   335.9971|
+| Lesotho | Africa    |  1962|   47.747|   893143|   411.8006|
+| Lesotho | Africa    |  1967|   48.492|   996380|   498.6390|
+| Lesotho | Africa    |  1972|   49.767|  1116779|   496.5816|
+| Lesotho | Africa    |  1977|   52.208|  1251524|   745.3695|
 
 ``` r
 p <- interesting_countries_info %>% 
