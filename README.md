@@ -24,7 +24,7 @@ These lines pointed out by [Jennifer Bryan](https://github.com/jennybc) in the f
 
 Apart from that, I wanted to learn R.
 
-## Table of Contents - STAT 545A
+## Table of Contents - STAT 545A and STAT547M
 
 #### Editing README.md and using R Markdown
 
@@ -60,8 +60,12 @@ Apart from that, I wanted to learn R.
 + The resultant Markdown document:
 [`hw05_factor-figure-management.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw05_factor-figure-management/hw05_factor-figure-management.md).
 
+#### Data Wrangling Conclusion
 
-
++ Main R Markdown document:
+[`hw_06-data-wrangling-conclusion.Rmd`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw06_data-wrangling-conclusion/hw_06-data-wrangling-conclusion.Rmd)
++ The resultant Markdown document:
+[`hw_06-data-wrangling-conclusion.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw06_data-wrangling-conclusion/hw_06-data-wrangling-conclusion.md)
 
 
 
