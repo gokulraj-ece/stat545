@@ -4,7 +4,7 @@ Gokul Raj Suresh Kumar
 2016-11-14
 
 Data Wrangling Conclusion
-=========================
+-------------------------
 
 #### Loading the required packages
 
@@ -16,46 +16,48 @@ library(MASS)
 library(broom)
 ```
 
-Writing Functions
------------------
+Writing functions to do `linear`, `robust` and `quadratic` regression
+---------------------------------------------------------------------
 
 ``` r
-selected_country <- "China"
+## Choosing a specific country for the function to operate upon
 
-( selected_country_info <- gapminder %>% 
-    filter( country == selected_country ) )
+knitr::kable( ( selected_country_info <- gapminder %>% 
+                  filter( country == "China" ) ) %>% 
+                head( ) )
 ```
 
-    ## # A tibble: 12 × 6
-    ##    country continent  year  lifeExp        pop gdpPercap
-    ##     <fctr>    <fctr> <int>    <dbl>      <int>     <dbl>
-    ## 1    China      Asia  1952 44.00000  556263527  400.4486
-    ## 2    China      Asia  1957 50.54896  637408000  575.9870
-    ## 3    China      Asia  1962 44.50136  665770000  487.6740
-    ## 4    China      Asia  1967 58.38112  754550000  612.7057
-    ## 5    China      Asia  1972 63.11888  862030000  676.9001
-    ## 6    China      Asia  1977 63.96736  943455000  741.2375
-    ## 7    China      Asia  1982 65.52500 1000281000  962.4214
-    ## 8    China      Asia  1987 67.27400 1084035000 1378.9040
-    ## 9    China      Asia  1992 68.69000 1164970000 1655.7842
-    ## 10   China      Asia  1997 70.42600 1230075000 2289.2341
-    ## 11   China      Asia  2002 72.02800 1280400000 3119.2809
-    ## 12   China      Asia  2007 72.96100 1318683096 4959.1149
+| country | continent |  year|   lifeExp|        pop|  gdpPercap|
+|:--------|:----------|-----:|---------:|----------:|----------:|
+| China   | Asia      |  1952|  44.00000|  556263527|   400.4486|
+| China   | Asia      |  1957|  50.54896|  637408000|   575.9870|
+| China   | Asia      |  1962|  44.50136|  665770000|   487.6740|
+| China   | Asia      |  1967|  58.38112|  754550000|   612.7057|
+| China   | Asia      |  1972|  63.11888|  862030000|   676.9001|
+| China   | Asia      |  1977|  63.96736|  943455000|   741.2375|
 
 ``` r
+## Plotting the data before fitting the regression
+
+## The 3 types of regression are superimposed on the same plot
+
 p <- selected_country_info %>% 
   ggplot( aes( x = year , y = lifeExp ) )
 
 p + geom_point( ) + 
-  geom_smooth( method = "lm" , aes( colour = "lm" ) , lwd = 0.5 , se = FALSE ) + 
-  geom_smooth( method = "rlm" , aes( colour = "rlm" ) , lwd = 0.5 , se = FALSE ) +
-  geom_smooth( method = "lm" , formula = y ~ x + I( x^2 ) , lwd = 0.5 , se = FALSE )
+  geom_smooth( method = "lm" , aes( colour = "linear" ) , lwd = 0.5 , se = FALSE ) + 
+  geom_smooth( method = "rlm" , aes( colour = "robust" ) , lwd = 0.5 , se = FALSE ) +
+  geom_smooth( method = "lm" , formula = y ~ x + I( x^2 ) , aes( colour = "quadratic" ) , lwd = 0.5 , se = FALSE ) +
+  scale_color_manual( name = "" , values = c( "linear" = "blue" , "robust" = "orange" , "quadratic" = "red" ) )
 ```
 
 ![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-2-1.png)
 
 ``` r
-# linear
+## Fitting linear regression ( based on Jenny's implementation )
+
+## Implementing logic to fit into the function
+
 linear_fit <- lm( lifeExp ~ I( year - 1952 ) , data = selected_country_info )
 
 coef( linear_fit )
@@ -65,10 +67,14 @@ coef( linear_fit )
     ##     47.1904815      0.5307149
 
 ``` r
+## Implementing the above logic into a function
+
 le_linear_fit <- function( data , offset = 1952 ){
   linear_fit <- lm( lifeExp ~ I( year - offset ) , data = data )
   setNames( coef( linear_fit ) , c( "intercept" , "slope" ) )
 }
+
+## Smell testing to see if the result obtained above matches
 
 le_linear_fit( selected_country_info )
 ```
@@ -77,7 +83,10 @@ le_linear_fit( selected_country_info )
     ## 47.1904815  0.5307149
 
 ``` r
-# robust 
+## Fitting robust regression 
+
+## Implementing logic to fit into the function
+
 robust_fit <- rlm( lifeExp ~ I( year - 1952 ) , data = selected_country_info )
 
 coef( robust_fit )
@@ -87,10 +96,14 @@ coef( robust_fit )
     ##     48.0172254      0.5120964
 
 ``` r
+## Implementing the above logic into a function
+
 le_robust_fit <- function( data , offset = 1952 ) {
   robust_fit <- rlm( lifeExp ~ I( year - offset ) , data = data )
   setNames( coef( robust_fit ) , c( "intercept" , "slope" ) )
 }
+
+## Smell testing to see if the result obtained above matches
 
 le_robust_fit( selected_country_info )
 ```
@@ -99,7 +112,10 @@ le_robust_fit( selected_country_info )
     ## 48.0172254  0.5120964
 
 ``` r
-# quadratic
+## Fitting quadratic regression 
+
+## Implementing logic to fit into the function
+
 quadratic_fit <- lm( lifeExp ~ I( year - 1952 ) + I( ( year - 1952 )^2 ) , data = selected_country_info )
 
 coef( quadratic_fit )
@@ -109,10 +125,14 @@ coef( quadratic_fit )
     ##        43.24529473         1.00413727        -0.00860768
 
 ``` r
+## Implementing the above logic into a function
+
 le_quadratic_fit <- function( data , offset = 1952 ){
   quadratic_fit <- lm( lifeExp ~ I( year - offset ) + I( ( year - offset )^2 ) , data = data )
   setNames( coef( quadratic_fit ) , c( "intercept" , "slope 1" , "slope 2" ) )
 }
+
+## Smell testing to see if the result obtained above matches
 
 le_quadratic_fit( selected_country_info )
 ```
@@ -124,28 +144,30 @@ Working with a nested data frame
 --------------------------------
 
 ``` r
-( nested_gap <- gapminder %>% 
-    group_by( continent , country ) %>% 
-    nest( ) )
+## Creating a nested version of gapminder df
+
+nested_gap <- gapminder %>% 
+  group_by( continent , country ) %>% 
+  nest( ) %>% 
+  print( n = 5 ) 
 ```
 
     ## # A tibble: 142 × 3
-    ##    continent     country              data
-    ##       <fctr>      <fctr>            <list>
-    ## 1       Asia Afghanistan <tibble [12 × 4]>
-    ## 2     Europe     Albania <tibble [12 × 4]>
-    ## 3     Africa     Algeria <tibble [12 × 4]>
-    ## 4     Africa      Angola <tibble [12 × 4]>
-    ## 5   Americas   Argentina <tibble [12 × 4]>
-    ## 6    Oceania   Australia <tibble [12 × 4]>
-    ## 7     Europe     Austria <tibble [12 × 4]>
-    ## 8       Asia     Bahrain <tibble [12 × 4]>
-    ## 9       Asia  Bangladesh <tibble [12 × 4]>
-    ## 10    Europe     Belgium <tibble [12 × 4]>
-    ## # ... with 132 more rows
+    ##   continent     country              data
+    ##      <fctr>      <fctr>            <list>
+    ## 1      Asia Afghanistan <tibble [12 × 4]>
+    ## 2    Europe     Albania <tibble [12 × 4]>
+    ## 3    Africa     Algeria <tibble [12 × 4]>
+    ## 4    Africa      Angola <tibble [12 × 4]>
+    ## 5  Americas   Argentina <tibble [12 × 4]>
+    ## # ... with 137 more rows
 
 ``` r
-# linear
+## Mapping Linear regression to a nested df ( based on Jenny's implementation )
+
+## Smell testing to see if the linear regression function implemented 
+## earlier is compatible. 25 represents China in the nested data frame
+
 le_linear_fit( nested_gap$data[[25]] )
 ```
 
@@ -153,10 +175,40 @@ le_linear_fit( nested_gap$data[[25]] )
     ## 47.1904815  0.5307149
 
 ``` r
-le_linear_res <- map( nested_gap$data[1:2] , le_linear_fit )
+## Smell testing the mapping of the first two list columns
+## before scaling it to the whole data frame
+
+map( nested_gap$data[1:2] , le_linear_fit )
+```
+
+    ## [[1]]
+    ##  intercept      slope 
+    ## 29.9072949  0.2753287 
+    ## 
+    ## [[2]]
+    ##  intercept      slope 
+    ## 59.2291282  0.3346832
+
+``` r
+## Mapping the linear regression function to the entire nested dataframe
 
 le_lin_fit_all <- nested_gap %>% 
-  mutate( linear_fit = map( data , le_linear_fit ) )
+  mutate( linear_fit = map( data , le_linear_fit ) ) %>% 
+  print( n = 5 )
+```
+
+    ## # A tibble: 142 × 4
+    ##   continent     country              data linear_fit
+    ##      <fctr>      <fctr>            <list>     <list>
+    ## 1      Asia Afghanistan <tibble [12 × 4]>  <dbl [2]>
+    ## 2    Europe     Albania <tibble [12 × 4]>  <dbl [2]>
+    ## 3    Africa     Algeria <tibble [12 × 4]>  <dbl [2]>
+    ## 4    Africa      Angola <tibble [12 × 4]>  <dbl [2]>
+    ## 5  Americas   Argentina <tibble [12 × 4]>  <dbl [2]>
+    ## # ... with 137 more rows
+
+``` r
+## Smell testing to see if the regression was mapped correctly
 
 le_lin_fit_all$linear_fit[[25]]
 ```
@@ -165,6 +217,8 @@ le_lin_fit_all$linear_fit[[25]]
     ## 47.1904815  0.5307149
 
 ``` r
+## Using the broom package's tidy function to extract tidy information
+
 tidy( le_lin_fit_all$linear_fit[[25]] )
 ```
 
@@ -175,8 +229,25 @@ tidy( le_lin_fit_all$linear_fit[[25]] )
     ## 2     slope  0.5307149
 
 ``` r
+## Mapping the tidy function to the entire nested dataframe
+
 le_lin_fit_all <- le_lin_fit_all %>% 
-  mutate( tidy = map( linear_fit , tidy ) )
+  mutate( tidy = map( linear_fit , tidy ) ) %>% 
+  print( n = 5 )
+```
+
+    ## # A tibble: 142 × 5
+    ##   continent     country              data linear_fit             tidy
+    ##      <fctr>      <fctr>            <list>     <list>           <list>
+    ## 1      Asia Afghanistan <tibble [12 × 4]>  <dbl [2]> <tibble [2 × 2]>
+    ## 2    Europe     Albania <tibble [12 × 4]>  <dbl [2]> <tibble [2 × 2]>
+    ## 3    Africa     Algeria <tibble [12 × 4]>  <dbl [2]> <tibble [2 × 2]>
+    ## 4    Africa      Angola <tibble [12 × 4]>  <dbl [2]> <tibble [2 × 2]>
+    ## 5  Americas   Argentina <tibble [12 × 4]>  <dbl [2]> <tibble [2 × 2]>
+    ## # ... with 137 more rows
+
+``` r
+## Smell testing to see if tidy was mapped correctly
 
 le_lin_fit_all$tidy[[25]]
 ```
@@ -188,15 +259,30 @@ le_lin_fit_all$tidy[[25]]
     ## 2     slope  0.5307149
 
 ``` r
-le_lin_coefs <- le_lin_fit_all %>% 
-  dplyr::select( continent , country , tidy ) %>% 
-  unnest( tidy )
+## Simplifying to a normal tibble by retaining just the needed information
 
-le_lin_ests <- le_lin_coefs %>% 
-  dplyr::select( continent:x ) %>% 
-  spread( key = "names" , value = "x" )
+knitr::kable( ( le_lin_coefs <- le_lin_fit_all %>% 
+                  dplyr::select( continent , country , tidy ) %>% 
+                  unnest( tidy ) ) %>% 
+                head( ) )
+```
 
-knitr::kable( le_lin_ests %>% head( ) )
+| continent | country     | names     |           x|
+|:----------|:------------|:----------|-----------:|
+| Asia      | Afghanistan | intercept |  29.9072949|
+| Asia      | Afghanistan | slope     |   0.2753287|
+| Europe    | Albania     | intercept |  59.2291282|
+| Europe    | Albania     | slope     |   0.3346832|
+| Africa    | Algeria     | intercept |  43.3749744|
+| Africa    | Algeria     | slope     |   0.5692797|
+
+``` r
+## Reshaping the data into a consumable format for exploratory analysis
+
+knitr::kable( ( le_lin_ests <- le_lin_coefs %>% 
+                  dplyr::select( continent:x ) %>% 
+                  spread( key = "names" , value = "x" ) ) %>% 
+                head( ) )
 ```
 
 | continent | country      |  intercept|      slope|
@@ -209,33 +295,50 @@ knitr::kable( le_lin_ests %>% head( ) )
 | Africa    | Burundi      |   40.57864|  0.1541343|
 
 ``` r
+## Alternate way to achieve results that can be reshaped into the data above
+
 le_lin_fit_broom <- gapminder %>% 
   group_by( continent , country ) %>% 
-  do( fit = lm( lifeExp ~ I( year - 1952 ) , . ) )
-
-le_lin_fit_broom %>% 
-  tidy( fit )
+  do( fit = lm( lifeExp ~ I( year - 1952 ) , . ) ) %>% 
+  print( n = 5 )
 ```
 
-    ## Source: local data frame [284 x 7]
-    ## Groups: continent, country [142]
+    ## Source: local data frame [142 x 3]
+    ## Groups: <by row>
     ## 
-    ##    continent      country           term    estimate  std.error  statistic
-    ##       <fctr>       <fctr>          <chr>       <dbl>      <dbl>      <dbl>
-    ## 1     Africa      Algeria    (Intercept) 43.37497436 0.71842024 60.3754908
-    ## 2     Africa      Algeria I(year - 1952)  0.56927972 0.02212707 25.7277493
-    ## 3     Africa       Angola    (Intercept) 32.12665385 0.76403549 42.0486406
-    ## 4     Africa       Angola I(year - 1952)  0.20933986 0.02353200  8.8959644
-    ## 5     Africa        Benin    (Intercept) 39.58851282 0.63788186 62.0624528
-    ## 6     Africa        Benin I(year - 1952)  0.33423287 0.01964652 17.0123200
-    ## 7     Africa     Botswana    (Intercept) 52.92911538 3.31904058 15.9471131
-    ## 8     Africa     Botswana I(year - 1952)  0.06066853 0.10222519  0.5934793
-    ## 9     Africa Burkina Faso    (Intercept) 34.68469231 1.11161365 31.2021109
-    ## 10    Africa Burkina Faso I(year - 1952)  0.36397483 0.03423728 10.6309510
-    ## # ... with 274 more rows, and 1 more variables: p.value <dbl>
+    ## # A tibble: 142 × 3
+    ##   continent      country      fit
+    ## *    <fctr>       <fctr>   <list>
+    ## 1    Africa      Algeria <S3: lm>
+    ## 2    Africa       Angola <S3: lm>
+    ## 3    Africa        Benin <S3: lm>
+    ## 4    Africa     Botswana <S3: lm>
+    ## 5    Africa Burkina Faso <S3: lm>
+    ## # ... with 137 more rows
 
 ``` r
-# robust
+## Using the broom package's tidy function to extract tidy information
+
+knitr::kable( ( le_lin_fit_broom %>% 
+                  tidy( fit ) ) %>% 
+                head( ) )
+```
+
+| continent | country | term           |    estimate|  std.error|  statistic|  p.value|
+|:----------|:--------|:---------------|-----------:|----------:|----------:|--------:|
+| Africa    | Algeria | (Intercept)    |  43.3749744|  0.7184202|  60.375491|  0.0e+00|
+| Africa    | Algeria | I(year - 1952) |   0.5692797|  0.0221271|  25.727749|  0.0e+00|
+| Africa    | Angola  | (Intercept)    |  32.1266538|  0.7640355|  42.048641|  0.0e+00|
+| Africa    | Angola  | I(year - 1952) |   0.2093399|  0.0235320|   8.895964|  4.6e-06|
+| Africa    | Benin   | (Intercept)    |  39.5885128|  0.6378819|  62.062453|  0.0e+00|
+| Africa    | Benin   | I(year - 1952) |   0.3342329|  0.0196465|  17.012320|  0.0e+00|
+
+``` r
+## Mapping Robust regression to a nested df 
+
+## Smell testing to see if the robust regression function implemented 
+## earlier is compatible. 25 represents China in the nested data frame
+
 le_robust_fit( nested_gap$data[[25]] )
 ```
 
@@ -243,10 +346,40 @@ le_robust_fit( nested_gap$data[[25]] )
     ## 48.0172254  0.5120964
 
 ``` r
-le_robust_res <- map( nested_gap$data[1:2] , le_robust_fit )
+## Smell testing the mapping of the first two list columns
+## before scaling it to the whole data frame
+
+map( nested_gap$data[1:2] , le_robust_fit )
+```
+
+    ## [[1]]
+    ##  intercept      slope 
+    ## 29.9072949  0.2753287 
+    ## 
+    ## [[2]]
+    ##  intercept      slope 
+    ## 59.9416820  0.3160949
+
+``` r
+## Mapping the robust regression function to the entire nested dataframe
 
 le_rob_fit_all <- nested_gap %>% 
-  mutate( robust_fit = map( data , le_robust_fit ) )
+  mutate( robust_fit = map( data , le_robust_fit ) ) %>% 
+  print( n = 5 )
+```
+
+    ## # A tibble: 142 × 4
+    ##   continent     country              data robust_fit
+    ##      <fctr>      <fctr>            <list>     <list>
+    ## 1      Asia Afghanistan <tibble [12 × 4]>  <dbl [2]>
+    ## 2    Europe     Albania <tibble [12 × 4]>  <dbl [2]>
+    ## 3    Africa     Algeria <tibble [12 × 4]>  <dbl [2]>
+    ## 4    Africa      Angola <tibble [12 × 4]>  <dbl [2]>
+    ## 5  Americas   Argentina <tibble [12 × 4]>  <dbl [2]>
+    ## # ... with 137 more rows
+
+``` r
+## Smell testing to see if the regression was mapped correctly
 
 le_rob_fit_all$robust_fit[[25]]
 ```
@@ -255,8 +388,37 @@ le_rob_fit_all$robust_fit[[25]]
     ## 48.0172254  0.5120964
 
 ``` r
+## Using the broom package's tidy function to extract tidy information
+
+tidy( le_rob_fit_all$robust_fit[[25]] )
+```
+
+    ## # A tibble: 2 × 2
+    ##       names          x
+    ##       <chr>      <dbl>
+    ## 1 intercept 48.0172254
+    ## 2     slope  0.5120964
+
+``` r
+## Mapping the tidy function to the entire nested dataframe
+
 le_rob_fit_all <- le_rob_fit_all %>% 
-  mutate( tidy = map( robust_fit , tidy ) )
+  mutate( tidy = map( robust_fit , tidy ) ) %>% 
+  print( n = 5 )
+```
+
+    ## # A tibble: 142 × 5
+    ##   continent     country              data robust_fit             tidy
+    ##      <fctr>      <fctr>            <list>     <list>           <list>
+    ## 1      Asia Afghanistan <tibble [12 × 4]>  <dbl [2]> <tibble [2 × 2]>
+    ## 2    Europe     Albania <tibble [12 × 4]>  <dbl [2]> <tibble [2 × 2]>
+    ## 3    Africa     Algeria <tibble [12 × 4]>  <dbl [2]> <tibble [2 × 2]>
+    ## 4    Africa      Angola <tibble [12 × 4]>  <dbl [2]> <tibble [2 × 2]>
+    ## 5  Americas   Argentina <tibble [12 × 4]>  <dbl [2]> <tibble [2 × 2]>
+    ## # ... with 137 more rows
+
+``` r
+## Smell testing to see if tidy was mapped correctly
 
 le_rob_fit_all$tidy[[25]]
 ```
@@ -268,15 +430,30 @@ le_rob_fit_all$tidy[[25]]
     ## 2     slope  0.5120964
 
 ``` r
-le_rob_coefs <- le_rob_fit_all %>% 
-  dplyr::select( continent , country , tidy ) %>% 
-  unnest( tidy )
+## Simplifying to a normal tibble by retaining just the needed information
 
-le_rob_ests <- le_rob_coefs %>% 
-  dplyr::select( continent:x ) %>% 
-  spread( key = "names" , value = "x" )
+knitr::kable( ( le_rob_coefs <- le_rob_fit_all %>% 
+                  dplyr::select( continent , country , tidy ) %>% 
+                  unnest( tidy ) ) %>% 
+                head( ) )
+```
 
-knitr::kable( le_rob_ests %>% head( ) )
+| continent | country     | names     |           x|
+|:----------|:------------|:----------|-----------:|
+| Asia      | Afghanistan | intercept |  29.9072949|
+| Asia      | Afghanistan | slope     |   0.2753287|
+| Europe    | Albania     | intercept |  59.9416820|
+| Europe    | Albania     | slope     |   0.3160949|
+| Africa    | Algeria     | intercept |  43.1580026|
+| Africa    | Algeria     | slope     |   0.5758313|
+
+``` r
+## Reshaping the data into a consumable format for exploratory analysis
+
+knitr::kable( ( le_rob_ests <- le_rob_coefs %>% 
+                  dplyr::select( continent:x ) %>% 
+                  spread( key = "names" , value = "x" ) ) %>% 
+                head( ) )
 ```
 
 | continent | country      |  intercept|      slope|
@@ -289,33 +466,50 @@ knitr::kable( le_rob_ests %>% head( ) )
 | Africa    | Burundi      |   40.57864|  0.1541343|
 
 ``` r
+## Alternate way to achieve results that can be reshaped into the data above
+
 le_rob_fit_broom <- gapminder %>% 
   group_by( continent , country ) %>% 
-  do( fit = rlm( lifeExp ~ I( year - 1952 ) , . ) )
-
-le_rob_fit_broom %>% 
-  tidy( fit )
+  do( fit = rlm( lifeExp ~ I( year - 1952 ) , . ) ) %>% 
+  print( n = 5 )
 ```
 
-    ## Source: local data frame [284 x 6]
-    ## Groups: continent, country [142]
+    ## Source: local data frame [142 x 3]
+    ## Groups: <by row>
     ## 
-    ##    continent      country           term    estimate  std.error  statistic
-    ##       <fctr>       <fctr>          <chr>       <dbl>      <dbl>      <dbl>
-    ## 1     Africa      Algeria    (Intercept) 43.15800264 0.60099398 71.8110394
-    ## 2     Africa      Algeria I(year - 1952)  0.57583135 0.01851039 31.1085536
-    ## 3     Africa       Angola    (Intercept) 32.13492594 0.94094528 34.1517479
-    ## 4     Africa       Angola I(year - 1952)  0.20903132 0.02898076  7.2127625
-    ## 5     Africa        Benin    (Intercept) 39.58851282 0.63788186 62.0624528
-    ## 6     Africa        Benin I(year - 1952)  0.33423287 0.01964652 17.0123200
-    ## 7     Africa     Botswana    (Intercept) 52.92911538 3.31904058 15.9471131
-    ## 8     Africa     Botswana I(year - 1952)  0.06066853 0.10222519  0.5934793
-    ## 9     Africa Burkina Faso    (Intercept) 34.68469231 1.11161365 31.2021109
-    ## 10    Africa Burkina Faso I(year - 1952)  0.36397483 0.03423728 10.6309510
-    ## # ... with 274 more rows
+    ## # A tibble: 142 × 3
+    ##   continent      country       fit
+    ## *    <fctr>       <fctr>    <list>
+    ## 1    Africa      Algeria <S3: rlm>
+    ## 2    Africa       Angola <S3: rlm>
+    ## 3    Africa        Benin <S3: rlm>
+    ## 4    Africa     Botswana <S3: rlm>
+    ## 5    Africa Burkina Faso <S3: rlm>
+    ## # ... with 137 more rows
 
 ``` r
-#quadratic
+## Using the broom package's tidy function to extract tidy information
+
+knitr::kable( ( le_rob_fit_broom %>% 
+                  tidy( fit ) ) %>% 
+                head( ) )
+```
+
+| continent | country | term           |    estimate|  std.error|  statistic|
+|:----------|:--------|:---------------|-----------:|----------:|----------:|
+| Africa    | Algeria | (Intercept)    |  43.1580026|  0.6009940|  71.811039|
+| Africa    | Algeria | I(year - 1952) |   0.5758313|  0.0185104|  31.108554|
+| Africa    | Angola  | (Intercept)    |  32.1349259|  0.9409453|  34.151748|
+| Africa    | Angola  | I(year - 1952) |   0.2090313|  0.0289808|   7.212763|
+| Africa    | Benin   | (Intercept)    |  39.5885128|  0.6378819|  62.062453|
+| Africa    | Benin   | I(year - 1952) |   0.3342329|  0.0196465|  17.012320|
+
+``` r
+## Mapping Quadratic regression to a nested df 
+
+## Smell testing to see if the quadratic regression function implemented 
+## earlier is compatible. 25 represents China in the nested data frame
+
 le_quadratic_fit( nested_gap$data[[25]] )
 ```
 
@@ -323,10 +517,40 @@ le_quadratic_fit( nested_gap$data[[25]] )
     ## 43.24529473  1.00413727 -0.00860768
 
 ``` r
-le_quad_res <- map( nested_gap$data[1:2] , le_quadratic_fit )
+## Smell testing the mapping of the first two list columns
+## before scaling it to the whole data frame
+
+map( nested_gap$data[1:2] , le_quadratic_fit )
+```
+
+    ## [[1]]
+    ##    intercept      slope 1      slope 2 
+    ## 28.178686813  0.482761638 -0.003771508 
+    ## 
+    ## [[2]]
+    ##    intercept      slope 1      slope 2 
+    ## 56.853134615  0.619802448 -0.005183986
+
+``` r
+## Mapping the quadratic regression function to the entire nested dataframe
 
 le_quad_fit_all <- nested_gap %>% 
-  mutate( quadratic_fit = map( data , le_quadratic_fit ) )
+  mutate( quadratic_fit = map( data , le_quadratic_fit ) ) %>% 
+  print( n = 5 )
+```
+
+    ## # A tibble: 142 × 4
+    ##   continent     country              data quadratic_fit
+    ##      <fctr>      <fctr>            <list>        <list>
+    ## 1      Asia Afghanistan <tibble [12 × 4]>     <dbl [3]>
+    ## 2    Europe     Albania <tibble [12 × 4]>     <dbl [3]>
+    ## 3    Africa     Algeria <tibble [12 × 4]>     <dbl [3]>
+    ## 4    Africa      Angola <tibble [12 × 4]>     <dbl [3]>
+    ## 5  Americas   Argentina <tibble [12 × 4]>     <dbl [3]>
+    ## # ... with 137 more rows
+
+``` r
+## Smell testing to see if the regression was mapped correctly
 
 le_quad_fit_all$quadratic_fit[[25]]
 ```
@@ -335,8 +559,38 @@ le_quad_fit_all$quadratic_fit[[25]]
     ## 43.24529473  1.00413727 -0.00860768
 
 ``` r
+## Using the broom package's tidy function to extract tidy information
+
+tidy( le_quad_fit_all$quadratic_fit[[25]] )
+```
+
+    ## # A tibble: 3 × 2
+    ##       names           x
+    ##       <chr>       <dbl>
+    ## 1 intercept 43.24529473
+    ## 2   slope 1  1.00413727
+    ## 3   slope 2 -0.00860768
+
+``` r
+## Mapping the tidy function to the entire nested dataframe
+
 le_quad_fit_all <- le_quad_fit_all %>% 
-  mutate( tidy = map( quadratic_fit , tidy ) )
+  mutate( tidy = map( quadratic_fit , tidy ) ) %>% 
+  print( n = 5 )
+```
+
+    ## # A tibble: 142 × 5
+    ##   continent     country              data quadratic_fit             tidy
+    ##      <fctr>      <fctr>            <list>        <list>           <list>
+    ## 1      Asia Afghanistan <tibble [12 × 4]>     <dbl [3]> <tibble [3 × 2]>
+    ## 2    Europe     Albania <tibble [12 × 4]>     <dbl [3]> <tibble [3 × 2]>
+    ## 3    Africa     Algeria <tibble [12 × 4]>     <dbl [3]> <tibble [3 × 2]>
+    ## 4    Africa      Angola <tibble [12 × 4]>     <dbl [3]> <tibble [3 × 2]>
+    ## 5  Americas   Argentina <tibble [12 × 4]>     <dbl [3]> <tibble [3 × 2]>
+    ## # ... with 137 more rows
+
+``` r
+## Smell testing to see if tidy was mapped correctly
 
 le_quad_fit_all$tidy[[25]]
 ```
@@ -349,15 +603,30 @@ le_quad_fit_all$tidy[[25]]
     ## 3   slope 2 -0.00860768
 
 ``` r
-le_quad_coefs <- le_quad_fit_all %>% 
-  dplyr::select( continent , country , tidy ) %>% 
-  unnest( tidy )
+## Simplifying to a normal tibble by retaining just the needed information
 
-le_quad_ests <- le_quad_coefs %>% 
-  dplyr::select( continent:x ) %>% 
-  spread( key = "names" , value = "x" ) 
+knitr::kable( ( le_quad_coefs <- le_quad_fit_all %>% 
+                  dplyr::select( continent , country , tidy ) %>% 
+                  unnest( tidy ) ) %>% 
+                head( ) )
+```
 
-knitr::kable( le_quad_ests %>% head( ) )
+| continent | country     | names     |           x|
+|:----------|:------------|:----------|-----------:|
+| Asia      | Afghanistan | intercept |  28.1786868|
+| Asia      | Afghanistan | slope 1   |   0.4827616|
+| Asia      | Afghanistan | slope 2   |  -0.0037715|
+| Europe    | Albania     | intercept |  56.8531346|
+| Europe    | Albania     | slope 1   |   0.6198024|
+| Europe    | Albania     | slope 2   |  -0.0051840|
+
+``` r
+## Reshaping the data into a consumable format for exploratory analysis
+
+knitr::kable( ( le_quad_ests <- le_quad_coefs %>% 
+                  dplyr::select( continent:x ) %>% 
+                  spread( key = "names" , value = "x" ) ) %>% 
+                head( ) )
 ```
 
 | continent | country      |  intercept|    slope 1|     slope 2|
@@ -370,35 +639,67 @@ knitr::kable( le_quad_ests %>% head( ) )
 | Africa    | Burundi      |   39.26621|  0.3116255|  -0.0028635|
 
 ``` r
+## Alternate way to achieve results that can be reshaped into the data above
+
 le_quad_fit_broom <- gapminder %>% 
   group_by( continent , country ) %>% 
-  do( fit = rlm( lifeExp ~ I( year - 1952 ) + I( ( year - 1952 )^2 ) , . ) )
-
-le_quad_fit_broom %>% 
-  tidy( fit )
+  do( fit = rlm( lifeExp ~ I( year - 1952 ) + I( ( year - 1952 )^2 ) , . ) ) %>% 
+  print( n = 5 )
 ```
 
-    ## Source: local data frame [426 x 6]
-    ## Groups: continent, country [142]
+    ## Source: local data frame [142 x 3]
+    ## Groups: <by row>
     ## 
-    ##    continent  country               term     estimate    std.error
-    ##       <fctr>   <fctr>              <chr>        <dbl>        <dbl>
-    ## 1     Africa  Algeria        (Intercept) 41.951551299 0.8291322824
-    ## 2     Africa  Algeria     I(year - 1952)  0.739640586 0.0700840706
-    ## 3     Africa  Algeria I((year - 1952)^2) -0.003100787 0.0012277828
-    ## 4     Africa   Angola        (Intercept) 30.043042009 0.4447693000
-    ## 5     Africa   Angola     I(year - 1952)  0.464016821 0.0375950179
-    ## 6     Africa   Angola I((year - 1952)^2) -0.004714918 0.0006586164
-    ## 7     Africa    Benin        (Intercept) 37.891662339 0.2193079128
-    ## 8     Africa    Benin     I(year - 1952)  0.532687034 0.0185374416
-    ## 9     Africa    Benin I((year - 1952)^2) -0.003481666 0.0003247522
-    ## 10    Africa Botswana        (Intercept) 44.935569344 2.8656565176
-    ## # ... with 416 more rows, and 1 more variables: statistic <dbl>
+    ## # A tibble: 142 × 3
+    ##   continent      country       fit
+    ## *    <fctr>       <fctr>    <list>
+    ## 1    Africa      Algeria <S3: rlm>
+    ## 2    Africa       Angola <S3: rlm>
+    ## 3    Africa        Benin <S3: rlm>
+    ## 4    Africa     Botswana <S3: rlm>
+    ## 5    Africa Burkina Faso <S3: rlm>
+    ## # ... with 137 more rows
 
 ``` r
-#linear and robust comparison
+## Using the broom package's tidy function to extract tidy information
 
-le_lin_rob_est <- left_join( le_lin_ests , le_rob_ests , by = c( "continent", "country" ) )
+knitr::kable( ( le_quad_fit_broom %>% 
+                  tidy( fit ) ) %>% 
+                head( ) )
+```
+
+| continent | country | term               |    estimate|  std.error|  statistic|
+|:----------|:--------|:-------------------|-----------:|----------:|----------:|
+| Africa    | Algeria | (Intercept)        |  41.9515513|  0.8291323|  50.596934|
+| Africa    | Algeria | I(year - 1952)     |   0.7396406|  0.0700841|  10.553619|
+| Africa    | Algeria | I((year - 1952)^2) |  -0.0031008|  0.0012278|  -2.525517|
+| Africa    | Angola  | (Intercept)        |  30.0430420|  0.4447693|  67.547472|
+| Africa    | Angola  | I(year - 1952)     |   0.4640168|  0.0375950|  12.342508|
+| Africa    | Angola  | I((year - 1952)^2) |  -0.0047149|  0.0006586|  -7.158823|
+
+``` r
+## Estimating the difference in parameters obtained using linear and robust regression
+
+## Performing a left join by 'continent' and 'country' on the two regression estimates 
+
+knitr::kable( ( le_lin_rob_est <- left_join( le_lin_ests , 
+                                             le_rob_ests , 
+                                             by = c( "continent", "country" ) 
+                                             ) ) %>% 
+                head( ) )
+```
+
+| continent | country      |  intercept.x|    slope.x|  intercept.y|    slope.y|
+|:----------|:-------------|------------:|----------:|------------:|----------:|
+| Africa    | Algeria      |     43.37497|  0.5692797|     43.15800|  0.5758313|
+| Africa    | Angola       |     32.12665|  0.2093399|     32.13493|  0.2090313|
+| Africa    | Benin        |     39.58851|  0.3342329|     39.58851|  0.3342329|
+| Africa    | Botswana     |     52.92912|  0.0606685|     52.92912|  0.0606685|
+| Africa    | Burkina Faso |     34.68469|  0.3639748|     34.68469|  0.3639748|
+| Africa    | Burundi      |     40.57864|  0.1541343|     40.57864|  0.1541343|
+
+``` r
+## Determining the difference in the estimated parameters under the two approaches
 
 le_lin_rob_est <- le_lin_rob_est %>% 
   mutate( slope_diff = (slope.x - slope.y ) , intercept_diff = (intercept.x - intercept.y ) ) %>%  
@@ -417,17 +718,38 @@ knitr::kable( le_lin_rob_est %>% head( ) )
 | Burundi      |    0.0000000|        0.0000000|
 
 ``` r
+## Plotting the difference in the estimated parameters obtained from the above step
+
 ggplot( le_lin_rob_est , aes( x = intercept_diff , y = slope_diff ) ) + geom_point( )
 ```
 
 ![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
 ``` r
-interesting_countries <- le_lin_rob_est %>% filter( ( intercept_diff < -1 ) | ( slope_diff < -0.075 ) )
+## Performing a filter based on the values from the above graph to shortlist interesting countries
 
-interesting_countries_info <-  semi_join( gapminder , interesting_countries , by = "country" )
+knitr::kable( interesting_countries <- le_lin_rob_est %>% 
+                filter( ( intercept_diff < -1 ) | ( slope_diff < -0.075 ) ) ) 
+```
 
-knitr::kable( interesting_countries_info %>% head( ) )
+| country      |  slope\_diff|  intercept\_diff|
+|:-------------|------------:|----------------:|
+| Lesotho      |   -0.1011116|        1.6412003|
+| Mauritius    |    0.0361848|       -1.4281125|
+| Rwanda       |   -0.0782100|        0.4262397|
+| South Africa |   -0.1116327|        1.8028066|
+| Swaziland    |   -0.1150924|        1.8377640|
+| Cambodia     |    0.0241815|       -2.5259164|
+| Bulgaria     |    0.0479174|       -1.8368321|
+
+``` r
+## Performing a semi join by 'country' on 'gapminder' and 'interesting_countries' 
+## to extract infromation about these specific countries alone
+
+knitr::kable( ( interesting_countries_info <-  semi_join( gapminder , 
+                                                          interesting_countries , 
+                                                          by = "country" ) ) %>%
+                head( ) )
 ```
 
 | country | continent |  year|  lifeExp|      pop|  gdpPercap|
@@ -440,6 +762,10 @@ knitr::kable( interesting_countries_info %>% head( ) )
 | Lesotho | Africa    |  1977|   52.208|  1251524|   745.3695|
 
 ``` r
+## Plotting the estimated for the interesting countries
+
+## The linear and robust regression lines are superimposed on the same plot
+
 p <- interesting_countries_info %>% 
   ggplot( aes( x = year , y = lifeExp ) )
 

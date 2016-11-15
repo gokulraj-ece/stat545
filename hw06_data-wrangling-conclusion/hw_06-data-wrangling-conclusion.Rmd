@@ -9,7 +9,7 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-#Data Wrangling Conclusion
+##Data Wrangling Conclusion
 
 ####Loading the required packages
 
@@ -22,55 +22,82 @@ library(broom)
 ```
 
 
-##Writing Functions
+##Writing functions to do `linear`, `robust` and `quadratic` regression
 
 ```{r dev='CairoPNG'}
-selected_country <- "China"
+## Choosing a specific country for the function to operate upon
 
-( selected_country_info <- gapminder %>% 
-    filter( country == selected_country ) )
+knitr::kable( ( selected_country_info <- gapminder %>% 
+                  filter( country == "China" ) ) %>% 
+                head( ) )
+
+## Plotting the data before fitting the regression
+
+## The 3 types of regression are superimposed on the same plot
 
 p <- selected_country_info %>% 
   ggplot( aes( x = year , y = lifeExp ) )
 
 p + geom_point( ) + 
-  geom_smooth( method = "lm" , aes( colour = "lm" ) , lwd = 0.5 , se = FALSE ) + 
-  geom_smooth( method = "rlm" , aes( colour = "rlm" ) , lwd = 0.5 , se = FALSE ) +
-  geom_smooth( method = "lm" , formula = y ~ x + I( x^2 ) , lwd = 0.5 , se = FALSE )
+  geom_smooth( method = "lm" , aes( colour = "linear" ) , lwd = 0.5 , se = FALSE ) + 
+  geom_smooth( method = "rlm" , aes( colour = "robust" ) , lwd = 0.5 , se = FALSE ) +
+  geom_smooth( method = "lm" , formula = y ~ x + I( x^2 ) , aes( colour = "quadratic" ) , lwd = 0.5 , se = FALSE ) +
+  scale_color_manual( name = "" , values = c( "linear" = "blue" , "robust" = "orange" , "quadratic" = "red" ) )
   
-# linear
+## Fitting linear regression ( based on Jenny's implementation )
+
+## Implementing logic to fit into the function
+
 linear_fit <- lm( lifeExp ~ I( year - 1952 ) , data = selected_country_info )
 
 coef( linear_fit )
+
+## Implementing the above logic into a function
 
 le_linear_fit <- function( data , offset = 1952 ){
   linear_fit <- lm( lifeExp ~ I( year - offset ) , data = data )
   setNames( coef( linear_fit ) , c( "intercept" , "slope" ) )
 }
 
+## Smell testing to see if the result obtained above matches
+
 le_linear_fit( selected_country_info )
 
-# robust 
+## Fitting robust regression 
+
+## Implementing logic to fit into the function
+
 robust_fit <- rlm( lifeExp ~ I( year - 1952 ) , data = selected_country_info )
 
 coef( robust_fit )
+
+## Implementing the above logic into a function
 
 le_robust_fit <- function( data , offset = 1952 ) {
   robust_fit <- rlm( lifeExp ~ I( year - offset ) , data = data )
   setNames( coef( robust_fit ) , c( "intercept" , "slope" ) )
 }
 
+## Smell testing to see if the result obtained above matches
+
 le_robust_fit( selected_country_info )
 
-# quadratic
+## Fitting quadratic regression 
+
+## Implementing logic to fit into the function
+
 quadratic_fit <- lm( lifeExp ~ I( year - 1952 ) + I( ( year - 1952 )^2 ) , data = selected_country_info )
 
 coef( quadratic_fit )
+
+## Implementing the above logic into a function
 
 le_quadratic_fit <- function( data , offset = 1952 ){
   quadratic_fit <- lm( lifeExp ~ I( year - offset ) + I( ( year - offset )^2 ) , data = data )
   setNames( coef( quadratic_fit ) , c( "intercept" , "slope 1" , "slope 2" ) )
 }
+
+## Smell testing to see if the result obtained above matches
 
 le_quadratic_fit( selected_country_info )
 ``` 
@@ -78,111 +105,214 @@ le_quadratic_fit( selected_country_info )
 ##Working with a nested data frame
 
 ```{r warning=FALSE,dev='CairoPNG'}
-( nested_gap <- gapminder %>% 
-    group_by( continent , country ) %>% 
-    nest( ) )
+## Creating a nested version of gapminder df
 
-# linear
+nested_gap <- gapminder %>% 
+  group_by( continent , country ) %>% 
+  nest( ) %>% 
+  print( n = 5 ) 
+
+## Mapping Linear regression to a nested df ( based on Jenny's implementation )
+
+## Smell testing to see if the linear regression function implemented 
+## earlier is compatible. 25 represents China in the nested data frame
+
 le_linear_fit( nested_gap$data[[25]] )
 
-le_linear_res <- map( nested_gap$data[1:2] , le_linear_fit )
+## Smell testing the mapping of the first two list columns
+## before scaling it to the whole data frame
+
+map( nested_gap$data[1:2] , le_linear_fit )
+
+## Mapping the linear regression function to the entire nested dataframe
 
 le_lin_fit_all <- nested_gap %>% 
-  mutate( linear_fit = map( data , le_linear_fit ) )
+  mutate( linear_fit = map( data , le_linear_fit ) ) %>% 
+  print( n = 5 )
+
+## Smell testing to see if the regression was mapped correctly
 
 le_lin_fit_all$linear_fit[[25]]
 
+## Using the broom package's tidy function to extract tidy information
+
 tidy( le_lin_fit_all$linear_fit[[25]] )
 
+## Mapping the tidy function to the entire nested dataframe
+
 le_lin_fit_all <- le_lin_fit_all %>% 
-  mutate( tidy = map( linear_fit , tidy ) )
+  mutate( tidy = map( linear_fit , tidy ) ) %>% 
+  print( n = 5 )
+
+## Smell testing to see if tidy was mapped correctly
 
 le_lin_fit_all$tidy[[25]]
 
-le_lin_coefs <- le_lin_fit_all %>% 
-  dplyr::select( continent , country , tidy ) %>% 
-  unnest( tidy )
+## Simplifying to a normal tibble by retaining just the needed information
 
-le_lin_ests <- le_lin_coefs %>% 
-  dplyr::select( continent:x ) %>% 
-  spread( key = "names" , value = "x" )
+knitr::kable( ( le_lin_coefs <- le_lin_fit_all %>% 
+                  dplyr::select( continent , country , tidy ) %>% 
+                  unnest( tidy ) ) %>% 
+                head( ) )
 
-knitr::kable( le_lin_ests %>% head( ) )
+## Reshaping the data into a consumable format for exploratory analysis
+
+knitr::kable( ( le_lin_ests <- le_lin_coefs %>% 
+                  dplyr::select( continent:x ) %>% 
+                  spread( key = "names" , value = "x" ) ) %>% 
+                head( ) )
+
+## Alternate way to achieve results that can be reshaped into the data above
 
 le_lin_fit_broom <- gapminder %>% 
   group_by( continent , country ) %>% 
-  do( fit = lm( lifeExp ~ I( year - 1952 ) , . ) )
+  do( fit = lm( lifeExp ~ I( year - 1952 ) , . ) ) %>% 
+  print( n = 5 )
 
-le_lin_fit_broom %>% 
-  tidy( fit )
+## Using the broom package's tidy function to extract tidy information
 
-# robust
+knitr::kable( ( le_lin_fit_broom %>% 
+                  tidy( fit ) ) %>% 
+                head( ) )
+
+## Mapping Robust regression to a nested df 
+
+## Smell testing to see if the robust regression function implemented 
+## earlier is compatible. 25 represents China in the nested data frame
+
 le_robust_fit( nested_gap$data[[25]] )
 
-le_robust_res <- map( nested_gap$data[1:2] , le_robust_fit )
+## Smell testing the mapping of the first two list columns
+## before scaling it to the whole data frame
+
+map( nested_gap$data[1:2] , le_robust_fit )
+
+## Mapping the robust regression function to the entire nested dataframe
 
 le_rob_fit_all <- nested_gap %>% 
-  mutate( robust_fit = map( data , le_robust_fit ) )
+  mutate( robust_fit = map( data , le_robust_fit ) ) %>% 
+  print( n = 5 )
+
+## Smell testing to see if the regression was mapped correctly
 
 le_rob_fit_all$robust_fit[[25]]
 
+## Using the broom package's tidy function to extract tidy information
+
+tidy( le_rob_fit_all$robust_fit[[25]] )
+
+## Mapping the tidy function to the entire nested dataframe
+
 le_rob_fit_all <- le_rob_fit_all %>% 
-  mutate( tidy = map( robust_fit , tidy ) )
+  mutate( tidy = map( robust_fit , tidy ) ) %>% 
+  print( n = 5 )
+
+## Smell testing to see if tidy was mapped correctly
 
 le_rob_fit_all$tidy[[25]]
 
-le_rob_coefs <- le_rob_fit_all %>% 
-  dplyr::select( continent , country , tidy ) %>% 
-  unnest( tidy )
+## Simplifying to a normal tibble by retaining just the needed information
 
-le_rob_ests <- le_rob_coefs %>% 
-  dplyr::select( continent:x ) %>% 
-  spread( key = "names" , value = "x" )
+knitr::kable( ( le_rob_coefs <- le_rob_fit_all %>% 
+                  dplyr::select( continent , country , tidy ) %>% 
+                  unnest( tidy ) ) %>% 
+                head( ) )
 
-knitr::kable( le_rob_ests %>% head( ) )
+## Reshaping the data into a consumable format for exploratory analysis
+
+knitr::kable( ( le_rob_ests <- le_rob_coefs %>% 
+                  dplyr::select( continent:x ) %>% 
+                  spread( key = "names" , value = "x" ) ) %>% 
+                head( ) )
+
+## Alternate way to achieve results that can be reshaped into the data above
 
 le_rob_fit_broom <- gapminder %>% 
   group_by( continent , country ) %>% 
-  do( fit = rlm( lifeExp ~ I( year - 1952 ) , . ) )
+  do( fit = rlm( lifeExp ~ I( year - 1952 ) , . ) ) %>% 
+  print( n = 5 )
 
-le_rob_fit_broom %>% 
-  tidy( fit )
+## Using the broom package's tidy function to extract tidy information
 
-#quadratic
+knitr::kable( ( le_rob_fit_broom %>% 
+                  tidy( fit ) ) %>% 
+                head( ) )
+                
+
+## Mapping Quadratic regression to a nested df 
+
+## Smell testing to see if the quadratic regression function implemented 
+## earlier is compatible. 25 represents China in the nested data frame
+
 le_quadratic_fit( nested_gap$data[[25]] )
 
-le_quad_res <- map( nested_gap$data[1:2] , le_quadratic_fit )
+## Smell testing the mapping of the first two list columns
+## before scaling it to the whole data frame
+
+map( nested_gap$data[1:2] , le_quadratic_fit )
+
+## Mapping the quadratic regression function to the entire nested dataframe
 
 le_quad_fit_all <- nested_gap %>% 
-  mutate( quadratic_fit = map( data , le_quadratic_fit ) )
+  mutate( quadratic_fit = map( data , le_quadratic_fit ) ) %>% 
+  print( n = 5 )
+
+## Smell testing to see if the regression was mapped correctly
 
 le_quad_fit_all$quadratic_fit[[25]]
 
+## Using the broom package's tidy function to extract tidy information
+
+tidy( le_quad_fit_all$quadratic_fit[[25]] )
+
+## Mapping the tidy function to the entire nested dataframe
+
 le_quad_fit_all <- le_quad_fit_all %>% 
-  mutate( tidy = map( quadratic_fit , tidy ) )
+  mutate( tidy = map( quadratic_fit , tidy ) ) %>% 
+  print( n = 5 )
+
+## Smell testing to see if tidy was mapped correctly
 
 le_quad_fit_all$tidy[[25]]
 
-le_quad_coefs <- le_quad_fit_all %>% 
-  dplyr::select( continent , country , tidy ) %>% 
-  unnest( tidy )
+## Simplifying to a normal tibble by retaining just the needed information
 
-le_quad_ests <- le_quad_coefs %>% 
-  dplyr::select( continent:x ) %>% 
-  spread( key = "names" , value = "x" ) 
+knitr::kable( ( le_quad_coefs <- le_quad_fit_all %>% 
+                  dplyr::select( continent , country , tidy ) %>% 
+                  unnest( tidy ) ) %>% 
+                head( ) )
 
-knitr::kable( le_quad_ests %>% head( ) )
+## Reshaping the data into a consumable format for exploratory analysis
+
+knitr::kable( ( le_quad_ests <- le_quad_coefs %>% 
+                  dplyr::select( continent:x ) %>% 
+                  spread( key = "names" , value = "x" ) ) %>% 
+                head( ) )
+
+## Alternate way to achieve results that can be reshaped into the data above
 
 le_quad_fit_broom <- gapminder %>% 
   group_by( continent , country ) %>% 
-  do( fit = rlm( lifeExp ~ I( year - 1952 ) + I( ( year - 1952 )^2 ) , . ) )
+  do( fit = rlm( lifeExp ~ I( year - 1952 ) + I( ( year - 1952 )^2 ) , . ) ) %>% 
+  print( n = 5 )
 
-le_quad_fit_broom %>% 
-  tidy( fit )
+## Using the broom package's tidy function to extract tidy information
 
-#linear and robust comparison
+knitr::kable( ( le_quad_fit_broom %>% 
+                  tidy( fit ) ) %>% 
+                head( ) )
 
-le_lin_rob_est <- left_join( le_lin_ests , le_rob_ests , by = c( "continent", "country" ) )
+## Estimating the difference in parameters obtained using linear and robust regression
+
+## Performing a left join by 'continent' and 'country' on the two regression estimates 
+
+knitr::kable( ( le_lin_rob_est <- left_join( le_lin_ests , 
+                                             le_rob_ests , 
+                                             by = c( "continent", "country" ) 
+                                             ) ) %>% 
+                head( ) )
+
+## Determining the difference in the estimated parameters under the two approaches
 
 le_lin_rob_est <- le_lin_rob_est %>% 
   mutate( slope_diff = (slope.x - slope.y ) , intercept_diff = (intercept.x - intercept.y ) ) %>%  
@@ -190,13 +320,26 @@ le_lin_rob_est <- le_lin_rob_est %>%
 
 knitr::kable( le_lin_rob_est %>% head( ) )
 
+## Plotting the difference in the estimated parameters obtained from the above step
+
 ggplot( le_lin_rob_est , aes( x = intercept_diff , y = slope_diff ) ) + geom_point( )
 
-interesting_countries <- le_lin_rob_est %>% filter( ( intercept_diff < -1 ) | ( slope_diff < -0.075 ) )
+## Performing a filter based on the values from the above graph to shortlist interesting countries
 
-interesting_countries_info <-  semi_join( gapminder , interesting_countries , by = "country" )
+knitr::kable( interesting_countries <- le_lin_rob_est %>% 
+                filter( ( intercept_diff < -1 ) | ( slope_diff < -0.075 ) ) ) 
 
-knitr::kable( interesting_countries_info %>% head( ) )
+## Performing a semi join by 'country' on 'gapminder' and 'interesting_countries' 
+## to extract infromation about these specific countries alone
+
+knitr::kable( ( interesting_countries_info <-  semi_join( gapminder , 
+                                                          interesting_countries , 
+                                                          by = "country" ) ) %>%
+                head( ) )
+
+## Plotting the estimated for the interesting countries
+
+## The linear and robust regression lines are superimposed on the same plot
 
 p <- interesting_countries_info %>% 
   ggplot( aes( x = year , y = lifeExp ) )
