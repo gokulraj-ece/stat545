@@ -729,7 +729,7 @@ ggplot( le_lin_rob_est , aes( x = intercept_diff , y = slope_diff ) ) + geom_poi
 ## Performing a filter based on the values from the above graph to shortlist interesting countries
 
 knitr::kable( interesting_countries <- le_lin_rob_est %>% 
-                filter( ( intercept_diff < -1 ) | ( slope_diff < -0.075 ) ) ) 
+                filter( ( slope_diff > 0.024 ) | ( slope_diff < -0.075 ) ) ) 
 ```
 
 | country      |  slope\_diff|  intercept\_diff|
@@ -777,10 +777,26 @@ p + geom_point( ) +
 
 ![](hw_06-data-wrangling-conclusion_files/figure-markdown_github/unnamed-chunk-3-2.png)
 
-<http://www.alastairsanderson.com/R/tutorials/robust-regression-in-R>
+Inference
+---------
 
-<http://statistics.ats.ucla.edu/stat/r/faq/smooths.htm>
+Based on the above plot, we can see that influential outliers were brought into limelight by taking the difference of estimates obtained by performing linear and robust regression. Out of the 7 interesting countries that we have obtained above, 5 have significant drop in life expectancy at some point between 1952 and 2007. The major reasons have been deciphered below.
 
-<http://www.theanalysisfactor.com/r-tutorial-4/>
+-   The genocide in [Cambodia](https://en.wikipedia.org/wiki/Khmer_Rouge_Killing_Fields) carried out by Khmer Rouge led by Pol Pot (1975).
+-   The genocide in [Rwanda](https://en.wikipedia.org/wiki/Rwandan_genocide) by the Hutu majority government (1994).
+-   The prevalence of HIV/AIDS in [Lesotho](http://www.worldlifeexpectancy.com/lesotho-life-expectancy) , [South Africa](http://businesstech.co.za/news/general/118214/south-africa-has-the-lowest-life-expectancy-in-the-world/) and [Swaziland](http://sundayexpress.co.ls/lesotho-has-lowest-life-expectancy/) causing a steep decline in life expectancy.
 
-<http://www.stat.yale.edu/Courses/1997-98/101/linreg.htm>
+Reflections
+-----------
+
+The assignment was a bit on the heavier side, but was a very rewarding experience nonetheless, as it involved the usage of multiple techniques from the previous assignments along with concepts that it inculcated on it's own. As always, Jenny's material (cited below) were of major help and laid the foundation to build on. The analysis led me to interesting revelations! Highly inspirational prompts !
+
+References
+----------
+
+-   Jenny Bryan's [Linear regression of life expectancy on year](http://stat545.com/block012_function-regress-lifeexp-on-year.html) and [Split-Apply-Combine](http://stat545.com/block024_group-nest-split-map.html)
+-   [Explanation of Linear regression by stat.yale.edu](http://www.stat.yale.edu/Courses/1997-98/101/linreg.htm)
+-   [Robust regression using R by Alastair Sanderson](http://www.alastairsanderson.com/R/tutorials/robust-regression-in-R)
+-   [Fitting a quadratic model in R by The Analysis Factor](http://www.theanalysisfactor.com/r-tutorial-4/)
+-   [Stata Data Analysis Examples by IDRE-UCLA](http://www.ats.ucla.edu/stat/stata/dae/rreg.htm)
+-   [Exploring different smooths in ggplot2 by IDRE-UCLA](http://statistics.ats.ucla.edu/stat/r/faq/smooths.htm)
