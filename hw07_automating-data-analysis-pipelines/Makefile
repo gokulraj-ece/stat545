@@ -14,7 +14,7 @@ clean:
 gapminder.tsv: 00_download-data.R
 				Rscript $<
 
-le_vs_year.png le_vs_year_lin_fit.png gap_reord_conti_le.tsv gap_sort_conti_le.tsv: 01_plot-reorder-sort.R gapminder.tsv
+le_vs_year.png le_vs_year_lin_fit.png gap_sort_conti_le.tsv: 01_plot-reorder-sort.R gapminder.tsv
 				Rscript $<
 
 asia_best_worst_countries.tsv americas_best_worst_countries.tsv africa_best_worst_countries.tsv europe_best_worst_countries.tsv: 02_fit-lin-reg.R gap_sort_conti_le.tsv

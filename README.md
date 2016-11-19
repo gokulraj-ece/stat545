@@ -70,9 +70,9 @@ Apart from that, I wanted to learn R.
 #### Automating Data-analysis pipelines
 
 + Main R Markdown document:
-[`hw_07-automating-data-analysis-pipeline.Rmd`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw06_data-wrangling-conclusion/hw_06-data-wrangling-conclusion.Rmd)
+[`hw_07-automating-data-analysis-pipeline.Rmd`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw07_automating-data-analysis-pipelines/hw_07-automating-data-analysis-pipeline.Rmd)
 + The resultant Markdown document:
-[`hw_07-automating-data-analysis-pipeline.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw06_data-wrangling-conclusion/hw_06-data-wrangling-conclusion.md)
+[`hw_07-automating-data-analysis-pipeline.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw07_automating-data-analysis-pipelines/hw_07-automating-data-analysis-pipeline.md)
 
 
 
