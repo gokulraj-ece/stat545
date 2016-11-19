@@ -1,0 +1,53 @@
+---
+title: "Automating Data-analysis Pipelines"
+author: "Gokul Raj Suresh Kumar"
+date: "`r format(Sys.Date())`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##Automating Data-analysis Pipelines
+
+This R markdown document is populated using the code from the respective R scripts using `make` and is an integral part of the pipeline. 
+
+###Downloading the data (00_download-data.R)
+
+```{r code=readLines("00_download-data.R"), eval=FALSE}
+```
+
+###Performing Exploratory Analyses(01_plot-reorder-sort.R)
+
+```{r code=readLines("01_plot-reorder-sort.R"), eval=FALSE}
+```
+
+####Embedding pre-existing figures
+
+![Life Expectancy vs Year for all continents except Oceania](le_vs_year.png)
+
+![Linear Model fitted to each plot facetted by Continent](le_vs_year_lin_fit.png)
+
+###Performing Statistical Analyses(02_fit-lin-reg.R)
+
+```{r code=readLines("02_fit-lin-reg.R"), eval=FALSE}
+```
+
+###Generating Figures(03_generate-plot.R)
+
+```{r code=readLines("03_generate-plot.R"), eval=FALSE}
+```
+
+####Embedding pre-existing figures
+
+![Countries having best and worst life expectancies in Asia](asia_best_worst_le.png)
+
+![Countries having best and worst life expectancies in Americas](americas_best_worst_le.png)
+
+![Countries having best and worst life expectancies in Africa](africa_best_worst_le.png)
+
+![Countries having best and worst life expectancies in Europe](europe_best_worst_le.png)
+
+###References
+
+

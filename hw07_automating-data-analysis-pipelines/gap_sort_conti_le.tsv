@@ -1,0 +1,1681 @@
+country	continent	year	lifeExp
+Rwanda	Africa	1992	23.599
+Gambia	Africa	1952	30.0
+Angola	Africa	1952	30.015
+Sierra Leone	Africa	1952	30.331
+Mozambique	Africa	1952	31.286
+Sierra Leone	Africa	1957	31.57
+Burkina Faso	Africa	1952	31.975
+Angola	Africa	1957	31.999
+Gambia	Africa	1957	32.065
+Guinea-Bissau	Africa	1952	32.5
+Sierra Leone	Africa	1962	32.767
+Somalia	Africa	1952	32.978
+Guinea-Bissau	Africa	1957	33.489
+Guinea	Africa	1952	33.609
+Mali	Africa	1952	33.685
+Mozambique	Africa	1957	33.779
+Gambia	Africa	1962	33.896
+Angola	Africa	1962	34.0
+Ethiopia	Africa	1952	34.078
+Sierra Leone	Africa	1967	34.113
+Equatorial Guinea	Africa	1952	34.482
+Guinea-Bissau	Africa	1962	34.488
+Guinea	Africa	1957	34.558
+Djibouti	Africa	1952	34.812
+Burkina Faso	Africa	1957	34.906
+Somalia	Africa	1957	34.977
+Mali	Africa	1957	35.307
+Sierra Leone	Africa	1972	35.4
+Central African Republic	Africa	1952	35.463
+Guinea-Bissau	Africa	1967	35.492
+Guinea	Africa	1962	35.753
+Gambia	Africa	1967	35.857
+Eritrea	Africa	1952	35.928
+Equatorial Guinea	Africa	1957	35.983
+Angola	Africa	1967	35.985
+Rwanda	Africa	1997	36.087
+Mozambique	Africa	1962	36.161
+Malawi	Africa	1952	36.256
+Nigeria	Africa	1952	36.324
+Guinea-Bissau	Africa	1972	36.486
+Ethiopia	Africa	1957	36.667
+Madagascar	Africa	1952	36.681
+Sierra Leone	Africa	1977	36.788
+Mali	Africa	1962	36.936
+Somalia	Africa	1962	36.981
+Gabon	Africa	1952	37.003
+Guinea	Africa	1967	37.197
+Malawi	Africa	1957	37.207
+Senegal	Africa	1952	37.278
+Djibouti	Africa	1957	37.328
+Niger	Africa	1952	37.444
+Central African Republic	Africa	1957	37.464
+Guinea-Bissau	Africa	1977	37.465
+Equatorial Guinea	Africa	1962	37.485
+Nigeria	Africa	1957	37.802
+Burkina Faso	Africa	1962	37.814
+Angola	Africa	1972	37.928
+Eritrea	Africa	1957	38.047
+Chad	Africa	1952	38.092
+Mozambique	Africa	1967	38.113
+Benin	Africa	1952	38.223
+Gambia	Africa	1972	38.308
+Sierra Leone	Africa	1992	38.333
+Malawi	Africa	1962	38.41
+Sierra Leone	Africa	1982	38.445
+Liberia	Africa	1952	38.48
+Mali	Africa	1967	38.487
+Cameroon	Africa	1952	38.523
+Togo	Africa	1952	38.596
+Niger	Africa	1957	38.598
+Sudan	Africa	1952	38.635
+Guinea	Africa	1972	38.842
+Madagascar	Africa	1957	38.865
+Somalia	Africa	1967	38.977
+Equatorial Guinea	Africa	1967	38.987
+Gabon	Africa	1957	38.999
+Burundi	Africa	1952	39.031
+Congo, Dem. Rep.	Africa	1952	39.143
+Zambia	Africa	2002	39.193
+Guinea-Bissau	Africa	1982	39.327
+Senegal	Africa	1957	39.329
+Nigeria	Africa	1962	39.36
+Central African Republic	Africa	1962	39.475
+Angola	Africa	1977	39.483
+Liberia	Africa	1957	39.486
+Malawi	Africa	1967	39.487
+Niger	Africa	1962	39.487
+Swaziland	Africa	2007	39.613
+Sudan	Africa	1957	39.624
+Somalia	Africa	1992	39.658
+Djibouti	Africa	1962	39.693
+Chad	Africa	1957	39.881
+Sierra Leone	Africa	1997	39.897
+Angola	Africa	1987	39.906
+Angola	Africa	1982	39.942
+Mali	Africa	1972	39.977
+Uganda	Africa	1952	39.978
+Zimbabwe	Africa	2002	39.989
+Rwanda	Africa	1952	40.0
+Sierra Leone	Africa	1987	40.006
+Ethiopia	Africa	1962	40.059
+Niger	Africa	1967	40.118
+Eritrea	Africa	1962	40.158
+Zambia	Africa	1997	40.238
+Mozambique	Africa	1972	40.328
+Benin	Africa	1957	40.358
+Cameroon	Africa	1957	40.428
+Cote d'Ivoire	Africa	1952	40.477
+Gabon	Africa	1962	40.489
+Liberia	Africa	1962	40.502
+Equatorial Guinea	Africa	1972	40.516
+Burundi	Africa	1957	40.533
+Mauritania	Africa	1952	40.543
+Niger	Africa	1972	40.546
+Angola	Africa	1992	40.647
+Congo, Dem. Rep.	Africa	1957	40.652
+Burkina Faso	Africa	1967	40.697
+Comoros	Africa	1952	40.715
+Guinea	Africa	1977	40.762
+Liberia	Africa	1992	40.802
+Madagascar	Africa	1962	40.848
+Sudan	Africa	1962	40.87
+Angola	Africa	1997	40.963
+Somalia	Africa	1972	40.973
+Angola	Africa	2002	41.003
+Sierra Leone	Africa	2002	41.012
+Nigeria	Africa	1967	41.04
+Togo	Africa	1957	41.208
+Tanzania	Africa	1952	41.215
+Guinea-Bissau	Africa	1987	41.245
+Niger	Africa	1977	41.291
+Swaziland	Africa	1952	41.407
+Senegal	Africa	1962	41.454
+Central African Republic	Africa	1967	41.478
+Rwanda	Africa	1957	41.5
+Liberia	Africa	1967	41.536
+Mali	Africa	1977	41.714
+Chad	Africa	1962	41.716
+Namibia	Africa	1952	41.725
+Malawi	Africa	1972	41.766
+Gambia	Africa	1977	41.842
+Egypt	Africa	1952	41.893
+Somalia	Africa	1977	41.974
+Equatorial Guinea	Africa	1977	42.024
+Zambia	Africa	1952	42.038
+Burundi	Africa	1962	42.045
+Djibouti	Africa	1967	42.074
+Mozambique	Africa	2007	42.082
+Congo, Rep.	Africa	1952	42.111
+Ethiopia	Africa	1967	42.115
+Congo, Dem. Rep.	Africa	1962	42.122
+Lesotho	Africa	1952	42.138
+Eritrea	Africa	1967	42.189
+Liberia	Africa	1997	42.221
+Kenya	Africa	1952	42.27
+Mauritania	Africa	1957	42.338
+Zambia	Africa	2007	42.384
+Comoros	Africa	1957	42.46
+Cote d'Ivoire	Africa	1957	42.469
+Mozambique	Africa	1977	42.495
+Sierra Leone	Africa	2007	42.568
+Uganda	Africa	1957	42.571
+Congo, Dem. Rep.	Africa	1997	42.587
+Lesotho	Africa	2007	42.592
+Niger	Africa	1982	42.598
+Liberia	Africa	1972	42.614
+Benin	Africa	1962	42.618
+Cameroon	Africa	1962	42.643
+Libya	Africa	1952	42.723
+Angola	Africa	2007	42.731
+Mozambique	Africa	1982	42.795
+Nigeria	Africa	1972	42.821
+Sudan	Africa	1967	42.858
+Mozambique	Africa	1987	42.861
+Morocco	Africa	1952	42.873
+Madagascar	Africa	1967	42.881
+Guinea	Africa	1982	42.891
+Somalia	Africa	1982	42.955
+Tanzania	Africa	1957	42.974
+Rwanda	Africa	1962	43.0
+Algeria	Africa	1952	43.077
+Ghana	Africa	1952	43.149
+Guinea-Bissau	Africa	1992	43.266
+Central African Republic	Africa	2002	43.308
+Rwanda	Africa	2002	43.413
+Swaziland	Africa	1957	43.424
+Central African Republic	Africa	1972	43.457
+Zimbabwe	Africa	2007	43.487
+Ethiopia	Africa	1972	43.515
+Burundi	Africa	1967	43.548
+Senegal	Africa	1967	43.563
+Burkina Faso	Africa	1972	43.591
+Chad	Africa	1967	43.601
+Equatorial Guinea	Africa	1982	43.662
+Liberia	Africa	2002	43.753
+Liberia	Africa	1977	43.764
+Malawi	Africa	1977	43.767
+Somalia	Africa	1997	43.795
+Swaziland	Africa	2002	43.869
+Eritrea	Africa	1982	43.89
+Mali	Africa	1982	43.916
+Togo	Africa	1962	43.922
+Rwanda	Africa	1987	44.02
+Mozambique	Africa	2002	44.026
+Congo, Dem. Rep.	Africa	1967	44.056
+Burundi	Africa	1972	44.057
+Zambia	Africa	1957	44.077
+Rwanda	Africa	1967	44.1
+Eritrea	Africa	1972	44.142
+Tanzania	Africa	1962	44.246
+Mauritania	Africa	1962	44.248
+Mozambique	Africa	1992	44.284
+Djibouti	Africa	1972	44.366
+Egypt	Africa	1957	44.444
+Comoros	Africa	1962	44.467
+Somalia	Africa	1987	44.501
+Ethiopia	Africa	1977	44.51
+Nigeria	Africa	1977	44.514
+Eritrea	Africa	1977	44.535
+Niger	Africa	1987	44.555
+Uganda	Africa	1997	44.578
+Lesotho	Africa	2002	44.593
+Gabon	Africa	1967	44.598
+Rwanda	Africa	1972	44.6
+Tunisia	Africa	1952	44.6
+Kenya	Africa	1957	44.686
+Burundi	Africa	1992	44.736
+Central African Republic	Africa	2007	44.741
+Ghana	Africa	1957	44.779
+Cameroon	Africa	1967	44.799
+Madagascar	Africa	1972	44.851
+Liberia	Africa	1982	44.852
+Guinea-Bissau	Africa	1997	44.873
+Benin	Africa	1967	44.885
+Ethiopia	Africa	1982	44.916
+Cote d'Ivoire	Africa	1962	44.93
+Congo, Dem. Rep.	Africa	2002	44.966
+Swaziland	Africa	1962	44.992
+Rwanda	Africa	1977	45.0
+Malawi	Africa	2002	45.009
+South Africa	Africa	1952	45.009
+Lesotho	Africa	1957	45.047
+Congo, Rep.	Africa	1957	45.053
+Sudan	Africa	1972	45.083
+Namibia	Africa	1957	45.226
+Libya	Africa	1957	45.289
+Burundi	Africa	1997	45.326
+Uganda	Africa	1962	45.344
+Morocco	Africa	1957	45.423
+Guinea-Bissau	Africa	2002	45.504
+Congo, Dem. Rep.	Africa	1992	45.548
+Guinea	Africa	1987	45.552
+Chad	Africa	1972	45.569
+Gambia	Africa	1982	45.58
+Malawi	Africa	1982	45.642
+Equatorial Guinea	Africa	1987	45.664
+Liberia	Africa	2007	45.678
+Algeria	Africa	1957	45.685
+Tanzania	Africa	1967	45.757
+Senegal	Africa	1972	45.815
+Nigeria	Africa	1982	45.826
+Burundi	Africa	1977	45.91
+Somalia	Africa	2002	45.936
+Congo, Dem. Rep.	Africa	1972	45.989
+Zambia	Africa	1962	46.023
+Liberia	Africa	1987	46.027
+Central African Republic	Africa	1997	46.066
+Zambia	Africa	1992	46.1
+Burkina Faso	Africa	1977	46.137
+Rwanda	Africa	1982	46.218
+Rwanda	Africa	2007	46.242
+Mauritania	Africa	1967	46.289
+Mozambique	Africa	1997	46.344
+Mali	Africa	1987	46.364
+Guinea-Bissau	Africa	2007	46.388
+Ghana	Africa	1962	46.452
+Eritrea	Africa	1987	46.453
+Congo, Dem. Rep.	Africa	2007	46.462
+Sao Tome and Principe	Africa	1952	46.471
+Comoros	Africa	1967	46.472
+Djibouti	Africa	1977	46.519
+Nigeria	Africa	2002	46.608
+Swaziland	Africa	1967	46.633
+Botswana	Africa	2002	46.634
+Ethiopia	Africa	1987	46.684
+Togo	Africa	1967	46.769
+Central African Republic	Africa	1977	46.775
+Zimbabwe	Africa	1997	46.809
+Cote d'Ivoire	Africa	2002	46.832
+Nigeria	Africa	2007	46.859
+Madagascar	Africa	1977	46.881
+Nigeria	Africa	1987	46.886
+Egypt	Africa	1962	46.992
+Benin	Africa	1972	47.014
+Cameroon	Africa	1972	47.049
+Tunisia	Africa	1957	47.1
+Cote d'Ivoire	Africa	1967	47.35
+Burundi	Africa	2002	47.36
+Chad	Africa	1977	47.383
+Niger	Africa	1992	47.391
+Congo, Dem. Rep.	Africa	1987	47.412
+Malawi	Africa	1987	47.457
+Nigeria	Africa	1997	47.464
+Burundi	Africa	1982	47.471
+Nigeria	Africa	1992	47.472
+Malawi	Africa	1997	47.495
+Equatorial Guinea	Africa	1992	47.545
+Tanzania	Africa	1972	47.62
+Botswana	Africa	1952	47.622
+Lesotho	Africa	1962	47.747
+Zambia	Africa	1967	47.768
+Congo, Dem. Rep.	Africa	1982	47.784
+Sudan	Africa	1977	47.8
+Congo, Dem. Rep.	Africa	1977	47.804
+Libya	Africa	1962	47.808
+Uganda	Africa	2002	47.813
+Morocco	Africa	1962	47.924
+Kenya	Africa	1962	47.949
+South Africa	Africa	1957	47.985
+Cote d'Ivoire	Africa	1997	47.991
+Uganda	Africa	1967	48.051
+Ghana	Africa	1967	48.072
+Ethiopia	Africa	1992	48.091
+Burkina Faso	Africa	1982	48.122
+Somalia	Africa	2007	48.159
+Burundi	Africa	1987	48.211
+Equatorial Guinea	Africa	1997	48.245
+Central African Republic	Africa	1982	48.295
+Algeria	Africa	1962	48.303
+Malawi	Africa	2007	48.303
+Cote d'Ivoire	Africa	2007	48.328
+Namibia	Africa	1962	48.386
+Mali	Africa	1992	48.388
+Congo, Rep.	Africa	1962	48.435
+Mauritania	Africa	1972	48.437
+Zimbabwe	Africa	1952	48.451
+Tanzania	Africa	1997	48.466
+Lesotho	Africa	1967	48.492
+Guinea	Africa	1992	48.576
+Gabon	Africa	1972	48.69
+Djibouti	Africa	1982	48.812
+Uganda	Africa	1992	48.825
+Senegal	Africa	1977	48.879
+Comoros	Africa	1972	48.944
+Sao Tome and Principe	Africa	1957	48.945
+Madagascar	Africa	1982	48.969
+Benin	Africa	1977	49.19
+Gambia	Africa	1987	49.265
+Egypt	Africa	1967	49.293
+South Africa	Africa	2007	49.339
+Equatorial Guinea	Africa	2002	49.348
+Madagascar	Africa	1987	49.35
+Cameroon	Africa	1977	49.355
+Central African Republic	Africa	1992	49.396
+Ethiopia	Africa	1997	49.402
+Malawi	Africa	1992	49.42
+Chad	Africa	1982	49.517
+Swaziland	Africa	1972	49.552
+Burkina Faso	Africa	1987	49.557
+Tunisia	Africa	1962	49.579
+Burundi	Africa	2007	49.58
+Botswana	Africa	1957	49.618
+Tanzania	Africa	2002	49.651
+Togo	Africa	1972	49.759
+Lesotho	Africa	1972	49.767
+Cote d'Ivoire	Africa	1972	49.801
+Uganda	Africa	1982	49.849
+Cameroon	Africa	2002	49.856
+Ghana	Africa	1972	49.875
+Mali	Africa	1997	49.903
+Tanzania	Africa	1977	49.919
+South Africa	Africa	1962	49.951
+Eritrea	Africa	1992	49.991
+Djibouti	Africa	1987	50.04
+Zambia	Africa	1972	50.107
+Libya	Africa	1967	50.227
+Burkina Faso	Africa	1992	50.26
+Burkina Faso	Africa	1997	50.324
+Morocco	Africa	1967	50.335
+Sudan	Africa	1982	50.338
+Uganda	Africa	1977	50.35
+Cameroon	Africa	2007	50.43
+Tanzania	Africa	1992	50.44
+Zimbabwe	Africa	1957	50.469
+Central African Republic	Africa	1987	50.485
+Chad	Africa	2002	50.525
+Tanzania	Africa	1982	50.608
+Burkina Faso	Africa	2002	50.65
+Chad	Africa	2007	50.651
+Kenya	Africa	1967	50.654
+Ethiopia	Africa	2002	50.725
+Botswana	Africa	2007	50.728
+Zambia	Africa	1987	50.821
+Mauritania	Africa	1977	50.852
+Benin	Africa	1982	50.904
+Comoros	Africa	1977	50.939
+Mauritius	Africa	1952	50.986
+Kenya	Africa	2002	50.992
+Uganda	Africa	1972	51.016
+Chad	Africa	1987	51.051
+Egypt	Africa	1972	51.137
+Namibia	Africa	1967	51.159
+Niger	Africa	1997	51.313
+Zambia	Africa	1977	51.386
+Algeria	Africa	1967	51.407
+Guinea	Africa	1997	51.455
+Namibia	Africa	2002	51.479
+Uganda	Africa	1987	51.509
+Botswana	Africa	1962	51.52
+Tanzania	Africa	1987	51.535
+Uganda	Africa	2007	51.542
+Chad	Africa	1997	51.573
+Equatorial Guinea	Africa	2007	51.579
+Djibouti	Africa	1992	51.604
+Chad	Africa	1992	51.724
+Sudan	Africa	1987	51.744
+Ghana	Africa	1977	51.756
+Mali	Africa	2002	51.818
+Zambia	Africa	1982	51.821
+Sao Tome and Principe	Africa	1962	51.893
+South Africa	Africa	1967	51.927
+Congo, Rep.	Africa	1967	52.04
+Cote d'Ivoire	Africa	1992	52.044
+Tunisia	Africa	1967	52.053
+Cameroon	Africa	1997	52.199
+Lesotho	Africa	1977	52.208
+Madagascar	Africa	1992	52.214
+Burkina Faso	Africa	2007	52.295
+Benin	Africa	1987	52.337
+Zimbabwe	Africa	1962	52.358
+Cote d'Ivoire	Africa	1977	52.374
+Senegal	Africa	1982	52.379
+Tanzania	Africa	2007	52.517
+Swaziland	Africa	1977	52.537
+Botswana	Africa	1997	52.556
+Gambia	Africa	1992	52.644
+Reunion	Africa	1952	52.724
+Libya	Africa	1972	52.773
+Gabon	Africa	1977	52.79
+Morocco	Africa	1972	52.862
+Togo	Africa	1977	52.887
+Namibia	Africa	2007	52.906
+Comoros	Africa	1982	52.933
+Ethiopia	Africa	2007	52.947
+Cameroon	Africa	1982	52.961
+Congo, Rep.	Africa	1997	52.962
+Congo, Rep.	Africa	2002	52.97
+Djibouti	Africa	1997	53.157
+Botswana	Africa	1967	53.298
+Egypt	Africa	1977	53.319
+South Africa	Africa	2002	53.365
+Djibouti	Africa	2002	53.373
+Eritrea	Africa	1997	53.378
+Sudan	Africa	1992	53.556
+Kenya	Africa	1972	53.559
+Mauritania	Africa	1982	53.599
+Guinea	Africa	2002	53.676
+South Africa	Africa	1972	53.696
+Ghana	Africa	1982	53.744
+Namibia	Africa	1972	53.867
+Benin	Africa	1992	53.919
+Cote d'Ivoire	Africa	1982	53.983
+Zimbabwe	Africa	1967	53.995
+Kenya	Africa	2007	54.11
+Swaziland	Africa	1997	54.289
+Cameroon	Africa	1992	54.314
+Benin	Africa	2002	54.406
+Kenya	Africa	1997	54.407
+Sao Tome and Principe	Africa	1967	54.425
+Mali	Africa	2007	54.467
+Niger	Africa	2002	54.496
+Algeria	Africa	1972	54.518
+Cote d'Ivoire	Africa	1987	54.655
+Benin	Africa	1997	54.777
+Djibouti	Africa	2007	54.791
+Congo, Rep.	Africa	1972	54.907
+Comoros	Africa	1987	54.926
+Madagascar	Africa	1997	54.978
+Cameroon	Africa	1987	54.985
+Lesotho	Africa	1982	55.078
+Reunion	Africa	1957	55.09
+Eritrea	Africa	2002	55.24
+Congo, Rep.	Africa	2007	55.322
+Sudan	Africa	1997	55.373
+Togo	Africa	1982	55.471
+South Africa	Africa	1977	55.527
+Lesotho	Africa	1997	55.558
+Swaziland	Africa	1982	55.561
+Tunisia	Africa	1972	55.602
+Congo, Rep.	Africa	1977	55.625
+Zimbabwe	Africa	1972	55.635
+Ghana	Africa	1987	55.729
+Morocco	Africa	1977	55.73
+Senegal	Africa	1987	55.769
+Gambia	Africa	1997	55.861
+Egypt	Africa	1982	56.006
+Guinea	Africa	2007	56.007
+Botswana	Africa	1972	56.024
+Mauritania	Africa	1987	56.145
+Kenya	Africa	1977	56.155
+Sudan	Africa	2002	56.369
+Congo, Rep.	Africa	1992	56.433
+Namibia	Africa	1977	56.437
+Sao Tome and Principe	Africa	1972	56.48
+Gabon	Africa	1982	56.564
+Congo, Rep.	Africa	1982	56.695
+Benin	Africa	2007	56.728
+Gabon	Africa	2007	56.735
+Gabon	Africa	2002	56.761
+Niger	Africa	2007	56.867
+Togo	Africa	1987	56.941
+Lesotho	Africa	1987	57.18
+Madagascar	Africa	2002	57.286
+Libya	Africa	1977	57.442
+Congo, Rep.	Africa	1987	57.47
+Ghana	Africa	1992	57.501
+Togo	Africa	2002	57.561
+Reunion	Africa	1962	57.666
+Zimbabwe	Africa	1977	57.674
+Swaziland	Africa	1987	57.678
+Comoros	Africa	1992	57.939
+Algeria	Africa	1977	58.014
+Eritrea	Africa	2007	58.04
+Gambia	Africa	2002	58.041
+Togo	Africa	1992	58.061
+Mauritius	Africa	1957	58.089
+South Africa	Africa	1982	58.161
+Senegal	Africa	1992	58.196
+Mauritania	Africa	1992	58.333
+Togo	Africa	1997	58.39
+Togo	Africa	2007	58.42
+Ghana	Africa	2002	58.453
+Swaziland	Africa	1992	58.474
+Sao Tome and Principe	Africa	1977	58.55
+Ghana	Africa	1997	58.556
+Sudan	Africa	2007	58.556
+Kenya	Africa	1982	58.766
+Namibia	Africa	1997	58.909
+Namibia	Africa	1982	58.968
+Kenya	Africa	1992	59.285
+Botswana	Africa	1977	59.319
+Kenya	Africa	1987	59.339
+Madagascar	Africa	2007	59.443
+Gambia	Africa	2007	59.448
+Morocco	Africa	1982	59.65
+Lesotho	Africa	1992	59.685
+Egypt	Africa	1987	59.797
+Tunisia	Africa	1977	59.837
+Ghana	Africa	2007	60.022
+Senegal	Africa	1997	60.187
+Gabon	Africa	1987	60.19
+South Africa	Africa	1997	60.236
+Mauritius	Africa	1962	60.246
+Sao Tome and Principe	Africa	1982	60.351
+Zimbabwe	Africa	1982	60.363
+Zimbabwe	Africa	1992	60.377
+Mauritania	Africa	1997	60.43
+Gabon	Africa	1997	60.461
+Reunion	Africa	1967	60.542
+Comoros	Africa	1997	60.66
+South Africa	Africa	1987	60.834
+Namibia	Africa	1987	60.835
+Gabon	Africa	1992	61.366
+Algeria	Africa	1982	61.368
+Botswana	Africa	1982	61.484
+Mauritius	Africa	1967	61.557
+Senegal	Africa	2002	61.6
+Sao Tome and Principe	Africa	1987	61.728
+South Africa	Africa	1992	61.888
+Namibia	Africa	1992	61.999
+Libya	Africa	1982	62.155
+Mauritania	Africa	2002	62.247
+Zimbabwe	Africa	1987	62.351
+Morocco	Africa	1987	62.677
+Sao Tome and Principe	Africa	1992	62.742
+Botswana	Africa	1992	62.745
+Mauritius	Africa	1972	62.944
+Comoros	Africa	2002	62.974
+Senegal	Africa	2007	63.062
+Sao Tome and Principe	Africa	1997	63.306
+Botswana	Africa	1987	63.622
+Egypt	Africa	1992	63.674
+Tunisia	Africa	1982	64.048
+Mauritania	Africa	2007	64.164
+Reunion	Africa	1972	64.274
+Sao Tome and Principe	Africa	2002	64.337
+Mauritius	Africa	1977	64.93
+Comoros	Africa	2007	65.152
+Morocco	Africa	1992	65.393
+Sao Tome and Principe	Africa	2007	65.528
+Algeria	Africa	1987	65.799
+Libya	Africa	1987	66.234
+Mauritius	Africa	1982	66.711
+Tunisia	Africa	1987	66.894
+Reunion	Africa	1977	67.064
+Egypt	Africa	1997	67.217
+Morocco	Africa	1997	67.66
+Algeria	Africa	1992	67.744
+Mauritius	Africa	1987	68.74
+Libya	Africa	1992	68.755
+Algeria	Africa	1997	69.152
+Morocco	Africa	2002	69.615
+Mauritius	Africa	1992	69.745
+Egypt	Africa	2002	69.806
+Reunion	Africa	1982	69.885
+Tunisia	Africa	1992	70.001
+Mauritius	Africa	1997	70.736
+Algeria	Africa	2002	70.994
+Morocco	Africa	2007	71.164
+Egypt	Africa	2007	71.338
+Libya	Africa	1997	71.555
+Reunion	Africa	1987	71.913
+Mauritius	Africa	2002	71.954
+Tunisia	Africa	1997	71.973
+Algeria	Africa	2007	72.301
+Libya	Africa	2002	72.737
+Mauritius	Africa	2007	72.801
+Tunisia	Africa	2002	73.042
+Reunion	Africa	1992	73.615
+Tunisia	Africa	2007	73.923
+Libya	Africa	2007	73.952
+Reunion	Africa	1997	74.772
+Reunion	Africa	2002	75.744
+Reunion	Africa	2007	76.442
+Haiti	Americas	1952	37.579
+Bolivia	Americas	1952	40.414
+Haiti	Americas	1957	40.696
+Bolivia	Americas	1957	41.89
+Honduras	Americas	1952	41.912
+Guatemala	Americas	1952	42.023
+Nicaragua	Americas	1952	42.314
+Bolivia	Americas	1962	43.428
+Haiti	Americas	1962	43.59
+Peru	Americas	1952	43.902
+Guatemala	Americas	1957	44.142
+Honduras	Americas	1957	44.665
+Bolivia	Americas	1967	45.032
+El Salvador	Americas	1952	45.262
+Nicaragua	Americas	1957	45.432
+Dominican Republic	Americas	1952	45.928
+Haiti	Americas	1967	46.243
+Peru	Americas	1957	46.263
+Bolivia	Americas	1972	46.714
+Guatemala	Americas	1962	46.954
+Honduras	Americas	1962	48.041
+Haiti	Americas	1972	48.042
+Ecuador	Americas	1952	48.357
+El Salvador	Americas	1957	48.57
+Nicaragua	Americas	1962	48.632
+Peru	Americas	1962	49.096
+Dominican Republic	Americas	1957	49.828
+Haiti	Americas	1977	49.923
+Guatemala	Americas	1967	50.016
+Bolivia	Americas	1977	50.023
+Colombia	Americas	1952	50.643
+Mexico	Americas	1952	50.789
+Brazil	Americas	1952	50.917
+Honduras	Americas	1967	50.924
+Ecuador	Americas	1957	51.356
+Peru	Americas	1967	51.445
+Haiti	Americas	1982	51.461
+Nicaragua	Americas	1967	51.884
+El Salvador	Americas	1962	52.307
+Brazil	Americas	1957	53.285
+Dominican Republic	Americas	1962	53.459
+Haiti	Americas	1987	53.636
+Guatemala	Americas	1972	53.738
+Bolivia	Americas	1982	53.859
+Honduras	Americas	1972	53.884
+Ecuador	Americas	1962	54.64
+Chile	Americas	1952	54.745
+Venezuela	Americas	1952	55.088
+Haiti	Americas	1992	55.089
+Colombia	Americas	1957	55.118
+Nicaragua	Americas	1972	55.151
+Mexico	Americas	1957	55.19
+Panama	Americas	1952	55.191
+Peru	Americas	1972	55.448
+Brazil	Americas	1962	55.665
+El Salvador	Americas	1967	55.855
+Guatemala	Americas	1977	56.029
+Chile	Americas	1957	56.074
+El Salvador	Americas	1982	56.604
+Haiti	Americas	1997	56.671
+Ecuador	Americas	1967	56.678
+El Salvador	Americas	1977	56.696
+Dominican Republic	Americas	1967	56.751
+Costa Rica	Americas	1952	57.206
+Bolivia	Americas	1987	57.251
+Honduras	Americas	1977	57.402
+Nicaragua	Americas	1977	57.47
+Brazil	Americas	1967	57.632
+Colombia	Americas	1962	57.863
+Venezuela	Americas	1957	57.907
+Chile	Americas	1962	57.924
+Guatemala	Americas	1982	58.137
+Haiti	Americas	2002	58.137
+El Salvador	Americas	1972	58.207
+Mexico	Americas	1962	58.299
+Peru	Americas	1977	58.447
+Jamaica	Americas	1952	58.53
+Ecuador	Americas	1972	58.796
+Trinidad and Tobago	Americas	1952	59.1
+Panama	Americas	1957	59.201
+Nicaragua	Americas	1982	59.298
+Cuba	Americas	1952	59.421
+Brazil	Americas	1972	59.504
+Dominican Republic	Americas	1972	59.631
+Bolivia	Americas	1992	59.957
+Colombia	Americas	1967	59.963
+Costa Rica	Americas	1957	60.026
+Mexico	Americas	1967	60.11
+Chile	Americas	1967	60.523
+Venezuela	Americas	1962	60.77
+Guatemala	Americas	1987	60.782
+Honduras	Americas	1982	60.909
+Haiti	Americas	2007	60.916
+Ecuador	Americas	1977	61.31
+Peru	Americas	1982	61.406
+Brazil	Americas	1977	61.489
+Colombia	Americas	1972	61.623
+Dominican Republic	Americas	1977	61.788
+Trinidad and Tobago	Americas	1957	61.8
+Panama	Americas	1962	61.817
+Nicaragua	Americas	1987	62.008
+Bolivia	Americas	1997	62.05
+Cuba	Americas	1957	62.325
+Mexico	Americas	1972	62.361
+Argentina	Americas	1952	62.485
+Jamaica	Americas	1957	62.61
+Paraguay	Americas	1952	62.649
+Costa Rica	Americas	1962	62.842
+El Salvador	Americas	1987	63.154
+Paraguay	Americas	1957	63.196
+Brazil	Americas	1982	63.336
+Guatemala	Americas	1992	63.373
+Chile	Americas	1972	63.441
+Venezuela	Americas	1967	63.479
+Dominican Republic	Americas	1982	63.727
+Colombia	Americas	1977	63.837
+Bolivia	Americas	2002	63.883
+Panama	Americas	1967	64.071
+Peru	Americas	1987	64.134
+Puerto Rico	Americas	1952	64.28
+Ecuador	Americas	1982	64.342
+Paraguay	Americas	1962	64.361
+Argentina	Americas	1957	64.399
+Honduras	Americas	1987	64.492
+Trinidad and Tobago	Americas	1962	64.9
+Paraguay	Americas	1967	64.951
+Mexico	Americas	1977	65.032
+Argentina	Americas	1962	65.142
+Brazil	Americas	1987	65.205
+Cuba	Americas	1962	65.246
+Trinidad and Tobago	Americas	1967	65.4
+Costa Rica	Americas	1967	65.424
+Bolivia	Americas	2007	65.554
+Jamaica	Americas	1962	65.61
+Argentina	Americas	1967	65.634
+Venezuela	Americas	1972	65.712
+Paraguay	Americas	1972	65.815
+Nicaragua	Americas	1992	65.843
+Trinidad and Tobago	Americas	1972	65.9
+Dominican Republic	Americas	1987	66.046
+Uruguay	Americas	1952	66.071
+Panama	Americas	1972	66.216
+Guatemala	Americas	1997	66.322
+Paraguay	Americas	1977	66.353
+Honduras	Americas	1992	66.399
+Peru	Americas	1992	66.458
+Colombia	Americas	1982	66.653
+El Salvador	Americas	1992	66.798
+Paraguay	Americas	1982	66.874
+Uruguay	Americas	1957	67.044
+Chile	Americas	1977	67.052
+Brazil	Americas	1992	67.057
+Argentina	Americas	1972	67.065
+Ecuador	Americas	1987	67.231
+Paraguay	Americas	1987	67.378
+Mexico	Americas	1982	67.405
+Venezuela	Americas	1977	67.456
+Jamaica	Americas	1967	67.51
+Honduras	Americas	1997	67.659
+Colombia	Americas	1987	67.768
+Costa Rica	Americas	1972	67.849
+Paraguay	Americas	1992	68.225
+Uruguay	Americas	1962	68.253
+Cuba	Americas	1967	68.29
+Trinidad and Tobago	Americas	1977	68.3
+Peru	Americas	1997	68.386
+Colombia	Americas	1992	68.421
+Nicaragua	Americas	1997	68.426
+United States	Americas	1952	68.44
+Dominican Republic	Americas	1992	68.457
+Uruguay	Americas	1967	68.468
+Argentina	Americas	1977	68.481
+Puerto Rico	Americas	1957	68.54
+Venezuela	Americas	1982	68.557
+Honduras	Americas	2002	68.565
+Uruguay	Americas	1972	68.673
+Panama	Americas	1977	68.681
+Canada	Americas	1952	68.75
+Trinidad and Tobago	Americas	1982	68.832
+Trinidad and Tobago	Americas	2002	68.976
+Guatemala	Americas	2002	68.978
+Jamaica	Americas	1972	69.0
+Brazil	Americas	1997	69.388
+Paraguay	Americas	1997	69.4
+Trinidad and Tobago	Americas	1997	69.465
+Uruguay	Americas	1977	69.481
+United States	Americas	1957	69.49
+Mexico	Americas	1987	69.498
+El Salvador	Americas	1997	69.535
+Trinidad and Tobago	Americas	1987	69.582
+Ecuador	Americas	1992	69.613
+Puerto Rico	Americas	1962	69.62
+Trinidad and Tobago	Americas	2007	69.819
+Trinidad and Tobago	Americas	1992	69.862
+Peru	Americas	2002	69.906
+Argentina	Americas	1982	69.942
+Dominican Republic	Americas	1997	69.957
+Canada	Americas	1957	69.96
+Jamaica	Americas	1977	70.11
+Venezuela	Americas	1987	70.19
+Honduras	Americas	2007	70.198
+United States	Americas	1962	70.21
+Guatemala	Americas	2007	70.259
+Colombia	Americas	1997	70.313
+Panama	Americas	1982	70.472
+Chile	Americas	1982	70.565
+Cuba	Americas	1972	70.723
+El Salvador	Americas	2002	70.734
+Costa Rica	Americas	1977	70.75
+Paraguay	Americas	2002	70.755
+United States	Americas	1967	70.76
+Argentina	Americas	1987	70.774
+Uruguay	Americas	1982	70.805
+Nicaragua	Americas	2002	70.836
+Dominican Republic	Americas	2002	70.847
+Brazil	Americas	2002	71.006
+Puerto Rico	Americas	1967	71.1
+Venezuela	Americas	1992	71.15
+Jamaica	Americas	1982	71.21
+Canada	Americas	1962	71.3
+United States	Americas	1972	71.34
+Peru	Americas	2007	71.421
+Mexico	Americas	1992	71.455
+Panama	Americas	1987	71.523
+Colombia	Americas	2002	71.682
+Paraguay	Americas	2007	71.752
+Jamaica	Americas	1992	71.766
+Jamaica	Americas	1987	71.77
+Argentina	Americas	1992	71.868
+El Salvador	Americas	2007	71.878
+Uruguay	Americas	1987	71.918
+Jamaica	Americas	2002	72.047
+Canada	Americas	1967	72.13
+Venezuela	Americas	1997	72.146
+Puerto Rico	Americas	1972	72.16
+Dominican Republic	Americas	2007	72.235
+Jamaica	Americas	1997	72.262
+Ecuador	Americas	1997	72.312
+Brazil	Americas	2007	72.39
+Panama	Americas	1992	72.462
+Chile	Americas	1987	72.492
+Jamaica	Americas	2007	72.567
+Cuba	Americas	1977	72.649
+Uruguay	Americas	1992	72.752
+Venezuela	Americas	2002	72.766
+Canada	Americas	1972	72.88
+Colombia	Americas	2007	72.889
+Nicaragua	Americas	2007	72.899
+Argentina	Americas	1997	73.275
+United States	Americas	1977	73.38
+Puerto Rico	Americas	1977	73.44
+Costa Rica	Americas	1982	73.45
+Mexico	Americas	1997	73.67
+Cuba	Americas	1982	73.717
+Panama	Americas	1997	73.738
+Venezuela	Americas	2007	73.747
+Puerto Rico	Americas	1982	73.75
+Puerto Rico	Americas	1992	73.911
+Chile	Americas	1992	74.126
+Ecuador	Americas	2002	74.173
+Cuba	Americas	1987	74.174
+Canada	Americas	1977	74.21
+Uruguay	Americas	1997	74.223
+Argentina	Americas	2002	74.34
+Cuba	Americas	1992	74.414
+Puerto Rico	Americas	1987	74.63
+United States	Americas	1982	74.65
+Panama	Americas	2002	74.712
+Costa Rica	Americas	1987	74.752
+Mexico	Americas	2002	74.902
+Puerto Rico	Americas	1997	74.917
+Ecuador	Americas	2007	74.994
+United States	Americas	1987	75.02
+Uruguay	Americas	2002	75.307
+Argentina	Americas	2007	75.32
+Panama	Americas	2007	75.537
+Costa Rica	Americas	1992	75.713
+Canada	Americas	1982	75.76
+Chile	Americas	1997	75.816
+United States	Americas	1992	76.09
+Cuba	Americas	1997	76.151
+Mexico	Americas	2007	76.195
+Uruguay	Americas	2007	76.384
+United States	Americas	1997	76.81
+Canada	Americas	1987	76.86
+Cuba	Americas	2002	77.158
+Costa Rica	Americas	1997	77.26
+United States	Americas	2002	77.31
+Puerto Rico	Americas	2002	77.778
+Chile	Americas	2002	77.86
+Canada	Americas	1992	77.95
+Costa Rica	Americas	2002	78.123
+United States	Americas	2007	78.242
+Cuba	Americas	2007	78.273
+Chile	Americas	2007	78.553
+Canada	Americas	1997	78.61
+Puerto Rico	Americas	2007	78.746
+Costa Rica	Americas	2007	78.782
+Canada	Americas	2002	79.77
+Canada	Americas	2007	80.653
+Afghanistan	Asia	1952	28.801
+Afghanistan	Asia	1957	30.332
+Cambodia	Asia	1977	31.22
+Afghanistan	Asia	1962	31.997
+Yemen, Rep.	Asia	1952	32.548
+Yemen, Rep.	Asia	1957	33.97
+Afghanistan	Asia	1967	34.02
+Yemen, Rep.	Asia	1962	35.18
+Afghanistan	Asia	1972	36.088
+Nepal	Asia	1952	36.157
+Myanmar	Asia	1952	36.319
+Yemen, Rep.	Asia	1967	36.984
+India	Asia	1952	37.373
+Indonesia	Asia	1952	37.468
+Bangladesh	Asia	1952	37.484
+Oman	Asia	1952	37.578
+Nepal	Asia	1957	37.686
+Afghanistan	Asia	1977	38.438
+Bangladesh	Asia	1957	39.348
+Nepal	Asia	1962	39.393
+Cambodia	Asia	1952	39.417
+Yemen, Rep.	Asia	1972	39.848
+Afghanistan	Asia	1982	39.854
+Saudi Arabia	Asia	1952	39.875
+Indonesia	Asia	1957	39.918
+Oman	Asia	1957	40.08
+India	Asia	1957	40.249
+Cambodia	Asia	1972	40.317
+Vietnam	Asia	1952	40.412
+Afghanistan	Asia	1987	40.822
+Bangladesh	Asia	1962	41.216
+Cambodia	Asia	1957	41.366
+Nepal	Asia	1967	41.472
+Afghanistan	Asia	1992	41.674
+Afghanistan	Asia	1997	41.763
+Myanmar	Asia	1957	41.905
+Afghanistan	Asia	2002	42.129
+Mongolia	Asia	1952	42.244
+Indonesia	Asia	1962	42.518
+Saudi Arabia	Asia	1957	42.868
+Vietnam	Asia	1957	42.887
+Jordan	Asia	1952	43.158
+West Bank and Gaza	Asia	1952	43.16
+Oman	Asia	1962	43.165
+Cambodia	Asia	1962	43.415
+Pakistan	Asia	1952	43.436
+Bangladesh	Asia	1967	43.453
+India	Asia	1962	43.605
+Afghanistan	Asia	2007	43.828
+Nepal	Asia	1972	43.971
+China	Asia	1952	44.0
+Yemen, Rep.	Asia	1977	44.175
+China	Asia	1962	44.50136
+Iran	Asia	1952	44.869
+Myanmar	Asia	1962	45.108
+Mongolia	Asia	1957	45.248
+Bangladesh	Asia	1972	45.252
+Iraq	Asia	1952	45.32
+Vietnam	Asia	1962	45.363
+Cambodia	Asia	1967	45.415
+Pakistan	Asia	1957	45.557
+Jordan	Asia	1957	45.669
+West Bank and Gaza	Asia	1957	45.671
+Syria	Asia	1952	45.883
+Saudi Arabia	Asia	1962	45.914
+Indonesia	Asia	1967	45.964
+Nepal	Asia	1977	46.748
+Bangladesh	Asia	1977	46.923
+Oman	Asia	1967	46.988
+Iran	Asia	1957	47.181
+India	Asia	1967	47.193
+Korea, Rep.	Asia	1952	47.453
+Pakistan	Asia	1962	47.67
+Philippines	Asia	1952	47.752
+Vietnam	Asia	1967	47.838
+Jordan	Asia	1962	48.126
+West Bank and Gaza	Asia	1962	48.127
+Mongolia	Asia	1962	48.251
+Syria	Asia	1957	48.284
+Iraq	Asia	1957	48.437
+Malaysia	Asia	1952	48.463
+Yemen, Rep.	Asia	1982	49.113
+Indonesia	Asia	1972	49.203
+Iran	Asia	1962	49.325
+Myanmar	Asia	1967	49.379
+Nepal	Asia	1982	49.594
+Pakistan	Asia	1967	49.8
+Saudi Arabia	Asia	1967	49.901
+Bangladesh	Asia	1982	50.009
+Korea, Dem. Rep.	Asia	1952	50.056
+Vietnam	Asia	1972	50.254
+Syria	Asia	1962	50.305
+China	Asia	1957	50.54896
+India	Asia	1972	50.651
+Thailand	Asia	1952	50.848
+Bahrain	Asia	1952	50.939
+Cambodia	Asia	1982	50.957
+Mongolia	Asia	1967	51.253
+Philippines	Asia	1957	51.334
+Iraq	Asia	1962	51.457
+Jordan	Asia	1967	51.629
+West Bank and Gaza	Asia	1967	51.631
+Pakistan	Asia	1972	51.929
+Malaysia	Asia	1957	52.102
+Oman	Asia	1972	52.143
+Iran	Asia	1967	52.469
+Nepal	Asia	1987	52.537
+Korea, Rep.	Asia	1957	52.681
+Indonesia	Asia	1977	52.702
+Bangladesh	Asia	1987	52.819
+Yemen, Rep.	Asia	1987	52.922
+Myanmar	Asia	1972	53.07
+Thailand	Asia	1957	53.63
+Syria	Asia	1967	53.655
+Mongolia	Asia	1972	53.754
+Bahrain	Asia	1957	53.832
+Saudi Arabia	Asia	1972	53.886
+Cambodia	Asia	1987	53.914
+Pakistan	Asia	1977	54.043
+Korea, Dem. Rep.	Asia	1957	54.081
+India	Asia	1977	54.208
+Iraq	Asia	1967	54.459
+Philippines	Asia	1962	54.757
+Iran	Asia	1972	55.234
+Korea, Rep.	Asia	1962	55.292
+Mongolia	Asia	1977	55.491
+Kuwait	Asia	1952	55.565
+Yemen, Rep.	Asia	1992	55.599
+Nepal	Asia	1992	55.727
+Malaysia	Asia	1962	55.737
+Vietnam	Asia	1977	55.764
+Cambodia	Asia	1992	55.803
+Lebanon	Asia	1952	55.928
+Bangladesh	Asia	1992	56.018
+Myanmar	Asia	1977	56.059
+Thailand	Asia	1962	56.061
+Pakistan	Asia	1982	56.158
+Indonesia	Asia	1982	56.159
+Philippines	Asia	1967	56.393
+Jordan	Asia	1972	56.528
+West Bank and Gaza	Asia	1972	56.532
+Cambodia	Asia	1997	56.534
+India	Asia	1982	56.596
+Korea, Dem. Rep.	Asia	1962	56.656
+Cambodia	Asia	2002	56.752
+Bahrain	Asia	1962	56.923
+Iraq	Asia	1972	56.95
+Iraq	Asia	2002	57.046
+Syria	Asia	1972	57.296
+Oman	Asia	1977	57.367
+Mongolia	Asia	1982	57.489
+Sri Lanka	Asia	1952	57.593
+Iran	Asia	1977	57.702
+Korea, Rep.	Asia	1967	57.716
+Yemen, Rep.	Asia	1997	58.02
+Kuwait	Asia	1957	58.033
+Myanmar	Asia	1982	58.056
+Philippines	Asia	1972	58.065
+Pakistan	Asia	1987	58.245
+Thailand	Asia	1967	58.285
+Myanmar	Asia	1987	58.339
+China	Asia	1967	58.38112
+Taiwan	Asia	1952	58.5
+India	Asia	1987	58.553
+Saudi Arabia	Asia	1977	58.69
+Iraq	Asia	1997	58.811
+Vietnam	Asia	1982	58.816
+Myanmar	Asia	1992	59.32
+Malaysia	Asia	1967	59.371
+Bangladesh	Asia	1997	59.412
+Nepal	Asia	1997	59.426
+Iraq	Asia	1992	59.461
+Lebanon	Asia	1957	59.489
+Iraq	Asia	2007	59.545
+Iran	Asia	1982	59.62
+Cambodia	Asia	2007	59.723
+Myanmar	Asia	2002	59.908
+Bahrain	Asia	1967	59.923
+Korea, Dem. Rep.	Asia	1967	59.942
+Philippines	Asia	1977	60.06
+Indonesia	Asia	1987	60.137
+Mongolia	Asia	1987	60.222
+India	Asia	1992	60.223
+Yemen, Rep.	Asia	2002	60.308
+Myanmar	Asia	1997	60.328
+Singapore	Asia	1952	60.396
+Thailand	Asia	1972	60.405
+Iraq	Asia	1977	60.413
+Kuwait	Asia	1962	60.47
+West Bank and Gaza	Asia	1977	60.765
+Pakistan	Asia	1992	60.838
+Hong Kong, China	Asia	1952	60.96
+Jordan	Asia	1977	61.134
+Syria	Asia	1977	61.195
+Mongolia	Asia	1992	61.271
+Nepal	Asia	2002	61.34
+Sri Lanka	Asia	1957	61.456
+India	Asia	1997	61.765
+Pakistan	Asia	1997	61.818
+Bangladesh	Asia	2002	62.013
+Iraq	Asia	1982	62.038
+Myanmar	Asia	2007	62.069
+Philippines	Asia	1982	62.082
+Lebanon	Asia	1962	62.094
+Sri Lanka	Asia	1962	62.192
+Taiwan	Asia	1957	62.4
+Thailand	Asia	1977	62.494
+Korea, Rep.	Asia	1972	62.612
+Indonesia	Asia	1992	62.681
+Yemen, Rep.	Asia	2007	62.698
+Oman	Asia	1982	62.728
+Vietnam	Asia	1987	62.82
+India	Asia	2002	62.879
+Malaysia	Asia	1972	63.01
+Saudi Arabia	Asia	1982	63.012
+Japan	Asia	1952	63.03
+Iran	Asia	1987	63.04
+China	Asia	1972	63.11888
+Singapore	Asia	1957	63.179
+Bahrain	Asia	1972	63.3
+Pakistan	Asia	2002	63.61
+Mongolia	Asia	1997	63.625
+Jordan	Asia	1982	63.739
+Nepal	Asia	2007	63.785
+Lebanon	Asia	1967	63.87
+China	Asia	1977	63.96736
+Korea, Dem. Rep.	Asia	1972	63.983
+Bangladesh	Asia	2007	64.062
+Philippines	Asia	1987	64.151
+Sri Lanka	Asia	1967	64.266
+West Bank and Gaza	Asia	1982	64.406
+Syria	Asia	1982	64.59
+Thailand	Asia	1982	64.597
+Kuwait	Asia	1967	64.624
+India	Asia	2007	64.698
+Hong Kong, China	Asia	1957	64.75
+Korea, Rep.	Asia	1977	64.766
+Mongolia	Asia	2002	65.033
+Sri Lanka	Asia	1972	65.042
+Iraq	Asia	1987	65.044
+Taiwan	Asia	1962	65.2
+Malaysia	Asia	1977	65.256
+Israel	Asia	1952	65.39
+Lebanon	Asia	1972	65.421
+Pakistan	Asia	2007	65.483
+Japan	Asia	1957	65.5
+China	Asia	1982	65.525
+Bahrain	Asia	1977	65.593
+Iran	Asia	1992	65.742
+Singapore	Asia	1962	65.798
+Jordan	Asia	1987	65.869
+Sri Lanka	Asia	1977	65.949
+Indonesia	Asia	1997	66.041
+Thailand	Asia	1987	66.084
+Lebanon	Asia	1977	66.099
+Saudi Arabia	Asia	1987	66.295
+Philippines	Asia	1992	66.458
+Korea, Dem. Rep.	Asia	2002	66.662
+Mongolia	Asia	2007	66.803
+Syria	Asia	1987	66.974
+Lebanon	Asia	1982	66.983
+West Bank and Gaza	Asia	1987	67.046
+Korea, Rep.	Asia	1982	67.123
+Korea, Dem. Rep.	Asia	1977	67.159
+China	Asia	1987	67.274
+Korea, Dem. Rep.	Asia	2007	67.297
+Thailand	Asia	1992	67.298
+Taiwan	Asia	1967	67.5
+Thailand	Asia	1997	67.521
+Hong Kong, China	Asia	1962	67.65
+Vietnam	Asia	1992	67.662
+Kuwait	Asia	1972	67.712
+Korea, Dem. Rep.	Asia	1997	67.727
+Oman	Asia	1987	67.734
+Israel	Asia	1957	67.84
+Lebanon	Asia	1987	67.926
+Singapore	Asia	1967	67.946
+Malaysia	Asia	1982	68.0
+Jordan	Asia	1992	68.015
+Iran	Asia	1997	68.042
+Philippines	Asia	1997	68.564
+Thailand	Asia	2002	68.564
+Indonesia	Asia	2002	68.588
+China	Asia	1992	68.69
+Japan	Asia	1962	68.73
+Sri Lanka	Asia	1982	68.757
+Saudi Arabia	Asia	1992	68.768
+Sri Lanka	Asia	1987	69.011
+Bahrain	Asia	1982	69.052
+Korea, Dem. Rep.	Asia	1982	69.1
+Syria	Asia	1992	69.249
+Lebanon	Asia	1992	69.292
+Kuwait	Asia	1977	69.343
+Israel	Asia	1962	69.39
+Taiwan	Asia	1972	69.39
+Iran	Asia	2002	69.451
+Malaysia	Asia	1987	69.5
+Singapore	Asia	1972	69.521
+West Bank and Gaza	Asia	1992	69.718
+Jordan	Asia	1997	69.772
+Korea, Rep.	Asia	1987	69.81
+Korea, Dem. Rep.	Asia	1992	69.978
+Hong Kong, China	Asia	1967	70.0
+Lebanon	Asia	1997	70.265
+Philippines	Asia	2002	70.303
+Sri Lanka	Asia	1992	70.379
+China	Asia	1997	70.426
+Sri Lanka	Asia	1997	70.457
+Saudi Arabia	Asia	1997	70.533
+Taiwan	Asia	1977	70.59
+Thailand	Asia	2007	70.616
+Korea, Dem. Rep.	Asia	1987	70.647
+Indonesia	Asia	2007	70.65
+Vietnam	Asia	1997	70.672
+Malaysia	Asia	1992	70.693
+Bahrain	Asia	1987	70.75
+Israel	Asia	1967	70.75
+Singapore	Asia	1977	70.795
+Sri Lanka	Asia	2002	70.815
+Iran	Asia	2007	70.964
+Lebanon	Asia	2002	71.028
+West Bank and Gaza	Asia	1997	71.096
+Oman	Asia	1992	71.197
+Jordan	Asia	2002	71.263
+Kuwait	Asia	1982	71.309
+Japan	Asia	1967	71.43
+Syria	Asia	1997	71.527
+Saudi Arabia	Asia	2002	71.626
+Israel	Asia	1972	71.63
+Philippines	Asia	2007	71.688
+Singapore	Asia	1982	71.76
+Malaysia	Asia	1997	71.938
+Lebanon	Asia	2007	71.993
+Hong Kong, China	Asia	1972	72.0
+China	Asia	2002	72.028
+Taiwan	Asia	1982	72.16
+Korea, Rep.	Asia	1992	72.244
+West Bank and Gaza	Asia	2002	72.37
+Sri Lanka	Asia	2007	72.396
+Oman	Asia	1997	72.499
+Jordan	Asia	2007	72.535
+Bahrain	Asia	1992	72.601
+Saudi Arabia	Asia	2007	72.777
+China	Asia	2007	72.961
+Vietnam	Asia	2002	73.017
+Malaysia	Asia	2002	73.044
+Syria	Asia	2002	73.053
+Israel	Asia	1977	73.06
+Taiwan	Asia	1987	73.4
+Japan	Asia	1972	73.42
+West Bank and Gaza	Asia	2007	73.422
+Singapore	Asia	1987	73.56
+Hong Kong, China	Asia	1977	73.6
+Bahrain	Asia	1997	73.925
+Syria	Asia	2007	74.143
+Kuwait	Asia	1987	74.174
+Oman	Asia	2002	74.193
+Malaysia	Asia	2007	74.241
+Vietnam	Asia	2007	74.249
+Taiwan	Asia	1992	74.26
+Israel	Asia	1982	74.45
+Korea, Rep.	Asia	1997	74.647
+Bahrain	Asia	2002	74.795
+Kuwait	Asia	1992	75.19
+Taiwan	Asia	1997	75.25
+Japan	Asia	1977	75.38
+Hong Kong, China	Asia	1982	75.45
+Israel	Asia	1987	75.6
+Bahrain	Asia	2007	75.635
+Oman	Asia	2007	75.64
+Singapore	Asia	1992	75.788
+Kuwait	Asia	1997	76.156
+Hong Kong, China	Asia	1987	76.2
+Kuwait	Asia	2002	76.904
+Israel	Asia	1992	76.93
+Taiwan	Asia	2002	76.99
+Korea, Rep.	Asia	2002	77.045
+Japan	Asia	1982	77.11
+Singapore	Asia	1997	77.158
+Kuwait	Asia	2007	77.588
+Hong Kong, China	Asia	1992	77.601
+Israel	Asia	1997	78.269
+Taiwan	Asia	2007	78.4
+Korea, Rep.	Asia	2007	78.623
+Japan	Asia	1987	78.67
+Singapore	Asia	2002	78.77
+Japan	Asia	1992	79.36
+Israel	Asia	2002	79.696
+Singapore	Asia	2007	79.972
+Hong Kong, China	Asia	1997	80.0
+Japan	Asia	1997	80.69
+Israel	Asia	2007	80.745
+Hong Kong, China	Asia	2002	81.495
+Japan	Asia	2002	82.0
+Hong Kong, China	Asia	2007	82.208
+Japan	Asia	2007	82.603
+Turkey	Europe	1952	43.585
+Turkey	Europe	1957	48.079
+Turkey	Europe	1962	52.098
+Bosnia and Herzegovina	Europe	1952	53.82
+Turkey	Europe	1967	54.336
+Albania	Europe	1952	55.23
+Turkey	Europe	1972	57.005
+Serbia	Europe	1952	57.996
+Bosnia and Herzegovina	Europe	1957	58.45
+Montenegro	Europe	1952	59.164
+Albania	Europe	1957	59.28
+Turkey	Europe	1977	59.507
+Bulgaria	Europe	1952	59.6
+Portugal	Europe	1952	59.82
+Turkey	Europe	1982	61.036
+Romania	Europe	1952	61.05
+Croatia	Europe	1952	61.21
+Poland	Europe	1952	61.31
+Montenegro	Europe	1957	61.448
+Portugal	Europe	1957	61.51
+Serbia	Europe	1957	61.685
+Bosnia and Herzegovina	Europe	1962	61.93
+Turkey	Europe	1987	63.108
+Montenegro	Europe	1962	63.728
+Hungary	Europe	1952	64.03
+Romania	Europe	1957	64.1
+Slovak Republic	Europe	1952	64.36
+Portugal	Europe	1962	64.39
+Serbia	Europe	1962	64.531
+Croatia	Europe	1957	64.77
+Bosnia and Herzegovina	Europe	1967	64.79
+Albania	Europe	1962	64.82
+Spain	Europe	1952	64.94
+Slovenia	Europe	1952	65.57
+Poland	Europe	1957	65.77
+Greece	Europe	1952	65.86
+Italy	Europe	1952	65.94
+Turkey	Europe	1992	66.146
+Albania	Europe	1967	66.22
+Hungary	Europe	1957	66.41
+Finland	Europe	1952	66.55
+Portugal	Europe	1967	66.6
+Bulgaria	Europe	1957	66.61
+Spain	Europe	1957	66.66
+Austria	Europe	1952	66.8
+Romania	Europe	1962	66.8
+Romania	Europe	1967	66.8
+Czech Republic	Europe	1952	66.87
+Ireland	Europe	1952	66.91
+Serbia	Europe	1967	66.914
+Croatia	Europe	1962	67.13
+Montenegro	Europe	1967	67.178
+France	Europe	1952	67.41
+Bosnia and Herzegovina	Europe	1972	67.45
+Slovak Republic	Europe	1957	67.45
+Austria	Europe	1957	67.48
+Finland	Europe	1957	67.49
+Germany	Europe	1952	67.5
+Poland	Europe	1962	67.64
+Albania	Europe	1972	67.69
+Italy	Europe	1957	67.81
+Slovenia	Europe	1957	67.85
+Greece	Europe	1957	67.86
+Hungary	Europe	1962	67.96
+Belgium	Europe	1952	68.0
+Croatia	Europe	1967	68.5
+Serbia	Europe	1972	68.7
+Finland	Europe	1962	68.75
+Turkey	Europe	1997	68.835
+Ireland	Europe	1957	68.9
+Albania	Europe	1977	68.93
+France	Europe	1957	68.93
+Czech Republic	Europe	1957	69.03
+Germany	Europe	1957	69.1
+Slovenia	Europe	1962	69.15
+Hungary	Europe	1992	69.17
+Slovenia	Europe	1967	69.18
+United Kingdom	Europe	1952	69.18
+Romania	Europe	1972	69.21
+Belgium	Europe	1957	69.24
+Italy	Europe	1962	69.24
+Portugal	Europe	1972	69.26
+Romania	Europe	1992	69.36
+Hungary	Europe	1982	69.39
+Romania	Europe	1977	69.46
+Hungary	Europe	1967	69.5
+Bulgaria	Europe	1962	69.51
+Greece	Europe	1962	69.51
+Romania	Europe	1987	69.53
+Austria	Europe	1962	69.54
+Hungary	Europe	1987	69.58
+Croatia	Europe	1972	69.61
+Poland	Europe	1967	69.61
+Switzerland	Europe	1952	69.62
+Romania	Europe	1982	69.66
+Spain	Europe	1962	69.69
+Romania	Europe	1997	69.72
+Hungary	Europe	1972	69.76
+Slovenia	Europe	1972	69.82
+Finland	Europe	1967	69.83
+Bosnia and Herzegovina	Europe	1977	69.86
+Czech Republic	Europe	1962	69.9
+Hungary	Europe	1977	69.95
+Austria	Europe	1967	70.14
+Serbia	Europe	1982	70.162
+Belgium	Europe	1962	70.25
+Czech Republic	Europe	1972	70.29
+Ireland	Europe	1962	70.29
+Germany	Europe	1962	70.3
+Serbia	Europe	1977	70.3
+Bulgaria	Europe	1997	70.32
+Slovak Republic	Europe	1962	70.33
+Slovak Republic	Europe	1972	70.35
+Czech Republic	Europe	1967	70.38
+Portugal	Europe	1977	70.41
+Albania	Europe	1982	70.42
+Bulgaria	Europe	1967	70.42
+United Kingdom	Europe	1957	70.42
+Slovak Republic	Europe	1977	70.45
+Croatia	Europe	1982	70.46
+France	Europe	1962	70.51
+Switzerland	Europe	1957	70.56
+Austria	Europe	1972	70.63
+Montenegro	Europe	1972	70.636
+Croatia	Europe	1977	70.64
+Poland	Europe	1977	70.67
+Bosnia and Herzegovina	Europe	1982	70.69
+Czech Republic	Europe	1977	70.71
+United Kingdom	Europe	1962	70.76
+Denmark	Europe	1952	70.78
+Germany	Europe	1967	70.8
+Slovak Republic	Europe	1982	70.8
+Bulgaria	Europe	1977	70.81
+Turkey	Europe	2002	70.845
+Poland	Europe	1972	70.85
+Finland	Europe	1972	70.87
+Bulgaria	Europe	1972	70.9
+Belgium	Europe	1967	70.94
+Czech Republic	Europe	1982	70.96
+Slovenia	Europe	1977	70.97
+Poland	Europe	1987	70.98
+Slovak Republic	Europe	1967	70.98
+Poland	Europe	1992	70.99
+Germany	Europe	1972	71.0
+Greece	Europe	1967	71.0
+Hungary	Europe	1997	71.04
+Italy	Europe	1967	71.06
+Slovenia	Europe	1982	71.063
+Bulgaria	Europe	1982	71.08
+Ireland	Europe	1967	71.08
+Slovak Republic	Europe	1987	71.08
+Bosnia and Herzegovina	Europe	1987	71.14
+Bulgaria	Europe	1992	71.19
+Serbia	Europe	1987	71.218
+Ireland	Europe	1972	71.28
+Poland	Europe	1982	71.32
+Switzerland	Europe	1962	71.32
+Romania	Europe	2002	71.322
+Bulgaria	Europe	1987	71.34
+United Kingdom	Europe	1967	71.36
+Slovak Republic	Europe	1992	71.38
+Belgium	Europe	1972	71.44
+Spain	Europe	1967	71.44
+Croatia	Europe	1987	71.52
+France	Europe	1967	71.55
+Czech Republic	Europe	1987	71.58
+Albania	Europe	1992	71.581
+Serbia	Europe	1992	71.659
+Turkey	Europe	2007	71.777
+Denmark	Europe	1957	71.81
+Sweden	Europe	1952	71.86
+Albania	Europe	1987	72.0
+United Kingdom	Europe	1972	72.01
+Ireland	Europe	1977	72.03
+Netherlands	Europe	1952	72.13
+Bulgaria	Europe	2002	72.14
+Austria	Europe	1977	72.17
+Bosnia and Herzegovina	Europe	1992	72.178
+Italy	Europe	1972	72.19
+Serbia	Europe	1997	72.232
+Slovenia	Europe	1987	72.25
+Greece	Europe	1972	72.34
+Denmark	Europe	1962	72.35
+France	Europe	1972	72.38
+Czech Republic	Europe	1992	72.4
+Romania	Europe	2007	72.476
+Iceland	Europe	1952	72.49
+Sweden	Europe	1957	72.49
+Germany	Europe	1977	72.5
+Finland	Europe	1977	72.52
+Croatia	Europe	1992	72.527
+Hungary	Europe	2002	72.59
+Norway	Europe	1952	72.67
+Slovak Republic	Europe	1997	72.71
+Poland	Europe	1997	72.75
+United Kingdom	Europe	1977	72.76
+Portugal	Europe	1982	72.77
+Switzerland	Europe	1967	72.77
+Belgium	Europe	1977	72.8
+Albania	Europe	1997	72.95
+Denmark	Europe	1967	72.96
+Netherlands	Europe	1957	72.99
+Bulgaria	Europe	2007	73.005
+Spain	Europe	1972	73.06
+Montenegro	Europe	1977	73.066
+Ireland	Europe	1982	73.1
+Austria	Europe	1982	73.18
+Serbia	Europe	2002	73.213
+Netherlands	Europe	1962	73.23
+Bosnia and Herzegovina	Europe	1997	73.244
+Hungary	Europe	2007	73.338
+Sweden	Europe	1962	73.37
+Norway	Europe	1957	73.44
+Denmark	Europe	1972	73.47
+Iceland	Europe	1957	73.47
+Norway	Europe	1962	73.47
+Italy	Europe	1977	73.48
+Slovenia	Europe	1992	73.64
+Croatia	Europe	1997	73.68
+Greece	Europe	1977	73.68
+Iceland	Europe	1962	73.68
+Iceland	Europe	1967	73.73
+Netherlands	Europe	1972	73.75
+Switzerland	Europe	1972	73.78
+Germany	Europe	1982	73.8
+Slovak Republic	Europe	2002	73.8
+Netherlands	Europe	1967	73.82
+France	Europe	1977	73.83
+Belgium	Europe	1982	73.93
+Montenegro	Europe	2002	73.981
+Serbia	Europe	2007	74.002
+Czech Republic	Europe	1997	74.01
+United Kingdom	Europe	1982	74.04
+Portugal	Europe	1987	74.06
+Norway	Europe	1967	74.08
+Bosnia and Herzegovina	Europe	2002	74.09
+Montenegro	Europe	1982	74.101
+Sweden	Europe	1967	74.16
+Norway	Europe	1972	74.34
+Ireland	Europe	1987	74.36
+Spain	Europe	1977	74.39
+Iceland	Europe	1972	74.46
+Montenegro	Europe	2007	74.543
+Finland	Europe	1982	74.55
+Denmark	Europe	1982	74.63
+Slovak Republic	Europe	2007	74.663
+Poland	Europe	2002	74.67
+Denmark	Europe	1977	74.69
+Sweden	Europe	1972	74.72
+Denmark	Europe	1987	74.8
+Finland	Europe	1987	74.83
+Germany	Europe	1987	74.847
+Bosnia and Herzegovina	Europe	2007	74.852
+Portugal	Europe	1992	74.86
+Montenegro	Europe	1987	74.865
+Croatia	Europe	2002	74.876
+France	Europe	1982	74.89
+Austria	Europe	1987	74.94
+Italy	Europe	1982	74.98
+United Kingdom	Europe	1987	75.007
+Slovenia	Europe	1997	75.13
+Greece	Europe	1982	75.24
+Netherlands	Europe	1977	75.24
+Denmark	Europe	1992	75.33
+Belgium	Europe	1987	75.35
+Norway	Europe	1977	75.37
+Switzerland	Europe	1977	75.39
+Montenegro	Europe	1992	75.435
+Sweden	Europe	1977	75.44
+Montenegro	Europe	1997	75.445
+Ireland	Europe	1992	75.467
+Czech Republic	Europe	2002	75.51
+Poland	Europe	2007	75.563
+Albania	Europe	2002	75.651
+Finland	Europe	1992	75.7
+Croatia	Europe	2007	75.748
+Norway	Europe	1987	75.89
+Norway	Europe	1982	75.97
+Portugal	Europe	1997	75.97
+Austria	Europe	1992	76.04
+Netherlands	Europe	1982	76.05
+Germany	Europe	1992	76.07
+Denmark	Europe	1997	76.11
+Iceland	Europe	1977	76.11
+Ireland	Europe	1997	76.122
+Switzerland	Europe	1982	76.21
+Spain	Europe	1982	76.3
+France	Europe	1987	76.34
+Italy	Europe	1987	76.42
+Sweden	Europe	1982	76.42
+United Kingdom	Europe	1992	76.42
+Albania	Europe	2007	76.423
+Belgium	Europe	1992	76.46
+Czech Republic	Europe	2007	76.486
+Slovenia	Europe	2002	76.66
+Greece	Europe	1987	76.67
+Netherlands	Europe	1987	76.83
+Spain	Europe	1987	76.9
+Iceland	Europe	1982	76.99
+Greece	Europe	1992	77.03
+Finland	Europe	1997	77.13
+Denmark	Europe	2002	77.18
+Sweden	Europe	1987	77.19
+United Kingdom	Europe	1997	77.218
+Iceland	Europe	1987	77.23
+Portugal	Europe	2002	77.29
+Norway	Europe	1992	77.32
+Germany	Europe	1997	77.34
+Switzerland	Europe	1987	77.41
+Netherlands	Europe	1992	77.42
+Italy	Europe	1992	77.44
+France	Europe	1992	77.46
+Austria	Europe	1997	77.51
+Belgium	Europe	1997	77.53
+Spain	Europe	1992	77.57
+Ireland	Europe	2002	77.783
+Greece	Europe	1997	77.869
+Slovenia	Europe	2007	77.926
+Netherlands	Europe	1997	78.03
+Switzerland	Europe	1992	78.03
+Portugal	Europe	2007	78.098
+Sweden	Europe	1992	78.16
+Greece	Europe	2002	78.256
+Belgium	Europe	2002	78.32
+Norway	Europe	1997	78.32
+Denmark	Europe	2007	78.332
+Finland	Europe	2002	78.37
+United Kingdom	Europe	2002	78.471
+Netherlands	Europe	2002	78.53
+France	Europe	1997	78.64
+Germany	Europe	2002	78.67
+Iceland	Europe	1992	78.77
+Spain	Europe	1997	78.77
+Italy	Europe	1997	78.82
+Ireland	Europe	2007	78.885
+Iceland	Europe	1997	78.95
+Austria	Europe	2002	78.98
+Norway	Europe	2002	79.05
+Finland	Europe	2007	79.313
+Switzerland	Europe	1997	79.37
+Sweden	Europe	1997	79.39
+Germany	Europe	2007	79.406
+United Kingdom	Europe	2007	79.425
+Belgium	Europe	2007	79.441
+Greece	Europe	2007	79.483
+France	Europe	2002	79.59
+Netherlands	Europe	2007	79.762
+Spain	Europe	2002	79.78
+Austria	Europe	2007	79.829
+Sweden	Europe	2002	80.04
+Norway	Europe	2007	80.196
+Italy	Europe	2002	80.24
+Iceland	Europe	2002	80.5
+Italy	Europe	2007	80.546
+Switzerland	Europe	2002	80.62
+France	Europe	2007	80.657
+Sweden	Europe	2007	80.884
+Spain	Europe	2007	80.941
+Switzerland	Europe	2007	81.701
+Iceland	Europe	2007	81.757
