@@ -67,7 +67,12 @@ Apart from that, I wanted to learn R.
 + The resultant Markdown document:
 [`hw_06-data-wrangling-conclusion.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw06_data-wrangling-conclusion/hw_06-data-wrangling-conclusion.md)
 
+#### Automating Data-analysis pipelines
 
++ Main R Markdown document:
+[`hw_07-automating-data-analysis-pipeline.Rmd`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw06_data-wrangling-conclusion/hw_06-data-wrangling-conclusion.Rmd)
++ The resultant Markdown document:
+[`hw_07-automating-data-analysis-pipeline.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw06_data-wrangling-conclusion/hw_06-data-wrangling-conclusion.md)
 
 
 
