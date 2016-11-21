@@ -1,7 +1,7 @@
 ---
 title: "Automating Data-analysis Pipelines"
 author: "Gokul Raj Suresh Kumar"
-date: "2016-11-18"
+date: "2016-11-20"
 ---
 
 
