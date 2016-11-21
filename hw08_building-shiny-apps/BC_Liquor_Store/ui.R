@@ -1,5 +1,7 @@
 fluidPage(
-	titlePanel("BCLS prices", windowTitle = "BCLS prices"),
+  includeCSS("styles.css"),
+  img(src = "banner.png"),
+  titlePanel("Liquor prices", windowTitle = "BCLS prices"),
 	sidebarLayout(
 		sidebarPanel(
 			sliderInput("priceInput", "Price", min = 0, max = 100, value = c(25, 40), pre = "$"),
@@ -7,9 +9,11 @@ fluidPage(
 			uiOutput("countryOutput")
 		),
 		mainPanel(
-			plotOutput("mainplot"),
-			br(), br(),
-			tableOutput("results")
+			#downloadButton("downloadData", "Download"),
+			tabsetPanel(
+				tabPanel("Plot", plotOutput("mainplot")),
+				tabPanel("Table", DT::dataTableOutput("results"))
+			)
 		)
 	)
 )

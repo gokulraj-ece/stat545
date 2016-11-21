@@ -21,13 +21,13 @@ function(input, output) {
 	
 	output$mainplot <- renderPlot({
 		if(is.null(filtered())){
-			return()
+			return(NULL)
 		}
 		ggplot(filtered(), aes(Alcohol_Content)) +
 			geom_histogram()
 	})
 	
-	output$results <- renderTable({
+	output$results <- DT::renderDataTable({
 		filtered()
 	})
 	
@@ -41,4 +41,12 @@ function(input, output) {
 					sort(unique(bcl$Type)),
 					selected = "WINE")
 	})
+	#output$downloadData <- downloadHandler({
+	#	filename = function(){
+	#		paste("data-", Sys.Date(), ".csv", sep = " ")
+	#	}
+	#	content = function(con){
+	#		write.csv(data, con)
+	#	}
+	#})
 }
