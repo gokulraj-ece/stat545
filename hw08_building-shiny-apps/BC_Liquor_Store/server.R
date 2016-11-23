@@ -3,7 +3,7 @@ library(dplyr)
 
 bcl <- read.csv("bcl-data.csv", stringsAsFactors = FALSE)
 
-function(input, output) {
+function(input, output){
 	filtered <- reactive({
 		
 		if(is.null(input$countryInput)){
@@ -41,12 +41,12 @@ function(input, output) {
 					sort(unique(bcl$Type)),
 					selected = "WINE")
 	})
-	#output$downloadData <- downloadHandler({
-	#	filename = function(){
-	#		paste("data-", Sys.Date(), ".csv", sep = " ")
-	#	}
-	#	content = function(con){
-	#		write.csv(data, con)
-	#	}
-	#})
+	output$downloadData <- downloadHandler(
+		filename = function(){ 
+		  paste('Liq_data-', Sys.Date(), ".csv", sep = "") 
+		  },
+		content = function(file){ 
+		  write.csv(filtered(), file) 
+		  }
+	)
 }

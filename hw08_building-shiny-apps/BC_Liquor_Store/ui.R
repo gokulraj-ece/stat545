@@ -9,7 +9,8 @@ fluidPage(
 			uiOutput("countryOutput")
 		),
 		mainPanel(
-			#downloadButton("downloadData", "Download"),
+			downloadButton("downloadData", "Download"),
+			br(),br(),
 			tabsetPanel(
 				tabPanel("Plot", plotOutput("mainplot")),
 				tabPanel("Table", DT::dataTableOutput("results"))
