@@ -24,7 +24,7 @@ function(input, output){
 			return(NULL)
 		}
 		ggplot(filtered(), aes(Alcohol_Content)) +
-			geom_histogram()
+			geom_histogram() 
 	})
 	
 	output$results <- DT::renderDataTable({
@@ -39,7 +39,7 @@ function(input, output){
 	output$typeOutput <- renderUI({
 		selectInput("typeInput", "Product Type",
 					sort(unique(bcl$Type)),
-					selected = "WINE")
+					selected = "WINE", multiple = TRUE)
 	})
 	output$downloadData <- downloadHandler(
 		filename = function(){ 
@@ -49,4 +49,7 @@ function(input, output){
 		  write.csv(filtered(), file) 
 		  }
 	)
+	output$countResults <- renderText({
+	  paste("We found ", nrow(filtered()), " options for you")
+	})
 }

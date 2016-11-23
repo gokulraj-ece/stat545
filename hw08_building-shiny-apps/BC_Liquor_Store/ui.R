@@ -6,7 +6,8 @@ fluidPage(
 		sidebarPanel(
 			sliderInput("priceInput", "Price", min = 0, max = 100, value = c(25, 40), pre = "$"),
 			uiOutput("typeOutput"),
-			uiOutput("countryOutput")
+			uiOutput("countryOutput"),
+			textOutput("countResults")
 		),
 		mainPanel(
 			downloadButton("downloadData", "Download"),
