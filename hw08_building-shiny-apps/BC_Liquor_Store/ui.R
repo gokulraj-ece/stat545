@@ -6,11 +6,16 @@ fluidPage(
 		sidebarPanel(
 			sliderInput("priceInput", "Price", min = 0, max = 100, value = c(25, 40), pre = "$"),
 			uiOutput("typeOutput"),
+			uiOutput("sweetnessLevelOutput"),
+			checkboxInput("sortByPrice", "Sort by Price", FALSE),
+			# uiOutput("selectCountryOutput"),
 			uiOutput("countryOutput"),
-			textOutput("countResults")
+			br(), br(),
+			img(src = "ghs.png")
 		),
 		mainPanel(
-			downloadButton("downloadData", "Download"),
+		  textOutput("countResults"),
+		  downloadButton("downloadData", "Download result"),
 			br(),br(),
 			tabsetPanel(
 				tabPanel("Plot", plotOutput("mainplot")),
