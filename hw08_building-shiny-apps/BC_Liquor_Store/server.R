@@ -1,5 +1,5 @@
 library(tidyverse)
-library(stringr)
+library(ggvis)
 
 bcl <- read.csv("bcl-data.csv", stringsAsFactors = FALSE)
 
@@ -32,9 +32,10 @@ function(input, output, session){
  	  
  	})
 
-	output$mainplot <- renderPlot({
-		ggplot(filtered_data(), aes(Alcohol_Content)) +
-			geom_histogram()
+	output$mainplot_ui <- renderPlot({
+	  ggplot(filtered_data(), aes(Alcohol_Content)) +
+		 	geom_histogram()
+	  # filtered_data() %>% ggvis(~Alcohol_Content) %>% layer_histograms() %>% bind_shiny("mainplot", "mainplot_ui")
 	})
 	
 	output$results <- DT::renderDataTable({

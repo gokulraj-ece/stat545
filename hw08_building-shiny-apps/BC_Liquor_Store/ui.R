@@ -1,4 +1,7 @@
+library(shinythemes)
+
 fluidPage(
+  theme = shinytheme("sandstone"),
   includeCSS("styles.css"),
   img(src = "banner.png"),
   titlePanel("Liquor prices", windowTitle = "BCLS prices"),
@@ -18,7 +21,7 @@ fluidPage(
 		  downloadButton("downloadData", "Download result"),
 			br(),br(),
 			tabsetPanel(
-				tabPanel("Plot", plotOutput("mainplot")),
+				tabPanel("Plot", plotOutput("mainplot_ui")),
 				tabPanel("Table", DT::dataTableOutput("results"))
 			)
 		)
