@@ -74,6 +74,12 @@ Apart from that, I wanted to learn R.
 + The resultant Markdown document:
 [`hw_07-automating-data-analysis-pipeline.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw07_automating-data-analysis-pipelines/hw_07-automating-data-analysis-pipeline.md)
 
+#### Building a Shiny app
+
++ Link to the app:
+[`BCLS app on shinyapps.io`](https://gokulraj-ece.shinyapps.io/bcls/)
++ Description of the app:
+[`README.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw08_building-shiny-apps/BC_Liquor_Store/README.md)
 
 
 
