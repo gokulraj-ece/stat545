@@ -1,14 +1,13 @@
 library(tidyverse)
-library(ggvis)
 
+# reading the data from the csv file
 bcl <- read.csv("bcl-data.csv", stringsAsFactors = FALSE)
 
-function(input, output, session){
 
+function(input, output, session){
+  
+  # a reactive element that returns a reactive variable filtered by Price, Type and/or Country
  	filtered <- reactive({
- 	  if (is.null(input$countryInput)) {
- 	    return(NULL)
- 	  }
  	  if (!input$selectCountry) {
  	    return(
  	      bcl %>% 
@@ -28,6 +27,8 @@ function(input, output, session){
  	  }
  	})
  	
+ 	# a reactive element that uses the reactive variable 'filtered' and filters it by category
+ 	# "WINE" and if so, returns a reactive value that is filtered by sweetness level
  	filtered_data <- reactive({
  	  if(input$typeInput == "WINE") {
  	    return(
@@ -42,10 +43,13 @@ function(input, output, session){
  	  }
  	})
  	
+ 	# a reactive element that uses the reactive variable 'filtered_data' and returns 
+ 	# the names of the 'Subtypes' for usage in the 'subtypeInput' drop down box
  	subtype_data <- reactive({
  	  if(nrow(filtered_data()) == 0) {
  	    return(NULL)
- 	  } else {
+ 	  } 
+ 	  else {
  	    return(
  	      filtered_data() %>%
  	        select(Subtype) %>%
@@ -54,7 +58,12 @@ function(input, output, session){
  	  }
  	})
  	
+ 	# the main reactive element that will be used for generating the table and
+ 	# the main plot. It filters the product by 'Subtype' if applicable
  	filtered_subtype_data <- reactive({
+ 	  if (is.null(input$countryInput)) {
+ 	    return(NULL)
+ 	  }
  	  if(nrow(filtered_data()) == 0) {
  	    return(NULL)
  	  }
@@ -73,24 +82,30 @@ function(input, output, session){
  	  }
  	})
  	
-	output$mainplot_ui <- renderPlot({
+ 	# generates the main plot to be plotted in the placeholder provided by the ui.R file
+	output$mainplot <- renderPlot({
 	  if (is.null(filtered_subtype_data())) {
 	    return(NULL)
 	  }
-	  ggplot(filtered_subtype_data(), aes(Alcohol_Content)) +
-		 	geom_histogram()
+	  else {
+	    ggplot(filtered_subtype_data(), aes(Alcohol_Content)) +
+	      geom_histogram(color = "black", fill = "steelblue3")
+	  }
 	})
 	
+	# generates the table to be populated in the placeholder provided by the ui.R file
 	output$results <- DT::renderDataTable({
 	  filtered_subtype_data()
 	})
 	
+	# generates the fields for the country names in the drop down box when checkbox is selected
 	output$countryOutput <- renderUI({
 	 	selectInput("countryInput", "Country",
 	 	            choices = sort(unique(bcl$Country)),
 	 	            selected = "CANADA")
 	})
 	
+	# the handler to download the generated data in CSV format and to write it to file
 	output$downloadData <- downloadHandler(
 		filename = function() { 
 		  paste('bcl_data-', Sys.Date(), ".csv", sep = "")
@@ -100,6 +115,7 @@ function(input, output, session){
 		  }
 	)
 	
+	# calculates the count of the records generated after filtering and displays to the user
 	output$countResults <- renderText({
 	  if (is.null(filtered_subtype_data())) {
 	    return(
@@ -111,6 +127,7 @@ function(input, output, session){
 	  }
 	})
 	
+	# generates the fields for the sweetness level if the type of the beverage is 'WINE'
 	output$sweetnessLevelOutput <- renderUI({
 	  conditionalPanel(
 	    condition = "input.typeInput == 'WINE'",
@@ -120,7 +137,12 @@ function(input, output, session){
 	  )
 	})
 	
+	# generates the fields for the subtypes based on the type of the product
 	output$subTypeOutput <- renderUI({
+	  if (is.null(subtype_data())) {
+	    return(NULL)
+	  }
 	  selectInput("subtypeInput", "Sub-type", subtype_data())
 	})
+	
 }
