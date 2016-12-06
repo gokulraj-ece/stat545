@@ -81,5 +81,13 @@ Apart from that, I wanted to learn R.
 + Description of the app:
 [`README.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw08_building-shiny-apps/BC_Liquor_Store/README.md)
 
+#### Writing an R package
+
++ Link to the package:
+[`foofactors`](https://github.com/gokulraj-ece/foofactors)
++ Relevant markdown document:
+[`hw09_writing-r-package.md`](https://github.com/STAT545-UBC/suresh-kumar_gokul-raj/blob/master/hw09_writing-r-package/hw09_writing-r-package.md)
+
+
 
 
