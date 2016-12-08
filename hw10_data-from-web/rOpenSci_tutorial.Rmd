@@ -1,0 +1,160 @@
+---
+title: "rOpenSci tutorial"
+author: "Gokul Raj Suresh Kumar"
+date: "`r format(Sys.Date())`"
+output: 
+  html_document:
+    keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r warning=FALSE, message=FALSE}
+library(tidyverse)
+library(rvest)
+library(xml2)
+library(jsonlite)
+library(httr)
+library(listviewer)
+library(XML)
+```
+
+##Collecting data from an API
+
+```{r}
+jon <- GET(url = "http://anapioficeandfire.com/api/characters/583")
+jon$headers
+jon$status_code
+jsonedit(content(jon, as = "parsed"))
+content(jon)
+```
+
+```{r}
+get_bin <- GET(url = "https://httpbin.org/get")
+get_bin$headers[["content-type"]]
+get_bin$status_code
+content(get_bin)
+get_bin$request
+res <- GET(url = "https://httpbin.org/get", accept_json())
+res$headers
+server_err <- GET(url = "https://httpbin.org/status/400")
+server_err$status_code
+content(server_err)
+client_err <- GET(url = "https://httpbin.org/status/500")
+client_err$status_code
+content(client_err)
+```
+
+```{r}
+r2 <- GET(url = "https://swapi.co/api/people/", query = list(search = "r2"))
+r2$headers
+r2$status_code
+r2$request
+jsonedit(content(r2, as = "parsed"))
+```
+
+```{r}
+inception_json <- GET("http://www.omdbapi.com/?t=inception&y=&plot=short&r=json")
+inception_json$status_code
+inception_json$headers
+content(inception_json, as = "text")
+jsonedit(content(inception_json, as = "parsed"))
+inception_xml <- GET("http://www.omdbapi.com/?t=inception&y=&plot=short&r=xml")
+inception_xml$headers
+content(inception_xml, as = "text")
+content(inception_xml, as = "parsed")
+```
+
+##APIs and Endpoints
+
+```{r}
+web_call <- GET("http://swapi.co/api/planets/1/")
+web_call
+ru <- GET("https://api.randomuser.me/")
+status_code(ru)
+owm <- GET("http://api.openweathermap.org/data/2.5/forecast?id=524901")
+status_code(owm)
+warn_for_status(owm)
+```
+
+```{r}
+call <- GET("http://google.com")
+result <- content(call, as = "text")
+result
+class(result)
+ru1 <- GET("https://api.randomuser.me/")
+person_text <- content(ru1, as = "text")
+person_text
+person_parsed <- content(ru1, as = "parsed")
+jsonedit(person_parsed)
+```
+
+```{r}
+num_results <- 5
+args <- list(results = num_results)
+random_names <- GET("http://api.randomuser.me/", query = args)
+output <- content(random_names, as = "parsed")
+length(output$results)
+jsonedit(output)
+```
+
+```{r}
+gen <- "male"
+args1 <- list(gender = gen, results = num_results)
+rnwg <- GET("http://api.randomuser.me/", query = args1)
+op <- content(rnwg, as = "parsed")
+jsonedit(op)
+```
+
+```{r}
+owm1 <- GET("api.openweathermap.org/data/2.5/weather?zip=94708,us&appid=c39ad46e5dc633dad2e23abfc4fca507")
+raw_data <- content(owm1, as = "parsed")
+jsonedit(raw_data)
+raw_data_csv <- unlist(raw_data)
+raw_data_csv <- t(raw_data_csv)
+raw_data_csv <- data.frame(raw_data_csv, stringsAsFactors = FALSE)
+View(raw_data_csv)
+```
+
+##Scraping data without an API
+
+```{r}
+frozen <- read_html("http://www.imdb.com/title/tt2294629/")
+itals <- html_nodes(frozen, "em")
+html_text(itals)
+html_name(itals)
+html_children(itals)
+html_attr(itals, "class")
+html_attrs(itals)
+```
+
+```{r}
+cast <- html_nodes(frozen, "span.itemprop")
+html_text(cast)
+cast2 <- html_nodes(frozen, "#titleCast .itemprop")
+html_text(cast2)
+cast3 <- html_nodes(frozen, ".itemprop .itemprop")
+html_text(cast3)
+```
+
+```{r}
+kw <- read_html("http://www.bestplaces.net/cost_of_living/city/florida/key_west")
+kw %>% 
+  html_nodes("#mainContent_dgCostOfLiving tr:nth-child(2) td:nth-child(2)") %>%
+  html_text()
+```
+
+```{r}
+cost_stats <- html_nodes(kw, css = "table")
+living_cost <- html_table(cost_stats, header = TRUE)[[2]]
+str(living_cost)
+```
+
+```{r}
+kw2 <- read_html("http://www.bestplaces.net/climate/city/florida/key_west")
+clm_stats <- html_nodes(kw2, css = "table")
+climate_data <- html_table(clm_stats, header = TRUE)[[2]]
+str(climate_data)
+```
