@@ -1,0 +1,272 @@
+---
+title: "HW_10-API-And-Scraping"
+author: "Patrick Daniele"
+date: "`r format(Sys.Date())`"
+output: 'github_document'
+always_allow_html: yes
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+<p> Load Libraries</p>
+```{r}
+library(tidyverse)
+library(httr)
+library(purrr)
+library(forcats)
+library(RColorBrewer)
+```
+
+<h2>Task: Make API Queries "By-Hand" using HTTR</h2>
+
+<h3>Goal: To create a dataset of characters (probably one line per person) and link it to other attributes. For example, I'll join on the house attributes for each character.</h3>
+
+<p> I'll start by trying to grab a little bit of data, then move on to traversing the pages to get ALL of the data</p>
+```{r}
+## Make the query
+chars <- GET('http://www.anapioficeandfire.com/api/characters/')
+
+## Check the status
+status_code(chars)
+## Success!!
+
+#Parse the data into a list
+chars_parsed <-content(chars, as='parsed')
+## After looking into the structure with listviewer, it seems we only get 10 characters per request. 
+## I want them ALL!!! I'll start by upping the page size to the max of 50, then try iterating over the 
+## pages
+
+## Again!
+
+## Make the query
+chars <- GET('http://www.anapioficeandfire.com/api/characters/?page=1&pageSize=50')
+
+## Check the status
+status_code(chars)
+## Success!!
+
+#Parse the data into a list
+chars_parsed <-content(chars, as='parsed')
+
+## Success again. We were able to get 50 records. Now we will need to loop over all the pages
+```
+
+<p> Instead of reinventing the wheel, I searched how to loop over pages in R. The following website was very helpful.</p>
+https://cran.r-project.org/web/packages/jsonlite/vignettes/json-paging.html
+
+<p> Important to note, there are 12 books, 444 houses and 2138 Characters. Will need to scrape all of that data. And make two datasets then join them on their allegiances and books. To make the task simpler, I'm going to ignore the list POVBooks and instead just use the books list. I'm also going to simplify the task a bit more, and match based on whatever values is first in any lists.</p>
+
+```{r}
+## Characters
+
+## This is not my code, taken from the previous link. Modified by me
+baseurl <- "http://www.anapioficeandfire.com/api/characters/"
+characters <- list()
+
+##This is grabbing a lot of data. It will take a minute.
+for(i in 1:43){
+  mydata <- GET(paste0(baseurl, "?page=", i, '&pageSize=50'))
+  characters[[i]] <- content(mydata, as='parsed')
+}
+
+# That seems to work. I'll inspect a specific character to see what we get
+characters[[2]][[12]]
+
+#Cool!
+
+##Houses
+
+## This is not my code, taken from the previous link. Modified by me
+baseurl <- "http://www.anapioficeandfire.com/api/houses/"
+houses <- list()
+
+for(i in 1:10){
+  mydata <- GET(paste0(baseurl, "?page=", i, '&pageSize=50'))
+  houses[[i]] <- content(mydata, as='parsed')
+}
+
+# That seems to work. I'll inspect a specific house to see what we get
+houses[[2]][[12]]
+
+
+#Cool!
+
+
+##Books
+
+## No need to traverse pages here. Only 12 values.
+mydata <- GET('http://www.anapioficeandfire.com/api/books/?page=1&pageSize=12')
+books_list <- content(mydata, as='parsed')
+
+# That seems to work. I'll inspect a specific book to see what we get
+books_list[[2]][[2]]
+#Cool!
+
+```
+
+<p> So now we have traversed the pages, next it's time to map them into data frames. I won't keep all the data, instead i'll just keep some specific variables such as Name, Gender, Culture, Year Born/Died, Father, Moth, Spouse, and Allegiances. I'll then merge the allegiances onto the houses to fill them in.</p>
+
+```{r}
+## Let's Start by simplify the data structure a little bit. We can use the flatten function on each
+houses2 <- flatten(houses)
+characters2 <- flatten(characters)
+
+
+## Now I'll try to map some variables into a dataset
+characters_temp <- map_df(characters2, `[`, c('url','name', 'gender', 'culture', 'born', 'died'))
+characters_df <- characters_temp %>% 
+  mutate(CharacterID=substr(url, start=49, stop=(49+nchar(url)-49))) %>% 
+    select(-url)
+
+
+##Getting Allegiances Data - I take no credit for this code. It was all Jenny's
+
+allegiances <- characters2 %>% 
+  tibble(
+    url = map_chr(., "url"),
+    allegiances = map(., "allegiances")
+  )
+
+## Creating ID Variables for Joining Later
+allegiances_df <- allegiances %>% 
+  mutate(House=map(allegiances, 1, c('allegiances')), HouseID= substr(House, start=45, stop=(45 +nchar(House)-45)),
+                   CharacterID=substr(url, start=49, stop=(49+nchar(url)-49))) %>% 
+  select(-allegiances, -House, -., -url)
+
+## Same thing for books
+
+books <- characters2 %>% 
+  tibble(
+    url = map_chr(., "url"),
+    books = map(., "books")
+  )
+
+## Creating ID Variables for Joining Later
+books_char_df <- books %>% 
+  mutate(Book=map(books, 1, c('books')), BookID= substr(Book, start=44, stop=(44 +nchar(Book)-44)),
+         CharacterID=substr(url, start=49, stop=(49+nchar(url)-49))) %>% 
+  select(-books, -Book, -., -url)
+
+
+## Grabbing Name, Region and URL (To turn into an ID variable)
+houses_temp <-map_df(houses2, `[`, c('name', 'region', 'url'))
+houses_df <- houses_temp %>% 
+  mutate(HouseID=substr(url, start=45, stop=(45+nchar(url)-45))) %>% 
+    select(-url) %>% 
+  rename(House_Name=name)
+##Perfect, After this, we have a variable called HouseID that we will be able to join on.
+
+
+##Finally, let's grab the data we need from the books list
+books_temp <- map_df(books_list, `[`, c('url', 'name'))
+books_df <- books_temp %>% 
+  mutate(BookID=substr(url, start=44, stop=(44+nchar(url)-44))) %>% 
+  select(-url) %>% 
+  rename(Book_Name=name)
+
+```
+<p> Originally, I had to use for loops. But after some excellent suggestions from Jenny and Sam, I was able to use mapping functions instead. Much nicer.</p>
+
+
+<p> To recap, we now have 5 datasets. 
+<br>
+1. Characters - Containing character specific data such as Name, Gender, and culture as well as a Character ID variable
+<br>
+2. Allegancies - Contains a character ID variable and their house ID
+<br>
+3. Houses - Contains HouseID and House specific variables such as Name, and Region
+<br>
+4. Books (From Characters) - Contains CharacterID and BookID
+<br>
+5. Books (From Books) - Contains BookID and Name of Book
+<br>
+Now, we slam all of this together! (Joins that is)
+</p>
+
+<p align="centre"><a href="http://i.imgur.com/JGR3y6k.gif" target="_blank"><img src="http://i.imgur.com/JGR3y6k.gif" alt="Whenever I do join, I think of this" data-canonical-src="http://i.imgur.com/JGR3y6k.gif" style="max-width:100%;" align="middle"></a></p>
+
+
+```{r}
+# Step 1 - Merge Characters onto Allegancies so we get their HouseIDs linked to CharactersIDs
+join1 <- full_join(characters_df, allegiances_df)
+
+# Step 2 - Merge previous dataset onto HouseIDs in the Houses Dataset
+join2 <- full_join(join1, houses_df, by=c('HouseID'))
+
+# Step 3 - Merge previous dataset onto CharacterID in the Books (From Characters) Dataset
+join3 <- full_join(join2, books_char_df, by=c('CharacterID'))
+
+# Step 3 - Merge previous dataset onto CharacterID in the Books (From Characters) Dataset
+IaF_df <- full_join(join3, books_df, by=c('BookID'))
+
+## Let's take a quick peak at what we've got
+knitr::kable(IaF_df[32:42,]) 
+
+## A Few extra rows are left over as a result of the joins. I'll drop those now.
+IaF_df <- IaF_df[1:2134,]
+
+## Now clean up that workspace!
+rm(list= ls()[!(ls() %in% c('IaF_df'))])
+```
+<p> We have the desired results!!! Now time for a bit of exploration to verify our data!</p>
+
+```{r}
+## Good way to smell test would be to check a few specific people
+
+## Let's start with Jon Snow. I'm Expecting Culture Northmen, Allegiance to house stark.
+## I Happen to know he is character 583, so let's pull him.
+knitr::kable(IaF_df[583,])
+
+```
+<p>Interesting that the book he appears in first as per the API is book 5. This should be Book 1, but it looks like 
+the API has him listed as book 5. Perhaps it has something to do the POVBooks variable.</p>
+<br>
+<p> Let's graph something, so I can feel like a real data person. For fun, let's do a bar plot of how many characters are in each book.</p>
+
+```{r}
+## I'd like to have the books show up in order as it appears in the API
+IaF_df_plot <- IaF_df
+IaF_df_plot$Book_Factor <- factor(IaF_df$Book_Name, levels=c("A Game of Thrones", "A Clash of Kings", 'A Storm of Swords', 'The Hedge Knight',
+                                  'A Feast for Crows', 'The Sworn Sword', 'The Mystery Knight','A Dance with Dragons', 
+                                  'The Princess and the Queen','The Rogue Prince', 'The World of Ice and Fire'))
+levels(IaF_df_plot$Book_Factor)
+
+plot <- IaF_df_plot %>% filter(!is.na(IaF_df_plot$Book_Name)) %>% 
+  ggplot(aes(Book_Factor, fill=Book_Factor)) + 
+  ## Bar Plot 
+  geom_bar() +
+  ## Remove x axis labels. Too long.
+  theme(axis.text.x = element_blank(), axis.ticks = element_blank()) +
+  ## Changing the colours just for fun
+  scale_fill_brewer(palette = "Set3") 
+  
+plot
+
+##Seems reasonable to me.
+
+```
+<p> Data looks right to me! Pretty happy with the flat data results, next step is to export the finished dataset to csv so it can be used by anyone who wants (or really just for practice)</p>
+
+```{r}
+
+##This will save the file. I'll comment it out, because it will cause an error 
+##for anyone who doesn't have the folder made.
+
+# write.csv(IaF_df, file=paste0(getwd(), '/HW10_API_And_Scraping/ICEandFIRE.csv'))
+```
+<p> Sweet! The dataset is saved, and I feel like I had a blast working with APIs through HTTR.</p>
+
+```{r}
+sessionInfo()
+```
+
+
+<h2> Reflections</h2>
+<p> This activity was interesting and challenging. I still struggle with the mapping functions, but this hands on activity gave me some amazing practice. Learning how to use HTTR seemed like the most daunting part of the task, however, it came fairly quickly. The meat of the assignment turned out to be working with lists. That being said, I look forward to trying the other methods such as wrapped APIs and scraping, scraping seems particularly challenging. On a more general note, we were encouraged to build our previous assignments like cheat sheets to make referencing them easy. I'm already finding I use these notes more than any other class I've ever taken. The process of doing the assignments was enlightening, but now having such a strong resource to go back to is so helpful. I went back to joins, and working with nested lists for this assignment which made the assignment a whole lot easier.</p>
+
+
+
